@@ -1,0 +1,2158 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="htmlRoot">
+<head>
+<meta charset="UTF-8">
+<meta name="theme-color" content="#000011">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="NEXUS">
+<link rel="manifest" id="pwaManifest">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>NEXUS-INTERNATIONAL v6 | NIDAL WATFA — FREE MODELS</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Cairo:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --g:#00FF9D;--b:#00B8FF;--pk:#FF0080;--or:#FF8C00;
+  --pu:#AA00FF;--tl:#00FFD1;--ye:#FFE500;--rd:#FF4444;
+  --bg:#000011;--c1:#0A0A2A;--c2:#0D0D2A;--c3:#111133;
+  --dim:rgba(255,255,255,.45);
+  --tx:rgba(255,255,255,.92);
+  --tx2:rgba(255,255,255,.7);
+  --ah:clamp(50px,7vh,64px);--mh:clamp(38px,5vh,50px);
+  --xs:clamp(12px,2vw,14px);--sm:clamp(14px,2.4vw,16px);
+  --md:clamp(16px,2.8vw,18px);--lg:clamp(18px,3.2vw,22px);
+  --xl:clamp(22px,4vw,28px);--r:14px;
+}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);
+  font-family:'Cairo',sans-serif;color:rgba(255,255,255,.92);font-size:15px}
+#bgC{position:fixed;inset:0;z-index:0;pointer-events:none}
+.grd{position:fixed;inset:0;z-index:1;pointer-events:none;
+  background-image:linear-gradient(rgba(0,255,157,.028) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,255,157,.028) 1px,transparent 1px);
+  background-size:36px 36px}
+#sln{position:fixed;left:0;right:0;height:2px;z-index:2;pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(0,255,157,.25),transparent);
+  animation:scn 7s linear infinite}
+@keyframes scn{0%{top:-2px}100%{top:100vh}}
+
+/* SPLASH */
+#spl{position:fixed;inset:0;z-index:500;
+  background:radial-gradient(ellipse at center,#00001E,#000011);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:clamp(10px,2.2vh,18px);transition:opacity 1s}
+.sg{position:absolute;inset:0;opacity:.7;
+  background-image:linear-gradient(rgba(0,255,157,.06) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,255,157,.06) 1px,transparent 1px);
+  background-size:44px 44px}
+.sorb{width:clamp(80px,15vw,118px);height:clamp(80px,15vw,118px);border-radius:50%;
+  border:2px solid var(--g);display:flex;align-items:center;justify-content:center;
+  font-size:clamp(36px,7vw,55px);z-index:1;position:relative;
+  background:radial-gradient(circle,rgba(0,255,157,.03),transparent);
+  animation:sg1 1.8s infinite alternate}
+@keyframes sg1{from{box-shadow:0 2px 6px rgba(0,0,0,.12)}to{box-shadow:0 2px 8px rgba(0,0,0,.2)}}
+.st1{font-family:'Orbitron',monospace;font-size:clamp(13px,2.8vw,21px);font-weight:900;
+  color:#fff;letter-spacing:clamp(2px,.5vw,4px);z-index:1;position:relative;text-align:center}
+.st2{font-family:'Orbitron',monospace;font-size:clamp(8px,1.6vw,12px);
+  background:linear-gradient(90deg,var(--g),var(--b));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  letter-spacing:2px;z-index:1;position:relative}
+.sbar{width:clamp(160px,40vw,260px);height:3px;background:rgba(255,255,255,.1);
+  border-radius:3px;overflow:hidden;z-index:1;position:relative}
+.sfil{height:100%;width:0%;background:linear-gradient(90deg,var(--g),var(--b));
+  border-radius:3px;transition:width .06s linear}
+.spct{font-family:'Orbitron',monospace;font-size:clamp(8px,1.5vw,10px);
+  color:rgba(0,255,157,.55);z-index:1;position:relative}
+.sdev{font-size:var(--xs);color:rgba(0,184,255,.6);font-family:'JetBrains Mono',monospace;
+  letter-spacing:1.5px;z-index:1;position:relative}
+
+/* APP SHELL */
+#app{position:fixed;inset:0;z-index:10;display:flex;flex-direction:column;
+  padding-top:env(safe-area-inset-top,0);padding-bottom:env(safe-area-inset-bottom,0);
+  opacity:0;transition:opacity .8s}
+#app.on{opacity:1}
+
+/* APPBAR */
+#ab{flex-shrink:0;height:var(--ah);
+  background:linear-gradient(135deg,#000,#08082A 50%,#000);
+  border-bottom:1px solid rgba(0,255,157,.15);
+  box-shadow:0 3px 12px rgba(0,0,0,.12);
+  display:flex;align-items:center;gap:6px;
+  padding:0 10px;overflow-x:auto;scrollbar-width:none;
+  cursor:grab;user-select:none}
+#ab::-webkit-scrollbar{display:none}
+#ab:active{cursor:grabbing}
+.aborg{width:clamp(28px,4.5vw,38px);height:clamp(28px,4.5vw,38px);border-radius:50%;
+  border:1.5px solid var(--g);background:radial-gradient(circle,rgba(0,255,157,.03),transparent);
+  display:flex;align-items:center;justify-content:center;font-size:clamp(12px,2vw,16px);
+  flex-shrink:0;animation:abg 2s infinite alternate}
+@keyframes abg{from{box-shadow:0 1px 3px rgba(0,0,0,.08)}to{box-shadow:0 2px 6px rgba(0,0,0,.15)}}
+.abbrand{flex-shrink:0}
+.abn{font-family:'Orbitron',monospace;font-size:clamp(8px,1.7vw,12px);font-weight:700;
+  color:#fff;letter-spacing:1px;white-space:nowrap;display:block;
+  overflow:hidden;border-right:2px solid var(--g);width:0;animation:tin 2.2s steps(21) .5s forwards}
+@keyframes tin{to{width:190px;border-right-color:transparent}}
+.aba{font-size:clamp(7px,1.3vw,9px);font-weight:700;
+  background:linear-gradient(90deg,var(--g),var(--b));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;white-space:nowrap}
+.asep{width:1px;height:26px;background:rgba(0,255,157,.16);flex-shrink:0}
+.abg2{display:flex;align-items:center;gap:4px;flex-shrink:0}
+.abt{display:flex;align-items:center;gap:4px;padding:4px 9px;border-radius:18px;
+  cursor:pointer;border:1px solid rgba(0,255,157,.16);
+  background:rgba(0,255,157,.08);color:rgba(255,255,255,.68);
+  font-size:var(--xs);white-space:nowrap;transition:all .2s;flex-shrink:0;
+  font-family:'Cairo',sans-serif}
+.abt:hover,.abt:active{background:rgba(0,255,157,.22);border-color:var(--g);color:#fff;transform:scale(1.06)}
+.abt.dev-btn{background:rgba(255,140,0,.14);border-color:rgba(255,140,0,.35);color:var(--or)}
+.abt.dev-btn:hover{background:rgba(255,140,0,.28);border-color:var(--or)}
+.abt.shr-btn{background:rgba(0,184,255,.12);border-color:rgba(0,184,255,.3);color:var(--b);position:relative}
+.abt.shr-btn:hover{background:rgba(0,184,255,.28);border-color:var(--b)}
+.abt.key-btn{position:relative}
+.abt.key-btn .key-dot{width:7px;height:7px;border-radius:50%;
+  display:inline-block;margin-right:3px;flex-shrink:0}
+.abt.key-btn .key-dot.ok{background:var(--g);box-shadow:0 2px 6px rgba(0,0,0,.2)}
+.abt.key-btn .key-dot.no{background:var(--rd);box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.abt.red{background:rgba(255,68,68,.1);border-color:rgba(255,68,68,.25);color:rgba(255,150,150,.7)}
+.abt.red:hover{background:rgba(255,68,68,.22);border-color:var(--rd)}
+
+/* SHARE DROPDOWN */
+#shrDrop{position:fixed;z-index:300;
+  background:rgba(5,5,30,.97);border:1px solid rgba(0,184,255,.4);
+  border-radius:14px;padding:6px;min-width:200px;
+  box-shadow:0 8px 24px rgba(0,0,0,.4),0 0 12px rgba(0,184,255,.06);
+  backdrop-filter:blur(8px);
+  display:none;animation:dropIn .2s cubic-bezier(.34,1.56,.64,1)}
+#shrDrop.on{display:block}
+@keyframes dropIn{from{opacity:0;transform:translateY(-8px) scale(.95)}to{opacity:1;transform:translateY(0) scale(1)}}
+.shr-ttl{font-size:var(--xs);color:rgba(0,184,255,.6);
+  padding:4px 10px 7px;font-family:'Orbitron',monospace;letter-spacing:1px;
+  border-bottom:1px solid rgba(0,184,255,.15);margin-bottom:4px}
+.shr-item{display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:9px;
+  cursor:pointer;transition:all .18s;font-size:var(--sm);font-family:'Cairo',sans-serif;
+  color:rgba(255,255,255,.8)}
+.shr-item:hover{background:rgba(0,184,255,.14);color:#fff;transform:translateX(-3px)}
+.shr-item .shr-ico{font-size:clamp(16px,2.8vw,20px);flex-shrink:0;width:28px;text-align:center}
+.shr-item .shr-lbl{flex:1}
+.shr-item .shr-sub{font-size:var(--xs);color:var(--dim);margin-top:1px}
+.shr-sep{height:1px;background:rgba(255,255,255,.06);margin:4px 8px}
+
+/* MODEBAR */
+#mb{flex-shrink:0;height:var(--mh);margin:5px 10px;
+  background:rgba(0,0,0,.5);border-radius:28px;
+  border:1px solid rgba(0,255,157,.16);
+  display:flex;align-items:center;justify-content:space-around;padding:0 2px}
+.mbt{display:flex;align-items:center;gap:3px;padding:5px 8px;
+  border-radius:20px;cursor:pointer;border:none;background:none;
+  font-family:'Cairo',sans-serif;font-size:clamp(9px,1.6vw,11px);
+  color:rgba(255,255,255,.35);transition:all .3s cubic-bezier(.34,1.56,.64,1);white-space:nowrap}
+.mbt .mi{font-size:clamp(11px,2vw,14px)}
+.mbt .ml{display:none;font-weight:700}
+.mbt.on{background:linear-gradient(135deg,var(--g),var(--b));color:#000!important;
+  box-shadow:0 4px 12px rgba(0,255,157,.12);transform:scale(1.06)}
+.mbt.on .ml{display:inline}
+.mbt.dev-tab.on{background:linear-gradient(135deg,var(--or),var(--pu))!important;
+  box-shadow:0 4px 12px rgba(255,140,0,.12)!important}
+
+/* PREVIEW PANE */
+#pv{flex:1;min-height:0;margin:0 10px;border-radius:var(--r);
+  border:1.5px solid var(--g);overflow:hidden;position:relative;
+  box-shadow:0 2px 5px rgba(0,0,0,.1);
+  background:radial-gradient(ellipse at 40% 30%,#000020,#000011)}
+.pvg{position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(rgba(0,255,157,.07) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,255,157,.07) 1px,transparent 1px);
+  background-size:18px 18px}
+.cn{position:absolute;width:55px;height:55px;pointer-events:none;z-index:3}
+.cn.tl{top:0;left:0;background:radial-gradient(circle at top left,rgba(0,255,157,.04),transparent 70%)}
+.cn.tr{top:0;right:0;background:radial-gradient(circle at top right,rgba(0,184,255,.04),transparent 70%)}
+.cn.bl{bottom:0;left:0;background:radial-gradient(circle at bottom left,rgba(255,0,128,.02),transparent 70%)}
+.cn.br{bottom:0;right:0;background:radial-gradient(circle at bottom right,rgba(0,255,209,.02),transparent 70%)}
+.pvs{position:absolute;top:9px;left:10px;right:10px;display:flex;justify-content:space-between;z-index:5}
+.bdg{display:flex;align-items:center;gap:4px;padding:3px 10px;
+  background:rgba(0,0,0,.68);border-radius:8px;border:1px solid rgba(0,255,157,.28);
+  font-family:'Orbitron',monospace;font-size:clamp(6px,1.1vw,8px);color:var(--g);letter-spacing:2px}
+.bdg.bl2{border-color:rgba(0,184,255,.28);color:var(--b)}
+.ld{width:5px;height:5px;border-radius:50%;background:var(--g);animation:blink 1s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.12}}
+#lov{display:none;position:absolute;inset:0;z-index:30;background:rgba(0,0,0,.76);
+  flex-direction:column;align-items:center;justify-content:center;gap:14px}
+#lov.on{display:flex}
+.spn{width:42px;height:42px;border:2px solid rgba(0,255,157,.18);
+  border-top-color:var(--g);border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+#lovTxt{color:var(--g);font-size:var(--sm)}
+
+/* MODE VIEWS */
+.mv{display:none;position:absolute;inset:0;z-index:2;
+  flex-direction:column;align-items:center;justify-content:center;
+  padding:42px 14px 14px;animation:fu .4s ease;overflow-y:auto;
+  scrollbar-width:thin;scrollbar-color:rgba(0,255,157,.18) transparent}
+.mv::-webkit-scrollbar{width:3px}
+.mv::-webkit-scrollbar-thumb{background:rgba(0,255,157,.3);border-radius:3px}
+.mv.on{display:flex}
+@keyframes fu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+.bico{font-size:clamp(46px,9vw,72px);animation:flt 3s infinite ease-in-out}
+@keyframes flt{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.ttl{font-size:var(--lg);font-weight:700;color:#fff;margin-top:12px;text-align:center}
+.sub{font-size:var(--sm);color:var(--dim);margin-top:6px;text-align:center;max-width:85%;
+  animation:shm 2.5s infinite}
+@keyframes shm{0%,100%{color:rgba(255,255,255,.33)}50%{color:rgba(0,255,157,.55)}}
+.srow{display:flex;gap:10px;margin-top:16px}
+.sc{padding:9px 16px;border-radius:12px;border:1px solid rgba(0,255,157,.38);
+  background:rgba(0,255,157,.06);cursor:default;transition:all .3s;text-align:center}
+.sc:hover{transform:scale(1.08);box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.sv{font-size:var(--xl);font-weight:700;color:var(--g);font-family:'Orbitron',monospace}
+.sl{font-size:var(--xs);color:var(--dim)}
+
+/* SYMBOLS */
+.sym-sec{width:100%;max-width:560px}
+.sym-tabs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:9px;justify-content:center}
+.sym-tab{padding:3px 11px;border-radius:14px;border:1px solid rgba(0,255,157,.2);
+  background:var(--c1);color:var(--dim);font-size:var(--xs);cursor:pointer;transition:all .2s}
+.sym-tab.on{background:linear-gradient(135deg,var(--g),var(--b));color:#000;font-weight:700;border-color:transparent}
+.sym-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(70px,1fr));
+  gap:7px;max-height:clamp(180px,40vh,320px);overflow-y:auto;padding:3px;
+  scrollbar-width:thin;scrollbar-color:rgba(0,255,157,.18) transparent}
+.sym-c{border-radius:9px;border:1px solid;padding:8px 4px;
+  display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;transition:all .2s;text-align:center}
+.sym-c:hover,.sym-c:active{transform:scale(1.1)}
+.sym-c.flash{animation:cpf .35s ease}
+@keyframes cpf{0%,100%{opacity:1}50%{opacity:.2;transform:scale(1.18)}}
+.sym-s{font-size:clamp(16px,2.8vw,22px);font-family:'JetBrains Mono',monospace;font-weight:700}
+.sym-n{font-size:clamp(7px,1.2vw,9px);color:var(--dim)}
+
+/* MAP */
+#mapWrap{position:absolute;inset:0;z-index:2}
+#mapEl{width:100%;height:100%}
+.leaflet-container{background:#000011}
+.map-ov{position:absolute;bottom:14px;right:14px;z-index:1000;
+  background:rgba(0,0,0,.78);border:1px solid rgba(0,255,157,.28);
+  border-radius:10px;padding:8px 12px;font-family:'Orbitron',monospace;
+  font-size:var(--xs);color:var(--g);line-height:1.8;backdrop-filter:blur(8px)}
+.map-loc-btn{position:absolute;top:14px;right:14px;z-index:1000;
+  background:rgba(0,0,0,.78);border:1px solid rgba(0,184,255,.4);
+  border-radius:10px;padding:8px 12px;font-size:var(--sm);color:var(--b);
+  cursor:pointer;font-family:'Cairo',sans-serif}
+.map-loc-btn:hover{background:rgba(0,184,255,.15)}
+
+/* CHART */
+.ch-sec{width:100%;max-width:500px;margin-top:12px}
+.ch-t{font-size:var(--md);font-weight:700;color:#fff;text-align:center;margin-bottom:8px}
+#chartC{width:100%;display:block;border-radius:9px}
+.mets{display:flex;justify-content:space-around;margin-top:10px}
+.met{text-align:center}
+.mv2{font-size:var(--md);font-weight:700}
+.ml2{font-size:var(--xs);color:var(--dim);margin-top:2px}
+
+/* AI MODE */
+.ai-orb{width:clamp(65px,12vw,92px);height:clamp(65px,12vw,92px);border-radius:50%;
+  background:radial-gradient(circle,var(--g),var(--b));
+  display:flex;align-items:center;justify-content:center;font-size:clamp(28px,5.5vw,44px);
+  animation:aio 2s infinite ease-in-out;
+  box-shadow:0 2px 6px rgba(0,0,0,.15)}
+@keyframes aio{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+.ai-txt{font-size:var(--md);font-weight:700;overflow:hidden;white-space:nowrap;
+  border-right:2px solid var(--g);margin-top:14px;min-height:1.5em}
+.ai-st{display:flex;align-items:center;gap:7px;margin-top:12px;padding:6px 18px;
+  border-radius:22px;border:1px solid rgba(0,255,157,.28);background:rgba(0,255,157,.07);
+  font-size:var(--sm);color:var(--g);cursor:pointer;transition:all .2s}
+.ai-st:hover{background:rgba(0,255,157,.15)}
+
+/* CHAT — expanded for math/equations */
+#chscr{width:100%;flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:8px;
+  padding:40px 12px 10px;scrollbar-width:thin;scrollbar-color:rgba(0,255,157,.18) transparent}
+#chscr::-webkit-scrollbar{width:3px}
+#chscr::-webkit-scrollbar-thumb{background:rgba(0,255,157,.3);border-radius:3px}
+.bub{max-width:92%;padding:10px 14px;border-radius:14px;font-size:var(--sm);line-height:1.7;
+  animation:bi .3s ease;direction:rtl;text-align:right;white-space:pre-wrap;word-break:break-word}
+@keyframes bi{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+.b-u{align-self:flex-end;
+  background:linear-gradient(135deg,rgba(0,255,157,.88),rgba(0,184,255,.76));
+  color:#000;font-weight:700;border-radius:14px 14px 4px 14px}
+.b-a{align-self:flex-start;background:var(--c3);color:rgba(255,255,255,.88);
+  border:1px solid rgba(255,255,255,.07);border-radius:14px 14px 14px 4px}
+.b-e{border-color:rgba(255,68,68,.35)!important;background:rgba(255,68,68,.07)!important;
+  color:rgba(255,140,140,.9)!important}
+.bub-acts{display:flex;gap:4px;margin-top:4px;flex-wrap:wrap}
+.bact{padding:3px 9px;border-radius:7px;font-size:var(--xs);cursor:pointer;
+  border:1px solid;transition:all .2s;font-family:'Cairo',sans-serif}
+.bact.cp-btn{border-color:rgba(0,255,157,.22);background:rgba(0,255,157,.07);color:var(--g)}
+.bact.tts-btn{border-color:rgba(0,184,255,.22);background:rgba(0,184,255,.07);color:var(--b)}
+.bact.cp-btn:hover{background:rgba(0,255,157,.18);border-color:var(--g)}
+.bact.tts-btn:hover{background:rgba(0,184,255,.18);border-color:var(--b)}
+.bact.prv-btn{border-color:rgba(170,0,255,.35);background:rgba(170,0,255,.1);color:#cc66ff}
+.bact.prv-btn:hover{background:rgba(170,0,255,.22);border-color:#aa00ff}
+.ty{display:flex;align-items:center;gap:4px;padding:10px 12px;background:var(--c3);
+  border-radius:14px 14px 14px 4px;align-self:flex-start;border:1px solid rgba(255,255,255,.06)}
+.ty span{width:6px;height:6px;background:var(--g);border-radius:50%;animation:td 1.2s infinite}
+.ty span:nth-child(2){animation-delay:.22s}
+.ty span:nth-child(3){animation-delay:.44s}
+@keyframes td{0%,80%,100%{transform:scale(.65);opacity:.3}40%{transform:scale(1.2);opacity:1}}
+.ch-em{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--dim)}
+.ce-i{font-size:clamp(36px,7vw,52px);opacity:.26}
+
+/* CONSOLE */
+#cv{font-family:'JetBrains Mono',monospace;font-size:clamp(9px,1.6vw,11px);color:var(--g);
+  direction:ltr;text-align:left;padding:40px 12px 8px;width:100%;
+  display:flex;flex-direction:column;overflow-y:auto;align-items:flex-start;
+  scrollbar-width:thin;scrollbar-color:rgba(0,255,157,.18) transparent}
+#cv::-webkit-scrollbar{width:3px}
+#cv::-webkit-scrollbar-thumb{background:rgba(0,255,157,.3);border-radius:3px}
+.ll{padding:2px 0;border-bottom:1px solid rgba(0,255,157,.04);word-break:break-all;line-height:1.65}
+.li{color:var(--g)}.lw{color:var(--ye)}.le{color:var(--rd)}.lc{color:var(--b)}.ls{color:var(--pu)}
+.ci-row{display:flex;align-items:center;gap:7px;margin-top:8px;
+  border-top:1px solid rgba(0,255,157,.15);padding-top:7px;width:100%;flex-shrink:0}
+.ci-p{color:var(--g);font-size:var(--sm);white-space:nowrap}
+.ci-f{flex:1;background:none;border:none;outline:none;color:var(--g);
+  font-family:'JetBrains Mono',monospace;font-size:var(--sm);caret-color:var(--g)}
+
+/* DEVELOPER MODE (kept) */
+#devPanel{position:absolute;inset:0;z-index:2;display:none;flex-direction:column}
+#devPanel.on{display:flex}
+#devHdr{flex-shrink:0;display:flex;align-items:center;gap:11px;
+  padding:10px 14px;
+  background:linear-gradient(135deg,rgba(255,140,0,.12),rgba(170,0,255,.08));
+  border-bottom:1px solid rgba(255,140,0,.22)}
+#devAv{width:clamp(40px,7vw,54px);height:clamp(40px,7vw,54px);border-radius:50%;
+  background:linear-gradient(135deg,var(--or),var(--pu));
+  display:flex;align-items:center;justify-content:center;
+  font-size:clamp(18px,3.5vw,26px);flex-shrink:0}
+#devNm{font-family:'Orbitron',monospace;font-size:clamp(11px,2vw,15px);
+  font-weight:900;color:var(--or);letter-spacing:1.5px}
+#devRl{font-size:var(--xs);color:var(--dim);margin-top:2px}
+#devBdg{display:flex;gap:5px;margin-top:5px;flex-wrap:wrap}
+.dbg{font-size:var(--xs);padding:2px 8px;border-radius:10px;
+  font-weight:700;font-family:'JetBrains Mono',monospace}
+.dbg.g{background:rgba(0,255,157,.16);color:var(--g)}
+.dbg.b{background:rgba(0,184,255,.16);color:var(--b)}
+.dbg.o{background:rgba(255,140,0,.16);color:var(--or)}
+#devTabs{flex-shrink:0;display:flex;gap:4px;padding:7px 10px;
+  background:rgba(0,0,0,.4);border-bottom:1px solid rgba(255,140,0,.12);
+  overflow-x:auto;scrollbar-width:none}
+.dtb{padding:5px 13px;border-radius:18px;border:1px solid rgba(255,140,0,.18);
+  background:rgba(255,140,0,.04);color:rgba(255,255,255,.45);
+  font-size:var(--xs);font-family:'Cairo',sans-serif;cursor:pointer;white-space:nowrap;transition:all .2s}
+.dtb.on{background:linear-gradient(135deg,var(--or),var(--pu));color:#fff;border-color:transparent;font-weight:700}
+.dpane{display:none;flex:1;flex-direction:column;min-height:0;overflow:hidden}
+.dpane.on{display:flex}
+#edBar{flex-shrink:0;display:flex;align-items:center;gap:4px;
+  padding:5px 9px;background:rgba(0,0,0,.5);
+  border-bottom:1px solid rgba(255,140,0,.12);overflow-x:auto;scrollbar-width:none}
+#langSel{background:var(--c2);border:1px solid rgba(255,140,0,.28);color:var(--or);
+  border-radius:7px;padding:3px 7px;font-size:var(--xs);outline:none;cursor:pointer;flex-shrink:0}
+#fnamIn{background:var(--c2);border:1px solid rgba(0,184,255,.25);color:var(--b);
+  border-radius:7px;padding:3px 9px;font-size:var(--xs);width:130px;outline:none;
+  font-family:'JetBrains Mono',monospace;flex-shrink:0}
+.eb{padding:3px 9px;border-radius:7px;border:1px solid rgba(0,255,157,.22);
+  background:rgba(0,255,157,.06);color:var(--g);font-size:var(--xs);
+  cursor:pointer;white-space:nowrap;transition:all .18s;flex-shrink:0}
+.eb:hover{background:rgba(0,255,157,.18);border-color:var(--g)}
+.eb.ai{border-color:rgba(0,184,255,.25);background:rgba(0,184,255,.06);color:var(--b)}
+#edArea{flex:1;min-height:0;position:relative;display:flex;flex-direction:column}
+#codeIn{flex:1;width:100%;background:#050518;border:none;outline:none;resize:none;
+  color:#e2e2e2;font-family:'JetBrains Mono',monospace;
+  font-size:clamp(10px,1.7vw,12px);line-height:1.72;padding:12px;
+  tab-size:2;caret-color:var(--g);direction:ltr;text-align:left;unicode-bidi:plaintext}
+#outWrap{flex-shrink:0;max-height:120px;border-top:1px solid rgba(0,255,157,.12);
+  background:rgba(0,0,0,.55);display:flex;flex-direction:column}
+#outLbl{font-family:'JetBrains Mono',monospace;font-size:var(--xs);color:var(--g);
+  padding:3px 10px;border-bottom:1px solid rgba(0,255,157,.08)}
+#outCnt{font-family:'JetBrains Mono',monospace;font-size:var(--xs);
+  color:rgba(255,255,255,.68);padding:6px 10px;overflow-y:auto;
+  max-height:88px;white-space:pre-wrap;line-height:1.55}
+#aiDevChat{display:flex;flex-direction:column;height:100%}
+#aiDevMsgs{flex:1;overflow-y:auto;padding:10px;display:flex;flex-direction:column;gap:9px}
+.devWelc{text-align:center;padding:16px;background:rgba(255,140,0,.04);
+  border-radius:12px;border:1px solid rgba(255,140,0,.14)}
+.devSugg{display:inline-block;padding:5px 11px;border-radius:14px;
+  border:1px solid rgba(255,140,0,.22);background:rgba(255,140,0,.06);
+  color:rgba(255,200,120,.75);font-size:var(--xs);cursor:pointer;
+  margin:3px;transition:all .18s;font-family:'Cairo',sans-serif}
+.devMsg{max-width:92%;border-radius:12px;padding:9px 13px;
+  font-size:var(--sm);line-height:1.65;animation:bi .3s ease}
+.devMsg.u{align-self:flex-end;
+  background:linear-gradient(135deg,rgba(255,140,0,.78),rgba(170,0,255,.65));
+  color:#fff;font-weight:700;border-radius:12px 12px 4px 12px;direction:rtl;text-align:right}
+.devMsg.a{align-self:flex-start;background:var(--c2);color:rgba(255,255,255,.88);
+  border:1px solid rgba(255,140,0,.14);border-radius:12px 12px 12px 4px;
+  white-space:pre-wrap;word-break:break-word;direction:rtl;text-align:right}
+#aiDevIn{flex-shrink:0;display:flex;gap:7px;padding:7px 9px;
+  border-top:1px solid rgba(255,140,0,.12);background:rgba(0,0,0,.4)}
+#devIn{flex:1;background:var(--c2);border:1px solid rgba(255,140,0,.22);border-radius:9px;
+  padding:7px 12px;color:#fff;font-size:var(--sm);font-family:'Cairo',sans-serif;
+  resize:none;outline:none;direction:rtl;text-align:right;max-height:80px}
+#devSndBtn{padding:7px 14px;border-radius:9px;border:none;
+  background:linear-gradient(135deg,var(--or),var(--pu));
+  color:#fff;font-weight:700;font-size:var(--sm);font-family:'Cairo',sans-serif;cursor:pointer}
+
+/* INPUT PANEL — expanded for equations */
+#ip{flex-shrink:0;background:linear-gradient(to bottom,rgba(0,0,0,.9),#000011);
+  border-top:1px solid rgba(0,255,157,.06);
+  padding:6px 10px 8px}
+#ir{display:flex;align-items:flex-end;gap:6px}
+.cb2{flex-shrink:0;width:clamp(36px,6vw,46px);height:clamp(36px,6vw,46px);
+  border-radius:50%;border:none;display:flex;align-items:center;justify-content:center;
+  font-size:clamp(14px,2.5vw,18px);cursor:pointer;transition:all .22s}
+.cb2:hover,.cb2:active{transform:scale(1.12)}
+.cba{background:linear-gradient(135deg,var(--g),var(--b));box-shadow:0 3px 8px rgba(0,255,157,.1)}
+.cbm{background:linear-gradient(135deg,var(--pk),var(--or));box-shadow:0 3px 8px rgba(255,0,128,.08)}
+.cbm.on{animation:mg .5s infinite alternate}
+@keyframes mg{from{box-shadow:0 0 4px rgba(255,0,128,.1)}to{box-shadow:0 0 5px rgba(255,0,128,.1)}}
+#iw{flex:1;min-height:clamp(48px,7vh,64px);max-height:140px;background:var(--c1);border-radius:18px;
+  border:1px solid rgba(0,255,157,.2);display:flex;align-items:flex-end;
+  padding:6px 8px 6px 10px;transition:border-color .18s,box-shadow .18s}
+#iw.on{border-color:var(--g);box-shadow:0 0 5px rgba(0,255,157,.06)}
+#mi{flex:1;background:none;border:none;outline:none;color:#fff;
+  font-family:'Cairo',sans-serif;font-size:var(--sm);text-align:right;direction:rtl;
+  resize:none;min-height:36px;max-height:120px;line-height:1.5;padding:4px 0}
+#mi::placeholder{color:rgba(255,255,255,.22);font-size:var(--xs)}
+#sb{flex-shrink:0;width:40px;height:40px;border-radius:50%;border:none;
+  background:linear-gradient(135deg,var(--g),var(--b));
+  display:flex;align-items:center;justify-content:center;font-size:17px;color:#000;font-weight:700;
+  cursor:pointer;box-shadow:0 2px 12px rgba(0,255,157,.25);margin-bottom:2px}
+#sb:hover{transform:scale(1.14)}
+#aidot{position:absolute;z-index:20;right:14px;
+  bottom:clamp(90px,14vh,120px);width:16px;height:16px;
+  border-radius:50%;background:var(--g);
+  box-shadow:0 0 5px rgba(0,255,157,.08);animation:aip 2s infinite ease-in-out}
+@keyframes aip{0%,100%{transform:scale(.8);opacity:.72}50%{transform:scale(1.35);opacity:1}}
+
+/* DIALOGS */
+.dov{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.84);
+  align-items:center;justify-content:center;padding:18px}
+.dov.on{display:flex}
+.dlg{background:var(--c1);border-radius:18px;padding:22px;
+  width:100%;max-width:400px;border:1px solid rgba(0,255,157,.3);
+  box-shadow:0 0 8px rgba(0,255,157,.06);max-height:90vh;overflow-y:auto}
+.dt{font-size:var(--md);font-weight:700;color:var(--g);margin-bottom:10px}
+.ds{font-size:var(--xs);color:var(--dim);margin-bottom:9px}
+.din{width:100%;background:var(--c2);border:1px solid rgba(0,255,157,.25);
+  border-radius:9px;padding:10px 14px;color:#fff;font-size:var(--sm);outline:none;
+  font-family:'Cairo',sans-serif;text-align:right;direction:rtl;margin-bottom:7px}
+.din:focus{border-color:var(--g)}
+.ks{margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.06)}
+.kl{font-size:var(--xs);color:var(--dim);margin-bottom:5px}
+.ks-st{display:flex;align-items:center;gap:6px;padding:8px 10px;
+  border-radius:9px;border:1px solid rgba(0,255,157,.15);background:rgba(0,255,157,.05);
+  font-size:var(--xs);line-height:1.7;flex-wrap:wrap}
+.dr{display:flex;gap:7px;margin-top:12px;justify-content:flex-end;flex-wrap:wrap}
+.db{padding:8px 16px;border-radius:9px;border:none;cursor:pointer;
+  font-size:var(--sm);font-family:'Cairo',sans-serif;font-weight:700;transition:all .18s}
+.dc{background:rgba(255,255,255,.09);color:rgba(255,255,255,.55)}
+.dok{background:var(--g);color:#000}
+.drd{background:var(--rd);color:#fff}
+.mdl-g{display:flex;flex-direction:column;gap:7px;margin-top:9px}
+.mdl-i{display:flex;align-items:center;gap:9px;padding:11px;border-radius:9px;
+  border:1px solid rgba(0,255,157,.16);background:var(--c2);cursor:pointer;transition:all .18s}
+.mdl-i:hover{border-color:var(--g);background:rgba(0,255,157,.06)}
+.mdl-i.on{border-color:var(--g);background:rgba(0,255,157,.1)}
+.mdl-ico{font-size:clamp(17px,3vw,22px)}
+.mdl-nm{font-size:var(--sm);font-weight:700;color:#fff}
+.mdl-ds{font-size:var(--xs);color:var(--dim);margin-top:2px}
+.mfree{background:rgba(0,255,157,.16);color:var(--g);padding:1px 7px;border-radius:9px;font-size:var(--xs);font-weight:700}
+
+/* TOAST */
+#tst{position:fixed;bottom:clamp(13px,2.5vh,20px);left:50%;transform:translateX(-50%);
+  background:var(--c1);border:1px solid var(--g);border-radius:28px;
+  padding:7px clamp(16px,3.5vw,26px);font-size:var(--sm);color:var(--g);
+  z-index:400;opacity:0;transition:opacity .28s;white-space:nowrap;pointer-events:none}
+#tst.on{opacity:1}
+.cf{position:fixed;pointer-events:none;z-index:999;animation:cf2 2s ease-in forwards}
+@keyframes cf2{0%{transform:translateY(-10px) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+
+/* LIGHT THEME */
+html.light{
+  --bg:#f0f4f8;--c1:#ffffff;--c2:#e8eef5;--c3:#dce6f0;
+  --dim:rgba(0,0,0,.45);
+  --tx:rgba(0,0,0,.88);
+  --tx2:rgba(0,0,0,.65);
+  --g:#00885a;--b:#0077aa;--pk:#c40060;--or:#d46b00;
+  --pu:#7a00cc;--tl:#008877;--ye:#b89a00;--rd:#cc2222;
+}
+html.light body{color:var(--tx);background:var(--bg)}
+html.light .bub.b-u{color:#000}
+html.light .bub.b-a{color:var(--tx);background:var(--c3);border-color:rgba(0,0,0,.08)}
+html.light #ab{background:linear-gradient(135deg,#e8eef5,#d0dce8 50%,#e8eef5);border-bottom-color:rgba(0,136,90,.2)}
+html.light .abt{color:rgba(0,0,0,.65);background:rgba(0,136,90,.08);border-color:rgba(0,136,90,.2)}
+html.light .mbt{color:rgba(0,0,0,.4)}
+html.light .mbt.on{color:#fff!important}
+html.light #pv{background:radial-gradient(ellipse at 40% 30%,#e8f0f8,#f0f4f8);border-color:var(--g)}
+html.light #ip{background:linear-gradient(to bottom,rgba(255,255,255,.95),#f0f4f8);border-top-color:rgba(0,0,0,.06)}
+html.light #iw{background:var(--c1);border-color:rgba(0,136,90,.25)}
+html.light #mi{color:var(--tx)}
+html.light #mi::placeholder{color:rgba(0,0,0,.35)}
+html.light .dlg{background:var(--c1);border-color:rgba(0,136,90,.3)}
+html.light .din{background:var(--c2);color:var(--tx);border-color:rgba(0,136,90,.25)}
+html.light .bdg{background:rgba(255,255,255,.9);color:var(--g)}
+html.light .leaflet-container{background:#e8eef5}
+html.light #tst{background:var(--c1);color:var(--g)}
+html.light .ttl,.st1,.abn{color:var(--tx)!important}
+html.light .sub,.sl,.mdl-ds,.ds{color:var(--dim)}
+html.light #codeIn{background:#f8fafc;color:#1a1a2e}
+html.light #cv,.ll{color:var(--g)}
+html.light .devMsg.a{background:var(--c2);color:var(--tx)}
+
+
+/* Model strip in chat input area */
+#modelStrip{
+  display:flex;flex-wrap:wrap;gap:6px;padding:6px 10px 4px;
+  justify-content:flex-start;align-items:center;
+  max-height:72px;overflow-y:auto;
+  border-bottom:1px solid rgba(0,255,157,.08);
+  scrollbar-width:thin;
+}
+#modelStrip .ms-lbl{
+  font-size:11px;color:var(--dim);margin-left:4px;white-space:nowrap;
+}
+#modelStrip .ms-chip{
+  padding:4px 10px;border-radius:14px;font-size:12px;cursor:pointer;
+  border:1px solid rgba(0,255,157,.25);background:rgba(0,255,157,.06);
+  color:rgba(255,255,255,.75);transition:all .2s;white-space:nowrap;
+  font-family:Cairo,sans-serif;
+}
+#modelStrip .ms-chip:hover{border-color:var(--g);background:rgba(0,255,157,.12);color:#fff}
+#modelStrip .ms-chip.on{
+  background:linear-gradient(135deg,var(--g),var(--b));
+  color:#000;font-weight:700;border-color:transparent;
+}
+html.light #modelStrip .ms-chip{color:rgba(0,0,0,.7);background:rgba(0,136,90,.08)}
+html.light #modelStrip .ms-chip.on{color:#fff}
+
+
+.ty-dots{letter-spacing:2px;animation:tyPulse 1s infinite ease-in-out}
+@keyframes tyPulse{0%,100%{opacity:.35}50%{opacity:1}}
+.ll{font-size:12px;line-height:1.6;padding:2px 0;word-break:break-word;direction:ltr;text-align:left}
+</style>
+</head>
+<body>
+<canvas id="bgC"></canvas>
+<div class="grd"></div>
+<div id="sln"></div>
+
+<!-- SPLASH -->
+<div id="spl">
+  <div class="sg"></div>
+  <div class="sorb">🌐</div>
+  <div class="st1">NEXUS-INTERNATIONAL</div>
+  <div class="st2">SCIENTIFIC AI PLATFORM v6.0 — FREE MODELS</div>
+  <div class="sbar"><div class="sfil" id="spf"></div></div>
+  <div class="spct" id="spp">تهيئة الأنظمة... 0%</div>
+  <div class="sdev">✦ ROOT DEVELOPER: NIDAL WATFA ✦</div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <div id="ab">
+    <div class="aborg">🌐</div>
+    <div class="abbrand">
+      <span class="abn">NEXUS-INTERNATIONAL</span>
+      <span class="aba">| NIDAL WATFA — ROOT v6 FREE</span>
+    </div>
+    <div class="asep"></div>
+    <div class="abg2">
+      <div class="abt" onclick="showD('mdlD')">🤖 النماذج</div>
+      <div class="abt key-btn" onclick="showD('apiD')" id="keyBadge">
+        <span class="key-dot no" id="keyDot"></span>
+        <span id="keyLabel">🔑 API</span>
+      </div>
+    </div>
+    <div class="asep"></div>
+    <div class="abg2">
+      <div class="abt" onclick="goTab('maps')">🌍 خرائط</div>
+      <div class="abt" onclick="goTab('symbols')">∑ رموز</div>
+    </div>
+    <div class="asep"></div>
+    <div class="abg2">
+      <div class="abt" onclick="saveSession()">💾 حفظ</div>
+      <div class="abt" onclick="exportHTML()">📦 HTML</div>
+      <div class="abt shr-btn" id="shrBtn" onclick="toggleShareMenu(event)">📤 مشاركة ▾</div>
+    </div>
+    <div class="asep"></div>
+    <div class="abg2">
+      <div class="abt" onclick="goTab('console')">⚙️ Console</div>
+      <div class="abt dev-btn" onclick="goTab('devmode')">👑 Developer</div>
+      <div class="abt" id="themeBtn" onclick="toggleTheme()" title="وضع فاتح/مظلم">🌙</div>
+      <div class="abt red" onclick="clearAll()">🗑️ مسح</div>
+    </div>
+  </div>
+
+  <div id="mb">
+    <button class="mbt on" data-m="explore" onclick="setM(this)"><span class="mi">🔭</span><span class="ml">استكشاف</span></button>
+    <button class="mbt" data-m="symbols" onclick="setM(this)"><span class="mi">∑</span><span class="ml">رموز</span></button>
+    <button class="mbt" data-m="maps" onclick="setM(this)"><span class="mi">🌍</span><span class="ml">خرائط</span></button>
+    <button class="mbt" data-m="data" onclick="setM(this)"><span class="mi">📊</span><span class="ml">بيانات</span></button>
+    <button class="mbt" data-m="ai" onclick="setM(this)"><span class="mi">🧠</span><span class="ml">AI</span></button>
+    <button class="mbt" data-m="chat" onclick="setM(this)"><span class="mi">💬</span><span class="ml">محادثة</span></button>
+    <button class="mbt" data-m="console" onclick="setM(this)"><span class="mi">⚙️</span><span class="ml">Console</span></button>
+    <button class="mbt dev-tab" data-m="devmode" onclick="setM(this)"><span class="mi">👑</span><span class="ml">Dev</span></button>
+  </div>
+
+  <div id="pv">
+    <div class="pvg"></div>
+    <div class="cn tl"></div><div class="cn tr"></div>
+    <div class="cn bl"></div><div class="cn br"></div>
+    <div class="pvs">
+      <div class="bdg"><div class="ld"></div>LIVE</div>
+      <div class="bdg bl2">ROOT: NIDAL WATFA</div>
+    </div>
+    <div id="lov"><div class="spn"></div><div id="lovTxt">جاري المعالجة...</div></div>
+
+    <!-- EXPLORE -->
+    <div class="mv on" id="mv-explore">
+      <div class="bico">🔭</div>
+      <div class="ttl">NEXUS-INTERNATIONAL v6</div>
+      <div class="sub">منصة علمية عالمية — نماذج مجانية — بواسطة نضال وطفة</div>
+      <div class="srow">
+        <div class="sc"><div class="sv">∞</div><div class="sl">رمز</div></div>
+        <div class="sc"><div class="sv">FREE</div><div class="sl">نماذج</div></div>
+        <div class="sc"><div class="sv">١٠٠٪</div><div class="sl">مجاني</div></div>
+      </div>
+    </div>
+
+    <!-- SYMBOLS -->
+    <div class="mv" id="mv-symbols" style="justify-content:flex-start">
+      <div class="sym-sec">
+        <div class="sym-tabs" id="symTabs"></div>
+        <div class="sym-grid" id="symGrid"></div>
+      </div>
+    </div>
+
+    <!-- MAPS — satellite-style free tiles + geolocation + draggable pin -->
+    <div id="mv-maps" style="display:none;position:absolute;inset:0;z-index:2">
+      <div id="mapWrap">
+        <div id="mapEl"></div>
+        <div class="map-loc-btn" onclick="locateMe()">📍 موقعي</div>
+        <div class="map-ov" id="mapInfo">📍 اضغط أو اسحب الدبوس — أو اضغط "موقعي"</div>
+      </div>
+    </div>
+
+    <!-- DATA — scientific charts + geometry -->
+    <div class="mv" id="mv-data" style="justify-content:flex-start;padding-top:48px">
+      <div class="ch-sec" style="max-width:560px;width:100%">
+        <div class="ch-t">📊 رسوم بيانية وهندسية علمية</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:10px">
+          <button class="eb" onclick="setChartType('line')" style="font-size:12px">خطي</button>
+          <button class="eb" onclick="setChartType('bar')" style="font-size:12px">أعمدة</button>
+          <button class="eb" onclick="setChartType('radar')" style="font-size:12px">رادار</button>
+          <button class="eb" onclick="setChartType('pie')" style="font-size:12px">دائري</button>
+          <button class="eb" onclick="setChartType('scatter')" style="font-size:12px">تشتت</button>
+          <button class="eb" onclick="drawGeometry('circle')" style="font-size:12px">⭕ دائرة</button>
+          <button class="eb" onclick="drawGeometry('triangle')" style="font-size:12px">△ مثلث</button>
+          <button class="eb" onclick="drawGeometry('arch')" style="font-size:12px">🏛 قوس معماري</button>
+          <button class="eb" onclick="drawGeometry('sine')" style="font-size:12px">∿ موجة</button>
+        </div>
+        <div style="position:relative;width:100%;min-height:220px;background:rgba(0,0,0,.25);border-radius:12px;border:1px solid rgba(0,255,157,.2);padding:8px">
+          <canvas id="chartC" style="width:100%!important;max-height:260px"></canvas>
+          <canvas id="geoC" style="display:none;width:100%;max-height:260px;border-radius:8px"></canvas>
+        </div>
+        <div class="mets" id="chartMets" style="margin-top:10px">
+          <div class="met"><div class="mv2" style="color:var(--g)" id="metMax">—</div><div class="ml2">الأقصى</div></div>
+          <div class="met"><div class="mv2" style="color:var(--b)" id="metAvg">—</div><div class="ml2">المتوسط</div></div>
+          <div class="met"><div class="mv2" style="color:var(--pk)" id="metMin">—</div><div class="ml2">الأدنى</div></div>
+        </div>
+        <div style="margin-top:10px;display:flex;gap:6px;width:100%">
+          <input id="chartDataIn" class="din" style="margin:0;flex:1;text-align:right" placeholder="بيانات: 12,45,30,80,55 أو معادلة مثل sin(x)"
+            onkeydown="if(event.key==='Enter')applyChartData()">
+          <button class="eb" onclick="applyChartData()" style="flex-shrink:0">📈 رسم</button>
+        </div>
+        <div style="display:flex;gap:8px;justify-content:center;margin-top:10px;flex-wrap:wrap">
+          <button class="eb" onclick="previewCurrentChart()" style="font-size:13px;border-color:rgba(170,0,255,.4);color:#cc66ff">🖥️ معاينة الرسم</button>
+          <button class="eb" onclick="goTab('chat')" style="font-size:13px">💬 اطلب رسماً من AI</button>
+        </div>
+        <div style="font-size:12px;color:var(--dim);text-align:center;margin-top:6px;line-height:1.5">
+          أدخل أرقاماً مفصولة بفواصل، أو معادلة مثل sin(x) — ثم 📈 رسم أو 🖥️ معاينة
+        </div>
+      </div>
+    </div>
+
+    <!-- AI -->
+    <div class="mv" id="mv-ai">
+      <div class="ai-orb">🧠</div>
+      <div class="ai-txt" id="aiTxt"></div>
+      <div style="font-size:var(--sm);color:var(--dim);margin-top:9px" id="mdInfo">OpenRouter Free — نشط</div>
+      <div class="ai-st" onclick="showD('apiD')" id="aiSt">
+        <span>🟢</span><span>AI جاهز — أضف مفتاح مجاني</span>
+      </div>
+    </div>
+
+    <!-- CHAT -->
+    <div class="mv" id="mv-chat" style="padding:0;justify-content:flex-start;align-items:stretch">
+      <div id="chscr">
+        <div class="ch-em" id="chEm">
+          <div class="ce-i">💬</div>
+          <div style="font-size:var(--sm)">ابدأ محادثتك العلمية</div>
+          <div style="font-size:var(--xs);margin-top:4px;text-align:center;color:var(--dim)">
+            🤖 نماذج مجانية — OpenRouter / Groq / Gemini
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONSOLE -->
+    <div class="mv" id="mv-console" style="padding:0;justify-content:flex-start;align-items:stretch">
+      <div id="cv">
+        <div id="logLines" style="width:100%"></div>
+        <div class="ci-row">
+          <span class="ci-p">NEXUS▶</span>
+          <input class="ci-f" id="cmdI" placeholder="help للمساعدة..."
+            onkeydown="if(event.key==='Enter'){runCmd(this.value);this.value=''}">
+        </div>
+      </div>
+    </div>
+
+    <!-- DEVELOPER MODE -->
+    <div id="devPanel">
+      <div id="devHdr">
+        <div id="devAv">👑</div>
+        <div>
+          <div id="devNm">NIDAL WATFA</div>
+          <div id="devRl">ROOT DEVELOPER — NEXUS-INTERNATIONAL FREE</div>
+          <div id="devBdg">
+            <span class="dbg g">FULL ACCESS</span>
+            <span class="dbg b">v6.0 FREE</span>
+            <span class="dbg o">SYRIA 🇸🇾</span>
+          </div>
+        </div>
+      </div>
+      <div id="devTabs">
+        <button class="dtb on" onclick="devTab('editor',this)">💻 محرر الكود</button>
+        <button class="dtb" onclick="devTab('aidev',this)">🤖 Claude مطور</button>
+      </div>
+      <div class="dpane on" id="dp-editor">
+        <div id="edBar">
+          <select id="langSel" onchange="updateEditorHint()">
+            <option>JavaScript</option><option>Python</option><option>HTML</option>
+            <option>CSS</option><option>Dart</option><option>C++</option>
+            <option>Java</option><option>SQL</option><option>Bash</option>
+          </select>
+          <input id="fnamIn" value="nexus_update.js">
+          <button class="eb" onclick="runCode()">▶ تشغيل</button>
+          <button class="eb" style="border-color:rgba(0,255,157,.4);color:var(--g)" onclick="previewCode()">🌐 معاينة</button>
+          <button class="eb" onclick="copyCode()">📋 نسخ</button>
+          <button class="eb" onclick="dlCode()">⬇️ حفظ</button>
+          <button class="eb ai" onclick="aiCompleteCode()">🤖 أكمل</button>
+          <button class="eb ai" onclick="aiExplainCode()">💡 اشرح</button>
+        </div>
+        <div id="edArea">
+          <textarea id="codeIn" spellcheck="false" dir="ltr"
+            placeholder="// اكتب الكود هنا أو اطلب من AI كتابته"></textarea>
+        </div>
+        <div id="outWrap">
+          <div id="outLbl">▶ المخرجات</div>
+          <div id="outCnt">جاهز...</div>
+        </div>
+      </div>
+      <div class="dpane" id="dp-aidev">
+        <div id="aiDevChat">
+          <div id="aiDevMsgs">
+            <div class="devWelc">
+              <div style="font-size:28px;margin-bottom:8px">👑</div>
+              <div style="color:var(--or);font-size:var(--md);font-weight:700">مرحباً سيدي نضال!</div>
+              <div style="color:var(--dim);font-size:var(--sm);margin-top:7px;line-height:1.7">
+                مطور شخصي لـ NEXUS باستخدام نماذج مجانية.<br>
+                اطلب أي كود أو تطوير.
+              </div>
+              <div style="margin-top:12px">
+                <div class="devSugg" onclick="devAsk('اكتب دالة JavaScript لحساب المشتقات والتكاملات')">📐 دالة المشتقات</div>
+                <div class="devSugg" onclick="devAsk('حلل التطبيق واقترح تحسينات')">🔍 تحليل التطبيق</div>
+              </div>
+            </div>
+          </div>
+          <div id="aiDevIn">
+            <textarea dir="auto" id="devIn" rows="2"
+              placeholder="اطلب أي كود أو تطوير..."
+              onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();devSend()}"></textarea>
+            <button id="devSndBtn" onclick="devSend()">⚡ أرسل</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INPUT + model selector always visible -->
+  <div id="ip">
+    <div id="modelStrip">
+      <span class="ms-lbl">🤖 النموذج:</span>
+      <!-- filled by buildModels -->
+    </div>
+    <div id="ir">
+      <button class="cb2 cba" onclick="document.getElementById('fileI').click()" title="إرسال ملف">📎</button>
+      <button class="cb2 cbm" id="micB" onclick="toggleMic()" title="صوت">🎤</button>
+      <input type="file" id="fileI" style="display:none" accept="image/*,.txt,.md,.csv,.json,.js,.py,.html,.css,.pdf" onchange="handleFile(this)">
+      <div id="iw">
+        <textarea id="mi" rows="2" placeholder="اكتب سؤالك العلمي أو المعادلة هنا... (يدعم الرياضيات والهندسة)"
+          onkeydown="if((event.key==='Enter'||event.keyCode===13)&&!event.shiftKey){event.preventDefault();if(typeof doSend==='function')doSend();}" oninput="onTyp(this)"></textarea>
+        <button id="sb" onclick="doSend()">➤</button>
+      </div>
+    </div>
+  </div>
+  <div id="aidot"></div>
+</div>
+
+<!-- SHARE DROPDOWN -->
+<div id="shrDrop">
+  <div class="shr-ttl">📤 خيارات المشاركة</div>
+  <div class="shr-item" onclick="shrNative()"><span class="shr-ico">📱</span><div><div class="shr-lbl">مشاركة عبر التطبيقات</div><div class="shr-sub">واتساب، تيليغرام...</div></div></div>
+  <div class="shr-item" onclick="exportHTML()"><span class="shr-ico">📦</span><div><div class="shr-lbl">تحميل كملف HTML</div><div class="shr-sub">نسخة كاملة</div></div></div>
+  <div class="shr-item" onclick="shrCopyLink()"><span class="shr-ico">🔗</span><div><div class="shr-lbl">نسخ رابط الصفحة</div></div></div>
+  <div class="shr-sep"></div>
+  <div class="shr-item" onclick="shrWhatsApp()"><span class="shr-ico">💬</span><div><div class="shr-lbl">واتساب</div></div></div>
+  <div class="shr-item" onclick="shrTelegram()"><span class="shr-ico">✈️</span><div><div class="shr-lbl">تيليغرام</div></div></div>
+  <div class="shr-item" onclick="shrEmail()"><span class="shr-ico">📧</span><div><div class="shr-lbl">البريد</div></div></div>
+</div>
+
+<!-- API KEYS DIALOG — only free providers -->
+<div class="dov" id="apiD" onclick="if(event.target===this)closeD('apiD')">
+  <div class="dlg">
+    <div class="dt">🔑 مفاتيح API المجانية فقط</div>
+    <div class="ds" style="color:rgba(0,255,157,.7)">✅ تُحفظ محلياً في المتصفح فقط — لا تُرسل لأي خادم</div>
+    <div class="ks">
+      <div class="kl">🌐 OpenRouter (مجاني — 50 طلب/يوم) — openrouter.ai/keys</div>
+      <input class="din" id="kOR" type="password" placeholder="sk-or-v1-...">
+    </div>
+    <div class="ks">
+      <div class="kl">⚡ Groq (مجاني سريع) — console.groq.com</div>
+      <input class="din" id="kGroq" type="password" placeholder="gsk_...">
+    </div>
+    <div class="ks">
+      <div class="kl">✨ Google Gemini (مجاني) — aistudio.google.com/app/apikey</div>
+      <input class="din" id="kGem" type="password" placeholder="AIzaSy...">
+    </div>
+    <div class="ks-st" id="keySt">🔵 أضف مفتاحاً مجانياً واحداً على الأقل</div>
+    <div style="font-size:var(--xs);color:rgba(0,255,157,.55);margin-top:7px;text-align:right;padding:6px 8px;
+      background:rgba(0,255,157,.04);border-radius:7px;border:1px solid rgba(0,255,157,.1)">
+      ⚠️ المفاتيح تُخزَّن فقط في localStorage على جهازك. لا تُصدَّر أبداً مع الملف.
+    </div>
+    <div class="dr">
+      <button class="db dc" onclick="closeD('apiD')">إلغاء</button>
+      <button class="db drd" onclick="clearKeys()">🗑️ مسح</button>
+      <button class="db dok" onclick="saveKeys()">💾 حفظ</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODELS DIALOG — free only -->
+<div class="dov" id="mdlD" onclick="if(event.target===this)closeD('mdlD')">
+  <div class="dlg">
+    <div class="dt">🤖 النماذج المجانية</div>
+    <div class="mdl-g" id="mdlList"></div>
+    <div class="dr"><button class="db dc" onclick="closeD('mdlD')">إغلاق</button></div>
+  </div>
+</div>
+
+
+  <!-- PREVIEW PANEL -->
+<div id="prevPanel" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:99999;background:#0a0a1a;flex-direction:column">
+  <div style="background:#050518;border-bottom:2px solid rgba(0,255,157,.25);padding:10px 14px;display:flex;align-items:center;gap:8px;direction:rtl;font-family:Cairo,sans-serif">
+    <span style="color:var(--g);font-weight:700;flex:1;font-size:14px" id="prevTitle">معاينة</span>
+    <button onclick="prevRefresh()" style="padding:6px 12px;border-radius:8px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.07);color:#fff;cursor:pointer;font-size:12px">🔄 تحديث</button>
+    <button onclick="prevDownload()" style="padding:6px 12px;border-radius:8px;border:1px solid rgba(0,255,157,.3);background:rgba(0,255,157,.1);color:var(--g);cursor:pointer;font-size:12px">⬇️ حفظ</button>
+    <button onclick="closePreview()" style="padding:6px 12px;border-radius:8px;border:1px solid rgba(255,60,60,.4);background:rgba(255,60,60,.1);color:#ff6060;cursor:pointer;font-size:12px">✕ إغلاق</button>
+  </div>
+  <iframe id="prevIframe" style="flex:1;width:100%;border:none;background:#fff" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
+</div>
+
+<div id="tst"></div>
+
+<script>
+// ══════════════════════════════════════════════════════════
+//  NEXUS ENGINE v6 FREE  |  NIDAL WATFA  |  SECURE + FREE MODELS
+// ══════════════════════════════════════════════════════════
+const DEV={name:'NIDAL WATFA',role:'ROOT DEVELOPER',ver:'6.0.0-FREE',country:'Syria'};
+
+// ── State ─────────────────────────────────────────────────
+let KEYS={or:'',groq:'',gem:''}; // only free providers
+let MODEL='openrouter/free', LANG='ar';
+let busy=false, devBusy=false, micOn=false;
+let sessions=[], devHistory=[];
+let mapReady=false, mapInst=null, mapMarker=null, ttsVoice=null;
+const ERRORS=[];
+const STORAGE_KEY = 'nexus_keys_v6_free';
+
+// ── Auto language detection ───────────────────────────────
+(function detectLang(){
+  const nav = (navigator.language||'ar').toLowerCase();
+  if(nav.startsWith('ar')||nav.startsWith('he')){
+    document.documentElement.lang = nav.slice(0,2);
+    document.documentElement.dir = 'rtl';
+    LANG = nav.slice(0,2);
+  } else {
+    document.documentElement.lang = nav.slice(0,2)||'en';
+    document.documentElement.dir = 'ltr';
+    LANG = nav.slice(0,2)||'en';
+  }
+})();
+
+// ── Secure key persistence (local only, never export) ─────
+function persistKeys(k){
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(k)); }catch(e){}
+  try{ sessionStorage.setItem(STORAGE_KEY, JSON.stringify(k)); }catch(e){}
+  window._nexusKeysCache = k;
+}
+function loadPersistedKeys(){
+  try{
+    const s = localStorage.getItem(STORAGE_KEY);
+    if(s){ const k=JSON.parse(s); if(k && (k.or||k.groq||k.gem)) return k; }
+  }catch(e){}
+  try{
+    const s = sessionStorage.getItem(STORAGE_KEY);
+    if(s){ const k=JSON.parse(s); if(k && (k.or||k.groq||k.gem)) return k; }
+  }catch(e){}
+  if(window._nexusKeysCache) return window._nexusKeysCache;
+  return null;
+}
+function loadKeys(){
+  const k = loadPersistedKeys();
+  if(k){
+    KEYS.or = k.or||''; KEYS.groq = k.groq||''; KEYS.gem = k.gem||'';
+    cLog('info','✅ مفاتيح محملة محلياً');
+  }
+  updKeyBadge();
+  const elOR=document.getElementById('kOR'); if(elOR) elOR.value = KEYS.or;
+  const elG=document.getElementById('kGroq'); if(elG) elG.value = KEYS.groq;
+  const elGem=document.getElementById('kGem'); if(elGem) elGem.value = KEYS.gem;
+}
+function saveKeys(){
+  KEYS.or = (document.getElementById('kOR')?.value||'').trim();
+  KEYS.groq = (document.getElementById('kGroq')?.value||'').trim();
+  KEYS.gem = (document.getElementById('kGem')?.value||'').trim();
+  persistKeys(KEYS);
+  updKeyBadge();
+  closeD('apiD');
+  toast('✅ تم حفظ المفاتيح محلياً فقط');
+  cLog('info','مفاتيح محفوظة محلياً');
+}
+function clearKeys(){
+  if(!confirm('مسح جميع المفاتيح؟'))return;
+  KEYS={or:'',groq:'',gem:''};
+  window._nexusKeysCache=null;
+  ['kOR','kGroq','kGem'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+  try{localStorage.removeItem(STORAGE_KEY);}catch(e){}
+  try{sessionStorage.removeItem(STORAGE_KEY);}catch(e){}
+  updKeyBadge();
+  toast('تم مسح المفاتيح');
+}
+function updKeyBadge(){
+  const hasAny = KEYS.or||KEYS.groq||KEYS.gem;
+  const dot = document.getElementById('keyDot');
+  const lbl = document.getElementById('keyLabel');
+  if(dot) dot.className = 'key-dot ' + (hasAny ? 'ok' : 'no');
+  if(lbl){
+    if(KEYS.or) lbl.textContent = '🔑 OR ✅';
+    else if(KEYS.groq) lbl.textContent = '🔑 Groq ✅';
+    else if(KEYS.gem) lbl.textContent = '🔑 Gemini ✅';
+    else lbl.textContent = '🔑 API';
+  }
+  const st=document.getElementById('keySt');
+  if(st) st.innerHTML =
+    `OpenRouter: <span style="color:${KEYS.or?'var(--g)':'var(--rd)'}">${KEYS.or?'✅':'✗'}</span> &nbsp;
+     Groq: <span style="color:${KEYS.groq?'var(--g)':'var(--rd)'}">${KEYS.groq?'✅':'✗'}</span> &nbsp;
+     Gemini: <span style="color:${KEYS.gem?'var(--g)':'var(--rd)'}">${KEYS.gem?'✅':'✗'}</span>`;
+  const aiSt=document.getElementById('aiSt');
+  if(aiSt) aiSt.innerHTML = hasAny
+    ?`<span>🟢</span><span>AI نشط — ${KEYS.or?'OpenRouter':KEYS.groq?'Groq':'Gemini'}</span>`
+    :'<span>🔴</span><span>أضف مفتاحاً مجانياً من 🔑</span>';
+}
+
+// ── Share (no keys in export) ─────────────────────────────
+let shrMenuOpen = false;
+function toggleShareMenu(e){
+  e.stopPropagation();
+  const drop = document.getElementById('shrDrop');
+  const btn = document.getElementById('shrBtn');
+  shrMenuOpen = !shrMenuOpen;
+  if(shrMenuOpen){
+    const rect = btn.getBoundingClientRect();
+    drop.style.top = (rect.bottom + 6) + 'px';
+    drop.style.right = (window.innerWidth - rect.right) + 'px';
+    drop.style.left = 'auto';
+    drop.classList.add('on');
+  } else drop.classList.remove('on');
+}
+document.addEventListener('click', function(e){
+  if(shrMenuOpen && !document.getElementById('shrDrop').contains(e.target)){
+    document.getElementById('shrDrop').classList.remove('on');
+    shrMenuOpen = false;
+  }
+});
+function closeShrMenu(){ document.getElementById('shrDrop').classList.remove('on'); shrMenuOpen=false; }
+function shrNative(){
+  closeShrMenu();
+  if(navigator.share){
+    navigator.share({title:'NEXUS-INTERNATIONAL v6',text:'منصة علمية AI — '+DEV.name,url:location.href})
+      .then(()=>toast('✅ تمت المشاركة!')).catch(()=>{});
+  } else toast('⚠️ المتصفح لا يدعم المشاركة المباشرة');
+}
+function exportHTML(){
+  // NEVER include keys in exported HTML
+  let html = document.documentElement.outerHTML;
+  // strip any potential key values from the snapshot
+  html = html.replace(/window\._nexusKeysCache\s*=\s*\{[^}]*\}/g, 'window._nexusKeysCache = null');
+  html = html.replace(/localStorage\.setItem\s*\(\s*['"]nexus_keys[^)]+\)/g, '/* keys stripped */');
+  const blob = new Blob([html], {type:'text/html;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href=url; a.download='NEXUS_v6_FREE.html'; a.click();
+  URL.revokeObjectURL(url);
+  toast('📦 ملف HTML محفوظ بدون مفاتيح');
+}
+function shrCopyLink(){ closeShrMenu(); copyToClipboard(location.href, ()=>toast('✅ تم نسخ الرابط!')); }
+function shrWhatsApp(){
+  closeShrMenu();
+  const txt = encodeURIComponent('🌐 NEXUS-INTERNATIONAL v6 — منصة علمية AI\nبواسطة: '+DEV.name+'\n'+location.href);
+  window.open('https://wa.me/?text='+txt, '_blank');
+}
+function shrTelegram(){
+  closeShrMenu();
+  const txt = encodeURIComponent('🌐 NEXUS-INTERNATIONAL v6');
+  const url = encodeURIComponent(location.href);
+  window.open('https://t.me/share/url?url='+url+'&text='+txt, '_blank');
+}
+function shrEmail(){
+  closeShrMenu();
+  const sub = encodeURIComponent('NEXUS-INTERNATIONAL v6');
+  const body = encodeURIComponent('أشارك معك NEXUS v6\nبواسطة: '+DEV.name+'\n'+location.href);
+  window.open('mailto:?subject='+sub+'&body='+body);
+}
+
+// ── BG Stars ──────────────────────────────────────────────
+const bgC=document.getElementById('bgC'),bgX=bgC.getContext('2d');
+function rsz(){bgC.width=innerWidth;bgC.height=innerHeight}rsz();
+window.addEventListener('resize',rsz);
+const stars=Array.from({length:180},()=>({
+  x:Math.random(),y:Math.random(),r:Math.random()*1.4+.3,
+  a:Math.random(),sp:Math.random()*.0006+.0001,blue:Math.random()>.5}));
+(function loop(){
+  bgX.fillStyle='#000011';bgX.fillRect(0,0,bgC.width,bgC.height);
+  stars.forEach(s=>{s.a+=s.sp;if(s.a>1)s.a=0;
+    const al=Math.abs(Math.sin(s.a*Math.PI));
+    bgX.beginPath();bgX.arc(s.x*bgC.width,s.y*bgC.height,s.r,0,Math.PI*2);
+    bgX.fillStyle=s.blue?`rgba(0,184,255,${al*.7})`:`rgba(0,255,157,${al*.5})`;bgX.fill()});
+  requestAnimationFrame(loop)})();
+
+// ── Splash ─────────────────────────────────────────────────
+let pct=0;
+const spT=setInterval(()=>{
+  pct+=Math.random()*3+2;if(pct>=100){pct=100;clearInterval(spT);setTimeout(showApp,280)}
+  document.getElementById('spf').style.width=pct+'%';
+  document.getElementById('spp').textContent='تهيئة الأنظمة... '+Math.floor(pct)+'%';
+},52);
+function showApp(){
+  document.getElementById('spl').style.opacity='0';
+  setTimeout(()=>document.getElementById('spl').style.display='none',900);
+  document.getElementById('app').classList.add('on');
+  setTimeout(()=>{
+    drawChart();startAIType();confetti();
+    buildSymbols();buildModels();
+    loadKeys();initTTS();
+    cLog('info',`NEXUS v${DEV.ver} — ${DEV.name} | FREE MODELS ✓`);
+    cLog('info','الخرائط: Esri World Imagery + OSM ✓');
+    cLog('info','AI: OpenRouter Free / Groq / Gemini ✓');
+  },750);
+}
+
+// ── Mode Switching ─────────────────────────────────────────
+function setM(btn){
+  document.querySelectorAll('.mbt').forEach(b=>b.classList.remove('on'));
+  document.querySelectorAll('.mv').forEach(v=>v.classList.remove('on'));
+  document.getElementById('devPanel').classList.remove('on');
+  document.getElementById('mv-maps').style.display='none';
+  btn.classList.add('on');
+  const m=btn.dataset.m;
+  if(m==='maps'){
+    document.getElementById('mv-maps').style.display='block';
+    if(!mapReady)setTimeout(initMap,100);
+    else setTimeout(()=>mapInst?.invalidateSize(),200);
+  } else if(m==='devmode'){
+    document.getElementById('devPanel').classList.add('on');
+  } else {
+    document.getElementById('mv-'+m)?.classList.add('on');
+  }
+  if(m==='data')setTimeout(drawChart,60);
+  if(m==='console')document.getElementById('cmdI')?.focus();
+}
+function goTab(m){const b=document.querySelector(`[data-m="${m}"]`);if(b)setM(b)}
+function devTab(id,btn){
+  document.querySelectorAll('.dtb').forEach(b=>b.classList.remove('on'));
+  document.querySelectorAll('.dpane').forEach(p=>p.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('dp-'+id).classList.add('on');
+}
+
+// ── Map: satellite-style free tiles + geolocation + draggable pin ──
+function initMap(){
+  if(mapReady||!window.L)return;
+  mapReady=true;
+  mapInst=L.map('mapEl',{zoomControl:true,attributionControl:true}).setView([33.51,36.29],6);
+  // Esri World Imagery (satellite-like, commonly used free for demos)
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{
+    maxZoom:19,
+    attribution:'Tiles © Esri — Source: Esri, Maxar, Earthstar Geographics'
+  }).addTo(mapInst);
+  // Labels overlay
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',{
+    maxZoom:19, opacity:0.7
+  }).addTo(mapInst);
+
+  const icon=L.divIcon({
+    html:'<div style="width:18px;height:18px;border-radius:50%;background:var(--g);border:3px solid #fff;box-shadow:0 0 12px var(--g)"></div>',
+    iconSize:[18,18],iconAnchor:[9,9]
+  });
+  mapMarker = L.marker([33.51,36.29],{icon,draggable:true}).addTo(mapInst);
+  mapMarker.on('dragend', e=>{
+    const {lat,lng}=e.target.getLatLng();
+    document.getElementById('mapInfo').innerHTML=
+      `📍 خط العرض: <b>${lat.toFixed(5)}</b><br>📍 خط الطول: <b>${lng.toFixed(5)}</b><br><small>اسحب الدبوس للتحريك</small>`;
+  });
+  mapInst.on('click',e=>{
+    const {lat,lng}=e.latlng;
+    mapMarker.setLatLng([lat,lng]);
+    document.getElementById('mapInfo').innerHTML=
+      `📍 خط العرض: <b>${lat.toFixed(5)}</b><br>📍 خط الطول: <b>${lng.toFixed(5)}</b>`;
+  });
+  setTimeout(()=>mapInst.invalidateSize(),200);
+}
+function locateMe(){
+  if(!navigator.geolocation){ toast('❌ تحديد الموقع غير مدعوم'); return; }
+  toast('📍 جاري تحديد موقعك...');
+  navigator.geolocation.getCurrentPosition(pos=>{
+    const lat=pos.coords.latitude, lng=pos.coords.longitude;
+    if(mapInst){
+      mapInst.setView([lat,lng],15);
+      if(mapMarker) mapMarker.setLatLng([lat,lng]);
+      document.getElementById('mapInfo').innerHTML=
+        `📍 موقعك الحالي<br>خط العرض: <b>${lat.toFixed(5)}</b><br>خط الطول: <b>${lng.toFixed(5)}</b>`;
+      toast('✅ تم تحديد موقعك');
+    }
+  }, err=>{
+    toast('❌ تعذر تحديد الموقع: '+err.message);
+  },{enableHighAccuracy:true,timeout:10000});
+}
+
+// ── Symbols ────────────────────────────────────────────────
+const SYMS={
+  'رياضيات':[
+    {s:'α',n:'ألفا'},{s:'β',n:'بيتا'},{s:'γ',n:'غاما'},{s:'δ',n:'دلتا'},{s:'ε',n:'إبسيلون'},
+    {s:'θ',n:'ثيتا'},{s:'λ',n:'لامبدا'},{s:'μ',n:'ميو'},{s:'π',n:'باي'},{s:'σ',n:'سيغما'},
+    {s:'φ',n:'فاي'},{s:'ω',n:'أوميغا'},{s:'Σ',n:'مجموع'},{s:'∫',n:'تكامل'},{s:'∂',n:'جزئي'},
+    {s:'√',n:'جذر'},{s:'∇',n:'نابلا'},{s:'∞',n:'لانهاية'},{s:'∆',n:'دلتا كبير'},{s:'≈',n:'يقارب'},
+    {s:'≠',n:'لا يساوي'},{s:'≤',n:'أصغر/يساوي'},{s:'≥',n:'أكبر/يساوي'},{s:'∈',n:'ينتمي'},
+    {s:'∀',n:'لكل'},{s:'∃',n:'يوجد'},{s:'±',n:'±'},{s:'∏',n:'جداء'},
+  ],
+  'فيزياء':[
+    {s:'ℏ',n:'ثابت بلانك'},{s:'c',n:'سرعة الضوء'},{s:'G',n:'الجاذبية'},{s:'e',n:'شحنة e⁻'},
+    {s:'F',n:'قوة'},{s:'E',n:'طاقة'},{s:'ρ',n:'كثافة'},{s:'Ω',n:'أوم'},{s:'ψ',n:'دالة موجة'},
+    {s:'→',n:'ناقل'},{s:'∝',n:'يتناسب'},{s:'℃',n:'سيلزيوس'},{s:'λ',n:'طول موجة'},
+  ],
+  'كيمياء':[
+    {s:'⇌',n:'توازن'},{s:'→',n:'لاعكوس'},{s:'H',n:'هيدروجين'},{s:'O',n:'أوكسجين'},
+    {s:'C',n:'كربون'},{s:'N',n:'نيتروجين'},{s:'Na',n:'صوديوم'},{s:'Fe',n:'حديد'},
+    {s:'pH',n:'حموضة'},{s:'ΔH',n:'إنتالبي'},
+  ],
+  'هندسة':[
+    {s:'∠',n:'زاوية'},{s:'⊥',n:'عمودي'},{s:'∥',n:'موازٍ'},{s:'△',n:'مثلث'},{s:'□',n:'مربع'},
+    {s:'○',n:'دائرة'},{s:'∫∫',n:'مزدوج'},{s:'∇²',n:'لابلاسيان'},
+  ],
+  'فلك':[
+    {s:'☀',n:'الشمس'},{s:'☽',n:'القمر'},{s:'♁',n:'الأرض'},{s:'♂',n:'المريخ'},
+    {s:'♃',n:'المشتري'},{s:'AU',n:'وحدة فلكية'},{s:'ly',n:'سنة ضوئية'},{s:'★',n:'نجم'},
+  ]
+};
+const SCC={'رياضيات':'var(--g)','فيزياء':'var(--or)','كيمياء':'var(--b)','هندسة':'var(--pu)','فلك':'var(--tl)'};
+function buildSymbols(){
+  const cats=Object.keys(SYMS);
+  document.getElementById('symTabs').innerHTML=cats.map((c,i)=>
+    `<div class="sym-tab${i===0?' on':''}" onclick="showCat('${c}',this)">${c}</div>`).join('');
+  showCat(cats[0]);
+}
+function showCat(cat,btn){
+  document.querySelectorAll('.sym-tab').forEach(t=>t.classList.remove('on'));
+  (btn||document.querySelector('.sym-tab'))?.classList.add('on');
+  const c=SCC[cat]||'var(--g)';
+  document.getElementById('symGrid').innerHTML=(SYMS[cat]||[]).map(it=>{
+    const safe=it.s.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    return `<div class="sym-c" style="border-color:${c}44;background:${c}0F" onclick="cpSym('${safe}',this)">
+      <div class="sym-s" style="color:${c}">${it.s}</div>
+      <div class="sym-n">${it.n}</div></div>`;
+  }).join('');
+}
+function cpSym(s,el){
+  copyToClipboard(s,()=>{});
+  fIn(s+' ');el.classList.add('flash');
+  setTimeout(()=>el.classList.remove('flash'),380);
+  toast('نُسخ: '+s);
+}
+
+// ── Free Models only ───────────────────────────────────────
+const MODELS=[
+  {id:'openrouter/free',nm:'OpenRouter Free Router',ico:'🌐',ds:'يختار تلقائياً نموذجاً مجانياً',tier:'free',pv:'or',link:'https://openrouter.ai/openrouter/free'},
+  {id:'qwen/qwen3-8b:free',nm:'Qwen3 8B (free)',ico:'🔥',ds:'OpenRouter — قوي',tier:'free',pv:'or',link:'https://openrouter.ai/qwen/qwen3-8b:free'},
+  {id:'meta-llama/llama-3.3-70b-instruct:free',nm:'Llama 3.3 70B (free)',ico:'🦙',ds:'OpenRouter — Meta',tier:'free',pv:'or',link:'https://openrouter.ai/meta-llama/llama-3.3-70b-instruct:free'},
+  {id:'google/gemma-2-9b-it:free',nm:'Gemma 2 9B (free)',ico:'✨',ds:'OpenRouter — Google',tier:'free',pv:'or',link:'https://openrouter.ai/google/gemma-2-9b-it:free'},
+  {id:'llama-3.3-70b-versatile',nm:'Llama 3.3 70B Groq',ico:'⚡',ds:'Groq — أسرع استجابة',tier:'free',pv:'groq',link:'https://console.groq.com/docs/models'},
+  {id:'llama-3.1-8b-instant',nm:'Llama 3.1 8B Instant',ico:'🚀',ds:'Groq — فوري',tier:'free',pv:'groq',link:'https://console.groq.com/docs/models'},
+  {id:'gemini-2.5-flash',nm:'Gemini 2.5 Flash',ico:'💫',ds:'Google AI Studio — مجاني',tier:'free',pv:'gem',link:'https://aistudio.google.com/app/apikey'},
+  {id:'gemini-2.0-flash',nm:'Gemini 2.0 Flash',ico:'🌟',ds:'Google — مجاني',tier:'free',pv:'gem',link:'https://ai.google.dev/gemini-api/docs/models'},
+  {id:'gemini-2.5-flash-lite',nm:'Gemini 2.5 Flash-Lite',ico:'⚡',ds:'Google — خفيف وسريع',tier:'free',pv:'gem',link:'https://aistudio.google.com'},
+];
+function buildModels(){
+  try{
+    var list = document.getElementById('mdlList');
+    if(!list){ console.warn('mdlList missing'); return; }
+    if(!MODELS || !MODELS.length){ list.innerHTML='<div style="padding:12px;color:#f66">لا توجد نماذج</div>'; return; }
+    list.innerHTML = MODELS.map(function(m){
+      var on = (m.id===MODEL) ? ' on' : '';
+      var link = m.link ? ('<a href="'+m.link+'" target="_blank" rel="noopener" onclick="event.stopPropagation()" style="font-size:11px;color:var(--b);text-decoration:underline;display:inline-block;margin-top:3px">🔗 الرابط الرسمي</a>') : '';
+      return '<div class="mdl-i'+on+'" onclick="selModel(\''+m.id+'\',this)">'+
+        '<div class="mdl-ico">'+m.ico+'</div>'+
+        '<div style="flex:1"><div class="mdl-nm">'+m.nm+'</div><div class="mdl-ds">'+m.ds+'</div>'+link+'</div>'+
+        '<span class="mfree">مجاني</span></div>';
+    }).join('');
+    var info = document.getElementById('mdInfo');
+    var cur = MODELS.find(function(x){ return x.id===MODEL; });
+    if(info && cur) info.textContent = cur.nm + ' — مجاني ✅';
+    // strip in chat input
+    var strip = document.getElementById('modelStrip');
+    if(strip){
+      var chips = '<span class="ms-lbl">🤖 النموذج:</span>';
+      MODELS.forEach(function(m){
+        var on = (m.id===MODEL) ? ' on' : '';
+        chips += '<button type="button" class="ms-chip'+on+'" data-mid="'+m.id+'" onclick="selModel(\''+m.id+'\',null)" title="'+m.ds+'">'+m.ico+' '+m.nm+'</button>';
+      });
+      strip.innerHTML = chips;
+    }
+  }catch(e){ console.warn('buildModels', e); }
+}
+function selModel(id,el){
+  try{
+    MODEL=id;
+    document.querySelectorAll('.mdl-i').forEach(function(i){i.classList.remove('on');});
+    if(el) el.classList.add('on');
+    document.querySelectorAll('#modelStrip .ms-chip').forEach(function(c){
+      c.classList.toggle('on', c.getAttribute('data-mid')===id);
+    });
+    var m=MODELS.find(function(x){return x.id===id;});
+    if(m){
+      var info=document.getElementById('mdInfo');
+      if(info) info.textContent=m.nm+' — مجاني ✅';
+      toast('النموذج: '+m.nm);
+    }
+    var dlg=document.getElementById('mdlD');
+    if(dlg && dlg.classList.contains('on')) closeD('mdlD');
+  }catch(e){ console.warn('selModel',e); }
+}
+
+function showD(id){
+  try{
+    if(id==='apiD'){
+      var kOR=document.getElementById('kOR'); if(kOR) kOR.value = KEYS.or||'';
+      var kG=document.getElementById('kGroq'); if(kG) kG.value = KEYS.groq||'';
+      var kGem=document.getElementById('kGem'); if(kGem) kGem.value = KEYS.gem||'';
+      if(typeof updKeyBadge==='function') updKeyBadge();
+    }
+    if(id==='mdlD'){
+      if(typeof buildModels==='function') buildModels();
+    }
+    var el=document.getElementById(id);
+    if(el) el.classList.add('on');
+  }catch(e){ console.warn('showD',e); }
+}
+function closeD(id){document.getElementById(id).classList.remove('on')}
+
+// ── Core AI Call — FREE providers only ─────────────────────
+async function callAI(systemPrompt, userMsg, maxTok=2000){
+  // Always try available keys in order: OpenRouter → Groq → Gemini
+  // Ignore selected model provider if that key is missing; fallback to any available key.
+
+  const errors = [];
+
+  // ── 1. OpenRouter ──
+  if(KEYS.or && KEYS.or.trim()){
+    try{
+      const modelId = (MODEL && (MODEL.includes(':free') || MODEL.startsWith('openrouter') || MODEL.includes('/')))
+        ? MODEL
+        : 'openrouter/free';
+      cLog('info','OpenRouter جاري... ('+modelId+')');
+      const r = await fetch('https://openrouter.ai/api/v1/chat/completions',{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json',
+          'Authorization': 'Bearer ' + KEYS.or.trim(),
+          'HTTP-Referer': (typeof location !== 'undefined' ? location.origin : 'https://nexus.local'),
+          'X-Title': 'NEXUS-INTERNATIONAL'
+        },
+        body: JSON.stringify({
+          model: modelId,
+          max_tokens: maxTok,
+          messages: [
+            {role:'system', content: systemPrompt},
+            {role:'user', content: userMsg}
+          ]
+        })
+      });
+      const d = await r.json().catch(()=>({}));
+      if(r.status === 401 || r.status === 403){
+        errors.push('OpenRouter: مفتاح غير صالح أو منتهي');
+        cLog('warn','OpenRouter auth: '+(d.error?.message||r.status));
+      } else if(!r.ok){
+        errors.push('OpenRouter: '+(d.error?.message||('HTTP '+r.status)));
+        cLog('warn','OpenRouter: '+(d.error?.message||r.status));
+      } else {
+        const txt = d.choices?.[0]?.message?.content || '';
+        if(txt){ cLog('info','OpenRouter ✓'); return txt; }
+        errors.push('OpenRouter: رد فارغ');
+      }
+    }catch(e){
+      errors.push('OpenRouter: '+e.message);
+      cLog('warn','OpenRouter network: '+e.message);
+    }
+  }
+
+  // ── 2. Groq ──
+  if(KEYS.groq && KEYS.groq.trim()){
+    try{
+      let modelId = 'llama-3.3-70b-versatile';
+      if(MODEL && (MODEL.includes('llama') || MODEL.includes('gemma') || MODEL.includes('mixtral') || MODEL.includes('instant'))){
+        modelId = MODEL;
+      }
+      cLog('info','Groq جاري... ('+modelId+')');
+      const r = await fetch('https://api.groq.com/openai/v1/chat/completions',{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json',
+          'Authorization': 'Bearer ' + KEYS.groq.trim()
+        },
+        body: JSON.stringify({
+          model: modelId,
+          max_tokens: maxTok,
+          messages: [
+            {role:'system', content: systemPrompt},
+            {role:'user', content: userMsg}
+          ]
+        })
+      });
+      const d = await r.json().catch(()=>({}));
+      if(r.status === 401 || r.status === 403){
+        errors.push('Groq: مفتاح غير صالح');
+        cLog('warn','Groq auth: '+(d.error?.message||r.status));
+      } else if(!r.ok){
+        errors.push('Groq: '+(d.error?.message||('HTTP '+r.status)));
+        cLog('warn','Groq: '+(d.error?.message||r.status));
+      } else {
+        const txt = d.choices?.[0]?.message?.content || '';
+        if(txt){ cLog('info','Groq ✓'); return txt; }
+        errors.push('Groq: رد فارغ');
+      }
+    }catch(e){
+      errors.push('Groq: '+e.message);
+      cLog('warn','Groq network: '+e.message);
+    }
+  }
+
+  // ── 3. Gemini (updated model names 2026) ──
+  if(KEYS.gem && KEYS.gem.trim()){
+    const gemModels = ['gemini-2.5-flash','gemini-2.0-flash','gemini-2.5-flash-lite','gemini-2.5-flash-lite-preview-09-2025'];
+    // Prefer selected if it is a gemini model
+    let tryList = gemModels.slice();
+    if(MODEL && MODEL.startsWith('gemini-')){
+      tryList = [MODEL].concat(gemModels.filter(m=>m!==MODEL));
+    }
+    for(const modelId of tryList){
+      try{
+        cLog('info','Gemini جاري... ('+modelId+')');
+        const url = 'https://generativelanguage.googleapis.com/v1beta/models/'+modelId+':generateContent?key='+encodeURIComponent(KEYS.gem.trim());
+        const r = await fetch(url,{
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({
+            systemInstruction: {parts:[{text: systemPrompt}]},
+            contents: [{role:'user', parts:[{text: userMsg}]}],
+            generationConfig: {maxOutputTokens: maxTok, temperature: 0.7}
+          })
+        });
+        const d = await r.json().catch(()=>({}));
+        if(r.status === 400 && (d.error?.message||'').includes('not found')){
+          cLog('warn','Gemini model not found: '+modelId);
+          continue; // try next model
+        }
+        if(r.status === 401 || r.status === 403 || (d.error?.message||'').toLowerCase().includes('api key')){
+          errors.push('Gemini: مفتاح غير صالح — احصل على مفتاح جديد من aistudio.google.com');
+          cLog('warn','Gemini auth: '+(d.error?.message||r.status));
+          break;
+        }
+        if(!r.ok){
+          errors.push('Gemini: '+(d.error?.message||('HTTP '+r.status)));
+          cLog('warn','Gemini: '+(d.error?.message||r.status));
+          continue;
+        }
+        const txt = d.candidates?.[0]?.content?.parts?.[0]?.text || '';
+        if(txt){ cLog('info','Gemini ✓ ('+modelId+')'); return txt; }
+        errors.push('Gemini: رد فارغ');
+      }catch(e){
+        errors.push('Gemini: '+e.message);
+        cLog('warn','Gemini network: '+e.message);
+      }
+    }
+  }
+
+  if(!KEYS.or && !KEYS.groq && !KEYS.gem){
+    throw new Error('❌ لا يوجد مفتاح API\\nأضف مفتاحاً مجانياً من 🔑\\n• OpenRouter: openrouter.ai/keys\\n• Groq: console.groq.com\\n• Gemini: aistudio.google.com/app/apikey');
+  }
+  throw new Error('❌ فشل كل المزودين:\\n' + (errors.length ? errors.join('\\n') : 'تحقق من المفاتيح والاتصال بالإنترنت'));
+}
+
+function copyToClipboard(text, onSuccess){
+  if(navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(text).then(onSuccess).catch(()=>_fallbackCopy(text,onSuccess));
+  } else _fallbackCopy(text,onSuccess);
+}
+function _fallbackCopy(text,onSuccess){
+  try{
+    const ta=document.createElement('textarea');
+    ta.value=text;ta.style.cssText='position:fixed;left:-9999px;opacity:0';
+    document.body.appendChild(ta);ta.focus();ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    if(onSuccess)onSuccess();
+  }catch(e){}
+}
+function fIn(t){const i=document.getElementById('mi');i.value=t;onTyp(i);i.focus()}
+function onTyp(el){
+  var sb = document.getElementById('sb');
+  if(sb){ sb.style.display = 'flex'; sb.style.opacity = el.value.trim() ? '1' : '0.75'; }
+  var iw = document.getElementById('iw');
+  if(iw) iw.classList.toggle('on', !!el.value.trim());
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+}
+
+
+// ── Console + loading helpers (required for chat AI) ───────
+function cLog(level, msg){
+  try{
+    var box = document.getElementById('logLines');
+    var line = document.createElement('div');
+    line.className = 'll';
+    var t = new Date();
+    var ts = t.toLocaleTimeString('ar-EG', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+    var color = level==='warn' ? 'var(--rd)' : level==='info' ? 'var(--g)' : 'var(--dim)';
+    line.innerHTML = '<span style="color:var(--dim)">'+ts+'</span> <span style="color:'+color+'">['+(level||'info').toUpperCase()+']</span> '+String(msg).replace(/</g,'&lt;');
+    if(box){
+      box.appendChild(line);
+      box.scrollTop = box.scrollHeight;
+      while(box.children.length > 200) box.removeChild(box.firstChild);
+    }
+    if(level==='warn') console.warn('[NEXUS]', msg);
+    else console.log('[NEXUS]', msg);
+  }catch(e){ console.log(msg); }
+}
+function setLoading(on, msg){
+  try{
+    var dot = document.getElementById('aidot');
+    if(dot) dot.style.opacity = on ? '1' : '0.5';
+    if(on && msg) cLog('info', msg);
+  }catch(e){}
+}
+function addTy(id){
+  var wrap = document.createElement('div');
+  wrap.style.cssText = 'display:flex;flex-direction:column;align-items:flex-start';
+  wrap.id = id || ('ty'+Date.now());
+  var el = document.createElement('div');
+  el.className = 'bub b-a';
+  el.innerHTML = '<span class="ty-dots">●●●</span> يفكر...';
+  el.style.opacity = '0.7';
+  wrap.appendChild(el);
+  var scr = document.getElementById('chscr');
+  if(scr) scr.appendChild(wrap);
+  return wrap;
+}
+function scrollCh(){
+  try{
+    var scr = document.getElementById('chscr');
+    if(scr) scr.scrollTop = scr.scrollHeight;
+  }catch(e){}
+}
+function runCmd(cmd){
+  cmd = (cmd||'').trim();
+  if(!cmd) return;
+  cLog('info', '▶ '+cmd);
+  var c = cmd.toLowerCase();
+  if(c==='help'){
+    cLog('info','help | clear | models | keys | status | version');
+  } else if(c==='clear'){
+    var box = document.getElementById('logLines');
+    if(box) box.innerHTML = '';
+    cLog('info','تم المسح');
+  } else if(c==='models'){
+    MODELS.forEach(function(m){ cLog('info', m.ico+' '+m.nm+' ('+m.id+')'); });
+  } else if(c==='keys'){
+    cLog('info','OR:'+(KEYS.or?'✅':'✗')+' Groq:'+(KEYS.groq?'✅':'✗')+' Gem:'+(KEYS.gem?'✅':'✗'));
+  } else if(c==='status'){
+    cLog('info','MODEL='+MODEL+' busy='+busy);
+  } else if(c==='version'){
+    cLog('info','NEXUS v'+(DEV&&DEV.ver||'?')+' — '+(DEV&&DEV.name||''));
+  } else {
+    cLog('warn','أمر غير معروف: '+cmd+' — اكتب help');
+  }
+}
+
+
+async function doSend(){
+  if(busy)return;
+  const inp=document.getElementById('mi');
+  if(!inp){ alert('مربع الكتابة غير موجود'); return; }
+  const txt=inp.value.trim();if(!txt)return;
+  inp.value='';inp.style.height='auto';
+  var sbEl=document.getElementById('sb'); if(sbEl){ sbEl.style.display='flex'; sbEl.style.opacity='0.75'; }
+  var iw=document.getElementById('iw'); if(iw) iw.classList.remove('on');
+  if(typeof goTab==='function') goTab('chat');
+  var em=document.getElementById('chEm'); if(em) em.remove();
+  addBub(txt,'u');scrollCh();
+  busy=true;
+  if(typeof setLoading==='function') setLoading(true,'AI يفكر...');
+  if(typeof cLog==='function') cLog('info','إرسال: '+txt.slice(0,60)+'... | نموذج: '+MODEL);
+  const tyEl = (typeof addTy==='function') ? addTy('ty') : null;
+  try{
+    const isWebReq = /موقع|صفح|تصميم|html|landing|web|site|واجهة|صفحة ويب/i.test(txt);
+    const sys = isWebReq
+    ? ('أنت مطور ويب محترف لـ NEXUS-INTERNATIONAL (المطور: ' + DEV.name + ').\n' +
+       'عند طلب موقع أو تصميم أو واجهة:\n' +
+       '1) أخرج كود HTML كاملاً واحداً داخل كتلة كود html من <!DOCTYPE html> حتى </html>\n' +
+       '2) لا تختصر — اكتب CSS وJS داخل الصفحة\n' +
+       '3) الألوان: خلفية #000011، أخضر #00FF9D، أزرق #00B8FF\n' +
+       '4) خطوط Google: Cairo + Orbitron\n' +
+       '5) تصميم متجاوب مع animations خفيفة\n' +
+       '6) في آخر الرد اكتب: اضغط زر المعاينة لعرض الموقع')
+    : ('أنت NEXUS-INTERNATIONAL — موسوعة علمية كونية، طوّرها ' + DEV.name + ' من ' + DEV.country + '.\n' +
+       'أجب بلغة المستخدم بدقة علمية.\n' +
+       'مجالات: فيزياء، كيمياء، رياضيات، هندسة معمارية، رسم هندسي، فلك، أحياء، حاسوب.\n' +
+       'للمعادلات استخدم ترميزاً واضحاً.\n' +
+       'إذا طُلب رسم بياني: أعطِ أرقاماً مفصولة بفواصل.\n' +
+       'إذا طُلب شكل هندسي: قدّم SVG داخل كود html كامل.\n' +
+       'إذا طُلب تصميم أو موقع: قدّم HTML كاملاً من DOCTYPE إلى نهاية html.');
+    const reply = await callAI(sys, txt, 2500);
+    tyEl.remove();setLoading(false);busy=false;
+    addBub(reply,'a');scrollCh();confetti();
+    sessions.push({q:txt,a:reply,ts:new Date().toISOString(),model:MODEL});
+    // Auto preview if full HTML website returned
+    if(/```html|<!DOCTYPE\s+html/i.test(reply)){
+      setTimeout(()=>openPreviewFromText(reply), 500);
+    }
+    cLog('info','إجابة — '+reply.length+' حرف');
+  }catch(e){
+    tyEl?.remove();setLoading(false);busy=false;
+    ERRORS.push({t:new Date().toISOString(),e:e.message});
+    addBub('⚠️ '+e.message,'a');scrollCh();
+    cLog('warn','AI error: '+e.message);
+  }
+}
+
+function addBub(txt,t){
+  const wrap=document.createElement('div');
+  wrap.style.cssText=`display:flex;flex-direction:column;align-items:${t==='u'?'flex-end':'flex-start'}`;
+  const el=document.createElement('div');
+  el.className='bub '+(t==='u'?'b-u':t==='e'?'b-a b-e':'b-a');
+  el.textContent=txt;
+  wrap.appendChild(el);
+  if(t!=='e'){
+    const acts=document.createElement('div');
+    acts.className='bub-acts';
+    acts.style.justifyContent=t==='u'?'flex-end':'flex-start';
+    const cp=document.createElement('button');cp.className='bact cp-btn';cp.textContent='📋 نسخ';
+    cp.onclick=()=>{copyToClipboard(txt,()=>{cp.textContent='✅';setTimeout(()=>cp.textContent='📋 نسخ',1400);toast('تم النسخ ✓');});};
+    const ttsB=document.createElement('button');ttsB.className='bact tts-btn';ttsB.textContent='🔊 قراءة';
+    ttsB.onclick=()=>speakText(txt,ttsB);
+    acts.appendChild(cp);acts.appendChild(ttsB);
+    // 🖥️ Preview always available for AI replies (and user if looks like code/html)
+    if(t==='a' || /```|<html|<svg|<div|function |def |<!DOCTYPE/i.test(txt)){
+      const prvB=document.createElement('button');
+      prvB.className='bact prv-btn';
+      prvB.textContent='🖥️ معاينة';
+      prvB.title='فتح شاشة المعاينة';
+      prvB.onclick=()=>openPreviewFromText(txt);
+      acts.appendChild(prvB);
+    }
+    wrap.appendChild(acts);
+  }
+  document.getElementById('chscr').appendChild(wrap);return wrap;
+}
+
+function openPreviewFromText(txt){
+  let code = (txt || '').trim();
+  if(!code){ toast('لا يوجد محتوى'); return; }
+
+  // Extract ```html ... ``` or ``` ... ``` first
+  let m = code.match(/```html\s*\n?([\s\S]*?)```/i);
+  if(!m) m = code.match(/```(?:svg|xml|css)?\s*\n?([\s\S]*?)```/i);
+  if(m) code = m[1].trim();
+
+  // Slice full document if present
+  const dt = code.search(/<!DOCTYPE\s+html/i);
+  if(dt >= 0) {
+    code = code.slice(dt);
+    const he = code.toLowerCase().lastIndexOf('</html>');
+    if(he > 0) code = code.slice(0, he + 7);
+  }
+
+  const looksMarkup = /<\/?[a-z][\s\S]*>/i.test(code) || /<!DOCTYPE/i.test(code);
+
+  if(!looksMarkup){
+    const esc = code.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+    const numMatches = code.match(/-?\d+\.?\d*/g) || [];
+    const vals = numMatches.map(Number).filter(n => !isNaN(n) && isFinite(n)).slice(0, 40);
+    let chartPart = '';
+    if(vals.length >= 3){
+      chartPart = '<div class="nx-card"><div style="color:#00FF9D;margin-bottom:10px;font-size:15px">رسم بياني مستخرج من الإجابة</div>' +
+        '<canvas id="nxChart" style="max-height:280px;width:100%"></canvas></div>' +
+        '<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"><\/script>' +
+        '<script>(function(){var v=' + JSON.stringify(vals) + ';' +
+        'new Chart(document.getElementById("nxChart"),{type:"line",data:{labels:v.map(function(_,i){return i+1;}),' +
+        'datasets:[{label:"بيانات",data:v,borderColor:"#00FF9D",backgroundColor:"rgba(0,255,157,0.2)",fill:true,tension:0.35,pointRadius:3}]},' +
+        'options:{responsive:true,plugins:{legend:{labels:{color:"#ccc"}}},scales:{x:{ticks:{color:"#888"}},y:{ticks:{color:"#888"}}}}});})();<\/script>';
+    }
+    code = `<!DOCTYPE html><html dir="rtl" lang="ar"><head><meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+      <style>
+        *{box-sizing:border-box}
+        body{font-family:Cairo,sans-serif;margin:0;padding:24px;background:#000011;color:rgba(255,255,255,.92);line-height:1.8;font-size:16px}
+        h1,h2{font-family:Orbitron,Cairo,sans-serif;color:#00FF9D}
+        .nx-card{background:#0A0A2A;border:1px solid rgba(0,255,157,.3);border-radius:16px;padding:20px;margin:14px 0}
+        .tag{color:#00B8FF;font-size:12px;letter-spacing:1px;margin-bottom:10px}
+      </style></head><body>
+      <div class="nx-card"><div class="tag">NEXUS — معاينة المحتوى</div>
+      <div style="white-space:pre-wrap;word-break:break-word">${esc}</div></div>
+      ${chartPart}
+      </body></html>`;
+  }
+
+  try {
+    const ci = document.getElementById('codeIn');
+    if(ci) ci.value = code;
+  } catch(e) {}
+  previewCode(code);
+}
+
+function previewCode(codeOverride){
+  let raw = (codeOverride || document.getElementById('codeIn')?.value || '').trim();
+  if(!raw){ toast('❌ لا يوجد محتوى للمعاينة'); return; }
+
+  let htmlDoc = raw;
+  const low = raw.toLowerCase();
+  const isFull = low.includes('<!doctype') || (low.includes('<html') && low.includes('</html>'));
+
+  if(!isFull){
+    if(low.includes('<svg')){
+      htmlDoc = `<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+        <style>html,body{margin:0;height:100%;background:#0a0a12;display:flex;align-items:center;justify-content:center}
+        svg{max-width:96vw;max-height:92vh}</style></head><body>${raw}</body></html>`;
+    } else {
+      htmlDoc = `<!DOCTYPE html><html dir="rtl" lang="ar"><head><meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+        <style>body{font-family:Cairo,sans-serif;padding:20px;margin:0;background:#000011;color:#eee;line-height:1.75;font-size:16px}
+        h1,h2{color:#00FF9D}</style></head><body>${raw}</body></html>`;
+    }
+  }
+
+  const panel = document.getElementById('prevPanel');
+  const iframe = document.getElementById('prevIframe');
+  if(!panel || !iframe){ toast('❌ شاشة المعاينة غير موجودة'); return; }
+
+  if(window._prevBlobUrl){ try{ URL.revokeObjectURL(window._prevBlobUrl); }catch(e){} }
+
+  const blob = new Blob([htmlDoc], { type: 'text/html;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  window._prevBlobUrl = url;
+
+  iframe.removeAttribute('srcdoc');
+  iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-forms allow-modals allow-popups');
+  iframe.style.cssText = 'flex:1;width:100%;height:100%;border:none;background:#ffffff;display:block';
+  iframe.src = url;
+
+  panel.style.cssText = 'display:flex;position:fixed;inset:0;z-index:99999;background:#050510;flex-direction:column';
+  const titleEl = document.getElementById('prevTitle');
+  if(titleEl) titleEl.textContent = '🖥️ معاينة عالية الدقة — NEXUS';
+  cLog('info','معاينة HD ✓ '+htmlDoc.length+' حرف');
+  toast('🖥️ معاينة مفتوحة');
+}
+
+function previewCurrentChart(){
+  const geo = document.getElementById('geoC');
+  const cv = document.getElementById('chartC');
+  let dataUrl = '';
+  try{
+    if(geo && geo.style.display !== 'none' && geo.width){
+      dataUrl = geo.toDataURL('image/png');
+    } else if(cv){
+      dataUrl = cv.toDataURL('image/png');
+    }
+  }catch(e){ cLog('warn','chart capture: '+e.message); }
+  if(!dataUrl){ toast('ارسم أولاً ثم عاين'); return; }
+  const page = `<!DOCTYPE html><html><head><meta charset=UTF-8><title>معاينة الرسم</title>
+    <style>body{margin:0;background:#000011;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;font-family:Cairo,sans-serif;color:#00FF9D}
+    img{max-width:96%;max-height:80vh;border:2px solid #00FF9D55;border-radius:12px;box-shadow:0 0 24px #00FF9D33}
+    h2{margin:16px}</style></head><body>
+    <h2>🖥️ معاينة الرسم — NEXUS</h2>
+    <img src="${dataUrl}" alt="chart"/>
+    <p style="color:#888;font-size:13px">يمكنك حفظ الصورة من القائمة اليمنى للصورة</p>
+    </body></html>`;
+  previewCode(page);
+  toast('🖥️ معاينة الرسم');
+}
+function closePreview(){
+  var panel = document.getElementById('prevPanel');
+  if(panel) panel.style.display = 'none';
+  var iframe = document.getElementById('prevIframe');
+  if(iframe){ iframe.src = 'about:blank'; iframe.removeAttribute('srcdoc'); }
+  if(window._prevBlobUrl){ try{ URL.revokeObjectURL(window._prevBlobUrl); }catch(e){} window._prevBlobUrl=null; }
+}
+function prevRefresh(){
+  const code = document.getElementById('codeIn')?.value?.trim();
+  if(code){ previewCode(code); toast('🔄 تم التحديث'); }
+  else toast('⚠️ لا يوجد كود');
+}
+function prevDownload(){
+  const code = document.getElementById('codeIn')?.value || '';
+  if(!code){ toast('المحرر فارغ'); return; }
+  const name = (document.getElementById('fnamIn')?.value || 'nexus_site') + (code.includes('<html')||code.includes('<!DOCTYPE')?'.html':'.txt');
+  const a = document.createElement('a');
+  a.href = 'data:text/html;charset=utf-8,' + encodeURIComponent(code);
+  a.download = name.endsWith('.html')||name.endsWith('.txt') ? name : name+'.html';
+  a.click();
+  toast('⬇️ تم الحفظ');
+}
+
+
+// ── TTS ────────────────────────────────────────────────────
+function initTTS(){
+  if(!window.speechSynthesis)return;
+  window.speechSynthesis.onvoiceschanged=function(){
+    var vv=window.speechSynthesis.getVoices();
+    ttsVoice=vv.find(function(v){return v.lang.startsWith(LANG);})||vv.find(function(v){return v.lang.startsWith('ar');})||vv[0];
+  };
+  window.speechSynthesis.getVoices();
+}
+function speakText(txt,btn){
+  if(!window.speechSynthesis){toast('TTS غير مدعوم');return;}
+  if(window.speechSynthesis.speaking){window.speechSynthesis.cancel();if(btn)btn.textContent='🔊 قراءة';return;}
+  var u=new SpeechSynthesisUtterance(txt);
+  if(ttsVoice)u.voice=ttsVoice;
+  u.lang=LANG==='ar'?'ar-SA':LANG;u.rate=.92;
+  if(btn){btn.textContent='⏹️ إيقاف';u.onend=function(){btn.textContent='🔊 قراءة';};}
+  window.speechSynthesis.speak(u);
+}
+
+// ── Mic ────────────────────────────────────────────────────
+function toggleMic(){
+  var b = document.getElementById('micB');
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SR){ toast('المتصفح لا يدعم التعرف على الصوت'); return; }
+  if(micOn){
+    micOn = false;
+    if(window._sr){ try{ window._sr.stop(); }catch(e){} window._sr = null; }
+    b.textContent = '🎤'; b.classList.remove('on');
+    return;
+  }
+  micOn = true;
+  b.textContent = '🔴'; b.classList.add('on');
+  toast('تحدث الآن...');
+  var sr = new SR();
+  window._sr = sr;
+  sr.lang = LANG==='ar' ? 'ar-SA' : (LANG||'en-US');
+  sr.continuous = false;
+  sr.interimResults = false;
+  sr.onresult = function(e) {
+    var txt = e.results[0][0].transcript;
+    micOn = false; b.textContent = '🎤'; b.classList.remove('on');
+    window._sr = null;
+    var inp = document.getElementById('mi');
+    if(inp){ inp.value = txt; onTyp(inp); inp.focus(); }
+    toast('تم التعرف');
+    setTimeout(function(){ if(inp && inp.value.trim()) doSend(); }, 600);
+  };
+  sr.onerror = function(e) {
+    micOn = false; b.textContent = '🎤'; b.classList.remove('on'); window._sr = null;
+    if(e.error !== 'no-speech') toast('خطأ: ' + e.error);
+  };
+  sr.onend = function(){ if(micOn){ micOn=false; b.textContent='🎤'; b.classList.remove('on'); } };
+  sr.start();
+}
+function handleFile(inp){
+  var f = inp.files && inp.files[0]; if(!f) return;
+  inp.value = '';
+  var ext = (f.name.split('.').pop()||'').toLowerCase();
+  var isImg = ['jpg','jpeg','png','gif','webp','bmp'].indexOf(ext)>=0 || (f.type||'').indexOf('image/')===0;
+  if(isImg){
+    toast('صورة: '+f.name);
+    var mi = document.getElementById('mi');
+    if(mi){ mi.value = 'حلل هذه الصورة: '+f.name; onTyp(mi); mi.focus(); }
+    goTab('chat');
+    return;
+  }
+  if(['txt','md','csv','json','js','py','html','css'].indexOf(ext)>=0){
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      var text = e.target.result;
+      var mi = document.getElementById('mi');
+      if(mi){ mi.value = 'حلل هذا الملف (' + f.name + '):\n\n' + text.substring(0,2500); onTyp(mi); }
+      toast('جاهز — اضغط إرسال');
+    };
+    reader.readAsText(f, 'UTF-8');
+  } else {
+    toast('ملف: ' + f.name);
+    var mi = document.getElementById('mi');
+    if(mi){ mi.value = 'لدي ملف باسم "' + f.name + '"'; onTyp(mi); }
+  }
+}
+
+// ── Scientific Charts + Geometry ───────────────────────────
+var _chartInst = null;
+var _chartType = 'line';
+var _chartData = [20,55,30,88,65,92,40,78,100,58,82,44,72,35,90];
+
+function drawChart(){
+  var cv = document.getElementById('chartC');
+  var geo = document.getElementById('geoC');
+  if(!cv) return;
+  if(geo) geo.style.display = 'none';
+  cv.style.display = 'block';
+  if(typeof Chart === 'undefined'){
+    _drawSimpleCanvas(cv, _chartData);
+    return;
+  }
+  if(_chartInst){ try{ _chartInst.destroy(); }catch(e){} _chartInst = null; }
+  var isDark = !document.documentElement.classList.contains('light');
+  var gridColor = isDark ? 'rgba(0,255,157,0.12)' : 'rgba(0,100,60,0.15)';
+  var textColor = isDark ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.65)';
+  var labels = _chartData.map(function(_,i){ return String(i+1); });
+  var cfg = {
+    type: _chartType === 'scatter' ? 'scatter' : _chartType,
+    data: {
+      labels: _chartType === 'scatter' ? undefined : labels,
+      datasets: [{
+        label: 'بيانات NEXUS',
+        data: _chartType === 'scatter' ? _chartData.map(function(v,i){return {x:i+1,y:v};}) : _chartData,
+        borderColor: '#00FF9D',
+        backgroundColor: _chartType === 'pie' ? _chartData.map(function(_,i){return 'hsl('+((i*40)%360)+',70%,45%)';}) : 'rgba(0,255,157,0.25)',
+        borderWidth: 2, tension: 0.35, pointRadius: 4, pointBackgroundColor: '#00B8FF',
+        fill: _chartType === 'line' || _chartType === 'radar'
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: true,
+      plugins: { legend: { labels: { color: textColor, font: { family: 'Cairo', size: 12 } } } },
+      scales: _chartType === 'pie' ? {} : {
+        x: { ticks: { color: textColor }, grid: { color: gridColor } },
+        y: { ticks: { color: textColor }, grid: { color: gridColor } }
+      }
+    }
+  };
+  _chartInst = new Chart(cv, cfg);
+  _updateMets(_chartData);
+}
+function _drawSimpleCanvas(cv, data){
+  var parent = cv.parentElement;
+  cv.width = parent ? parent.clientWidth - 16 : 400;
+  cv.height = 220;
+  var c = cv.getContext('2d'), W = cv.width, H = cv.height;
+  var max = Math.max.apply(null, data.concat([1]));
+  c.clearRect(0,0,W,H);
+  c.strokeStyle = 'rgba(0,255,157,0.1)';
+  [0.25,0.5,0.75].forEach(function(y){ c.beginPath(); c.moveTo(0,y*H); c.lineTo(W,y*H); c.stroke(); });
+  c.beginPath();
+  data.forEach(function(v,i){
+    var x = i * (W/(data.length-1||1));
+    var y = H - (v/max)*H*0.9;
+    i===0 ? c.moveTo(x,y) : c.lineTo(x,y);
+  });
+  c.strokeStyle = '#00FF9D'; c.lineWidth = 2.5; c.stroke();
+  _updateMets(data);
+}
+function _updateMets(d){
+  if(!d || !d.length) return;
+  var mx = Math.max.apply(null,d), mn = Math.min.apply(null,d);
+  var avg = d.reduce(function(a,b){return a+b;},0)/d.length;
+  var el = function(id){ return document.getElementById(id); };
+  if(el('metMax')) el('metMax').textContent = mx.toFixed(1);
+  if(el('metAvg')) el('metAvg').textContent = avg.toFixed(1);
+  if(el('metMin')) el('metMin').textContent = mn.toFixed(1);
+}
+function setChartType(t){
+  _chartType = t;
+  var geo = document.getElementById('geoC');
+  var cv = document.getElementById('chartC');
+  if(geo) geo.style.display = 'none';
+  if(cv) cv.style.display = 'block';
+  drawChart();
+  toast('نوع الرسم: '+t);
+}
+function applyChartData(){
+  var inp = document.getElementById('chartDataIn');
+  var raw = (inp && inp.value || '').trim();
+  if(!raw){ toast('أدخل بيانات'); return; }
+  if(/sin|cos|tan/i.test(raw)){
+    var pts = [];
+    for(var i=0;i<=40;i++){
+      var x = (i/40)*Math.PI*4;
+      var y = /cos/i.test(raw) ? Math.cos(x) : Math.sin(x);
+      pts.push(Math.round(y*50+50));
+    }
+    _chartData = pts; _chartType = 'line';
+  } else {
+    var nums = raw.split(/[,،\s]+/).map(parseFloat).filter(function(n){return !isNaN(n);});
+    if(nums.length < 2){ toast('أدخل رقمين على الأقل'); return; }
+    _chartData = nums;
+  }
+  drawChart();
+  toast('تم رسم البيانات');
+  goTab('data');
+}
+function drawGeometry(kind){
+  var cv = document.getElementById('chartC');
+  var geo = document.getElementById('geoC');
+  if(!geo) return;
+  if(cv) cv.style.display = 'none';
+  geo.style.display = 'block';
+  if(_chartInst){ try{ _chartInst.destroy(); }catch(e){} _chartInst=null; }
+  var parent = geo.parentElement;
+  var W = parent ? parent.clientWidth - 16 : 400;
+  var H = 240;
+  geo.width = W; geo.height = H;
+  var c = geo.getContext('2d');
+  c.clearRect(0,0,W,H);
+  var isDark = !document.documentElement.classList.contains('light');
+  c.fillStyle = isDark ? '#050518' : '#f8fafc';
+  c.fillRect(0,0,W,H);
+  c.strokeStyle = '#00FF9D';
+  c.fillStyle = 'rgba(0,255,157,0.15)';
+  c.lineWidth = 2.5;
+  var cx = W/2, cy = H/2;
+  if(kind === 'circle'){
+    c.beginPath(); c.arc(cx, cy, Math.min(W,H)*0.32, 0, Math.PI*2); c.fill(); c.stroke();
+    c.beginPath(); c.moveTo(cx,cy); c.lineTo(cx+Math.min(W,H)*0.32, cy); c.stroke();
+    c.fillStyle = '#00B8FF'; c.font = '14px Cairo'; c.textAlign='center';
+    c.fillText('دائرة — نصف القطر r', cx, H-16);
+  } else if(kind === 'triangle'){
+    var s = Math.min(W,H)*0.35;
+    c.beginPath();
+    c.moveTo(cx, cy-s); c.lineTo(cx-s*0.9, cy+s*0.7); c.lineTo(cx+s*0.9, cy+s*0.7); c.closePath();
+    c.fill(); c.stroke();
+    c.fillStyle = '#00B8FF'; c.font = '14px Cairo'; c.textAlign='center';
+    c.fillText('مثلث متساوي الأضلاع', cx, H-16);
+  } else if(kind === 'arch'){
+    c.beginPath();
+    c.moveTo(cx-W*0.3, cy+H*0.25);
+    c.lineTo(cx-W*0.3, cy);
+    c.quadraticCurveTo(cx, cy-H*0.35, cx+W*0.3, cy);
+    c.lineTo(cx+W*0.3, cy+H*0.25);
+    c.stroke();
+    c.strokeRect(cx-W*0.32, cy, W*0.04, H*0.25);
+    c.strokeRect(cx+W*0.28, cy, W*0.04, H*0.25);
+    c.fillStyle = '#00B8FF'; c.font = '14px Cairo'; c.textAlign='center';
+    c.fillText('قوس معماري (Arch)', cx, H-16);
+  } else if(kind === 'sine'){
+    c.beginPath();
+    for(var i=0;i<=80;i++){
+      var x = (i/80)*W;
+      var y = cy + Math.sin((i/80)*Math.PI*4)*H*0.28;
+      i===0 ? c.moveTo(x,y) : c.lineTo(x,y);
+    }
+    c.stroke();
+    c.strokeStyle = 'rgba(0,184,255,0.4)'; c.lineWidth=1;
+    c.beginPath(); c.moveTo(0,cy); c.lineTo(W,cy); c.stroke();
+    c.fillStyle = '#00B8FF'; c.font = '14px Cairo'; c.textAlign='center';
+    c.fillText('موجة جيبية y = sin(x)', cx, H-16);
+  }
+  toast('هندسة: '+kind);
+}
+function previewCurrentChart(){
+  var geo = document.getElementById('geoC');
+  var cv = document.getElementById('chartC');
+  var dataUrl = '';
+  try{
+    if(geo && geo.style.display !== 'none' && geo.width) dataUrl = geo.toDataURL('image/png');
+    else if(cv) dataUrl = cv.toDataURL('image/png');
+  }catch(e){}
+  if(!dataUrl){ toast('ارسم أولاً ثم عاين'); return; }
+  var page = '<!DOCTYPE html><html><head><meta charset=UTF-8><title>معاينة</title>'+
+    '<style>body{margin:0;background:#000011;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;font-family:Cairo,sans-serif;color:#00FF9D}'+
+    'img{max-width:96%;max-height:80vh;border:2px solid #00FF9D55;border-radius:12px}</style></head><body>'+
+    '<h2>معاينة الرسم — NEXUS</h2><img src="'+dataUrl+'" alt="chart"/></body></html>';
+  previewCode(page);
+}
+
+// ── AI Typing ──────────────────────────────────────────────
+var aiPh=['مرحباً '+DEV.name,'نماذج مجانية جاهزة...','NEXUS v6 Ready!','Science at fingertips...'];
+var aiPI=0,aiCI=0;
+function startAIType(){
+  var el=document.getElementById('aiTxt');if(!el)return;
+  var ph=aiPh[aiPI];
+  if(aiCI<ph.length){el.textContent=ph.slice(0,++aiCI);setTimeout(startAIType,65);}
+  else setTimeout(function(){aiCI=0;aiPI=(aiPI+1)%aiPh.length;el.textContent='';startAIType();},1900);
+}
+
+// ── Code Editor helpers ────────────────────────────────────
+function runCode(){
+  var code=document.getElementById('codeIn').value;
+  var lang=document.getElementById('langSel').value;
+  var out=document.getElementById('outCnt');
+  if(lang==='JavaScript'){
+    try{
+      var logs=[];
+      var fakeConsole={log:function(){logs.push([].join.call(arguments,' '));},error:function(){logs.push('❌ '+[].join.call(arguments,' '));},warn:function(){logs.push('⚠️ '+[].join.call(arguments,' '));}};
+      var fn=new Function('console',code);fn(fakeConsole);
+      out.textContent=logs.length?logs.join('\\n'):'تم التنفيذ';
+    
+           }catch(e){out.textContent='خطأ: '+e.message;}
+  } else out.textContent='تشغيل '+lang+' يتطلب بيئة خادم.';
+}
+function copyCode(){copyToClipboard(document.getElementById('codeIn').value,function(){toast('تم نسخ الكود');});}
+function dlCode(){
+  var code=document.getElementById('codeIn').value;
+  var name=document.getElementById('fnamIn').value||'nexus_code.js';
+  var a=document.createElement('a');
+  a.href='data:text/plain;charset=utf-8,'+encodeURIComponent(code);
+  a.download=name;a.click();toast('تم حفظ: '+name);
+}
+function updateEditorHint(){
+  var lang=document.getElementById('langSel').value;
+  var hints={JavaScript:'nexus_update.js',Python:'nexus_script.py',HTML:'nexus_page.html',CSS:'nexus_styles.css',Dart:'nexus_screen.dart'};
+  document.getElementById('fnamIn').value=hints[lang]||'nexus_code.txt';
+}
+async function aiCompleteCode(){
+  var code=document.getElementById('codeIn').value;
+  var lang=document.getElementById('langSel').value;
+  setLoading(true,'يكمل الكود...');
+  try{
+    var result=await callAI('أنت مطور خبير في '+lang+'. أكمل الكود فقط.','أكمل:\\n'+code,1200);
+    document.getElementById('codeIn').value=code+'\\n\\n// --- AI ---\\n'+result;
+    setLoading(false);toast('اكتمل الكود');
+  }catch(e){setLoading(false);toast(e.message);}
+}
+async function aiExplainCode(){
+  var code=document.getElementById('codeIn').value||'// أدخل كوداً';
+  var lang=document.getElementById('langSel').value;
+  setLoading(true,'يشرح...');
+  try{
+    var result=await callAI('اشرح الكود '+lang+' باختصار.',code,800);
+    document.getElementById('outCnt').textContent=result;
+    setLoading(false);toast('الشرح جاهز');
+  }catch(e){setLoading(false);toast(e.message);}
+}
+async function devSend(){
+  if(devBusy)return;
+  var inp=document.getElementById('devIn');
+  var txt=inp.value.trim();if(!txt)return;
+  inp.value='';
+  addDevMsg(txt,'u');
+  devHistory.push({role:'user',content:txt});
+  devBusy=true;
+  document.getElementById('devSndBtn').textContent='...';
+  var tyEl=addTy('devty');
+  try{
+    var sys='أنت مطور شخصي لـ NEXUS. المطور: '+DEV.name+'. اكتب كوداً نظيفاً. عند طلب HTML كامل ابدأ بـ <!DOCTYPE>.';
+    var reply = await callAI(sys, txt, 3000);
+    devHistory.push({role:'assistant',content:reply});
+    tyEl.remove();
+    addDevMsg(reply,'a');
+    var codeMatch=reply.match(/```(?:\\w+)?\\n([\\s\\S]+?)```/);
+    if(codeMatch){
+      document.getElementById('codeIn').value = codeMatch[1].trim();
+      toast('الكود في المحرر');
+      if(/html|DOCTYPE/i.test(reply)) setTimeout(function(){ openPreviewFromText(reply); }, 400);
+    }
+  }catch(e){
+    tyEl && tyEl.remove();
+    addDevMsg(e.message,'a');
+  }
+  devBusy=false;
+  document.getElementById('devSndBtn').textContent='أرسل';
+}
+function devAsk(q){document.getElementById('devIn').value=q;devSend();}
+function addDevMsg(txt,t){
+  var wrap=document.createElement('div');
+  wrap.style.cssText='display:flex;flex-direction:column;align-items:'+(t==='u'?'flex-end':'flex-start');
+  var el=document.createElement('div');
+  el.className='devMsg '+t;
+  el.textContent=txt;
+  wrap.appendChild(el);
+  if(t==='a'){
+    var acts=document.createElement('div');acts.className='devMsg-acts';
+    var cp=document.createElement('div');cp.className='dact';cp.textContent='نسخ';
+    cp.onclick=function(){copyToClipboard(txt,function(){toast('نُسخ');});};
+    var prv=document.createElement('div');prv.className='dact';prv.textContent='معاينة';
+    prv.onclick=function(){openPreviewFromText(txt);};
+    acts.appendChild(cp);acts.appendChild(prv);wrap.appendChild(acts);
+  }
+  var cont=document.getElementById('aiDevMsgs');
+  cont.appendChild(wrap);
+  setTimeout(function(){cont.scrollTop=cont.scrollHeight;},55);
+}
+function saveSession(){
+  if(!sessions.length){toast('لا توجد محادثات');return;}
+  var a=document.createElement('a');
+  a.href='data:application/json;charset=utf-8,'+encodeURIComponent(JSON.stringify({dev:DEV,sessions:sessions,at:new Date().toISOString()},null,2));
+  a.download='nexus_session_'+Date.now()+'.json';a.click();
+  toast('الجلسة محفوظة');
+}
+function clearAll(){
+  if(!confirm('مسح المحادثات؟'))return;
+  sessions=[];devHistory=[];
+  document.getElementById('chscr').innerHTML='<div class="ch-em"><div class="ce-i">💬</div><div>ابدأ محادثتك</div></div>';
+  toast('تم المسح');
+}
+function closePreview(){
+  var panel = document.getElementById('prevPanel');
+  if(panel) panel.style.display = 'none';
+  var iframe = document.getElementById('prevIframe');
+  if(iframe){ iframe.src = 'about:blank'; }
+  if(window._prevBlobUrl){ try{ URL.revokeObjectURL(window._prevBlobUrl); }catch(e){} window._prevBlobUrl=null; }
+}
+function prevRefresh(){
+  var code = document.getElementById('codeIn') && document.getElementById('codeIn').value;
+  if(code){ previewCode(code); toast('تم التحديث'); }
+  else toast('لا يوجد كود');
+}
+function prevDownload(){
+  var code = document.getElementById('codeIn') && document.getElementById('codeIn').value || '';
+  if(!code){ toast('المحرر فارغ'); return; }
+  var name = (document.getElementById('fnamIn') && document.getElementById('fnamIn').value) || 'nexus_site.html';
+  var a = document.createElement('a');
+  a.href = 'data:text/html;charset=utf-8,' + encodeURIComponent(code);
+  a.download = name.indexOf('.')>=0 ? name : name+'.html';
+  a.click();
+  toast('تم الحفظ');
+}
+
+
+window.openPreviewFromText = openPreviewFromText;
+window.previewCode = previewCode;
+window.buildModels = buildModels;
+window.closePreview = closePreview;
+function confetti(){
+  ['#00FF9D','#00B8FF','#FF0080','#FF8C00','#fff','#AA00FF'].forEach(c=>{
+    for(let i=0;i<3;i++){
+      const el=document.createElement('div');el.className='cf';
+      const sz=Math.random()*8+4;
+      el.style.cssText=`left:${8+Math.random()*84}%;top:0;width:${sz}px;height:${sz}px;
+        background:${c};animation-delay:${Math.random()*.7}s;
+        border-radius:${Math.random()>.5?'50%':'3px'}`;
+      document.body.appendChild(el);setTimeout(()=>el.remove(),2600);
+    }
+  });
+}
+let tT;
+function toast(msg){
+  const t=document.getElementById('tst');t.textContent=msg;t.classList.add('on');
+  clearTimeout(tT);tT=setTimeout(()=>t.classList.remove('on'),3000);
+}
+</script>
+</body>
+</htm   
