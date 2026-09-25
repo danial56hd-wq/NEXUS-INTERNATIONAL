@@ -228,9 +228,11 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);
 .sym-n{font-size:clamp(7px,1.2vw,9px);color:var(--dim)}
 
 /* MAP */
-#mapWrap{position:absolute;inset:0;z-index:2}
-#mapEl{width:100%;height:100%}
-.leaflet-container{background:#000011}
+#mapWrap{position:absolute;inset:0;z-index:2;width:100%;height:100%}
+#mapEl{width:100%!important;height:100%!important;min-height:280px;background:#000011}
+.leaflet-container{background:#000011;width:100%!important;height:100%!important}
+.leaflet-control-layers{background:rgba(0,0,0,.85)!important;color:#fff;border:1px solid rgba(0,255,157,.3)!important;border-radius:8px}
+.leaflet-control-layers-toggle{background-color:rgba(0,0,0,.8)!important}
 .map-ov{position:absolute;bottom:14px;right:14px;z-index:1000;
   background:rgba(0,0,0,.78);border:1px solid rgba(0,255,157,.28);
   border-radius:10px;padding:8px 12px;font-family:'Orbitron',monospace;
@@ -394,30 +396,36 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);
 /* INPUT PANEL — expanded for equations */
 #ip{flex-shrink:0;background:linear-gradient(to bottom,rgba(0,0,0,.9),#000011);
   border-top:1px solid rgba(0,255,157,.06);
-  padding:6px 10px 8px}
+  padding:8px 10px 10px;position:relative;z-index:100;isolation:isolate}
 #ir{display:flex;align-items:flex-end;gap:6px}
-.cb2{flex-shrink:0;width:clamp(36px,6vw,46px);height:clamp(36px,6vw,46px);
+.cb2{flex-shrink:0;width:clamp(44px,8vw,52px);height:clamp(44px,8vw,52px);
   border-radius:50%;border:none;display:flex;align-items:center;justify-content:center;
-  font-size:clamp(14px,2.5vw,18px);cursor:pointer;transition:all .22s}
+  font-size:clamp(16px,3vw,20px);cursor:pointer;transition:all .22s;
+  pointer-events:auto!important;position:relative;z-index:60;-webkit-tap-highlight-color:rgba(0,255,157,.3);
+  touch-action:manipulation;-webkit-user-select:none;user-select:none}
 .cb2:hover,.cb2:active{transform:scale(1.12)}
 .cba{background:linear-gradient(135deg,var(--g),var(--b));box-shadow:0 3px 8px rgba(0,255,157,.1)}
 .cbm{background:linear-gradient(135deg,var(--pk),var(--or));box-shadow:0 3px 8px rgba(255,0,128,.08)}
 .cbm.on{animation:mg .5s infinite alternate}
 @keyframes mg{from{box-shadow:0 0 4px rgba(255,0,128,.1)}to{box-shadow:0 0 5px rgba(255,0,128,.1)}}
-#iw{flex:1;min-height:clamp(48px,7vh,64px);max-height:140px;background:var(--c1);border-radius:18px;
+#iw{flex:1;min-height:clamp(52px,8vh,72px);max-height:240px;background:var(--c1);border-radius:18px;
   border:1px solid rgba(0,255,157,.2);display:flex;align-items:flex-end;
   padding:6px 8px 6px 10px;transition:border-color .18s,box-shadow .18s}
 #iw.on{border-color:var(--g);box-shadow:0 0 5px rgba(0,255,157,.06)}
 #mi{flex:1;background:none;border:none;outline:none;color:#fff;
   font-family:'Cairo',sans-serif;font-size:var(--sm);text-align:right;direction:rtl;
-  resize:none;min-height:36px;max-height:120px;line-height:1.5;padding:4px 0}
+  resize:none;min-height:44px;max-height:220px;line-height:1.55;padding:6px 0}
 #mi::placeholder{color:rgba(255,255,255,.22);font-size:var(--xs)}
-#sb{flex-shrink:0;width:40px;height:40px;border-radius:50%;border:none;
+#sb{flex-shrink:0;width:48px;height:48px;min-width:48px;min-height:48px;border-radius:50%;border:none;
   background:linear-gradient(135deg,var(--g),var(--b));
-  display:flex;align-items:center;justify-content:center;font-size:17px;color:#000;font-weight:700;
-  cursor:pointer;box-shadow:0 2px 12px rgba(0,255,157,.25);margin-bottom:2px}
-#sb:hover{transform:scale(1.14)}
-#aidot{position:absolute;z-index:20;right:14px;
+  display:flex!important;align-items:center;justify-content:center;font-size:20px;color:#000;font-weight:700;
+  cursor:pointer;box-shadow:0 2px 12px rgba(0,255,157,.35);margin-bottom:2px;
+  pointer-events:auto!important;opacity:1!important;z-index:60;position:relative;
+  touch-action:manipulation;-webkit-user-select:none;user-select:none}
+#sb:hover{transform:scale(1.1)}
+#sb:active{transform:scale(0.94)}
+#sb[disabled]{opacity:1!important;pointer-events:auto!important;cursor:pointer}
+#aidot{position:absolute;z-index:2;right:14px;pointer-events:none!important;
   bottom:clamp(90px,14vh,120px);width:16px;height:16px;
   border-radius:50%;background:var(--g);
   box-shadow:0 0 5px rgba(0,255,157,.08);animation:aip 2s infinite ease-in-out}
@@ -499,30 +507,8 @@ html.light #cv,.ll{color:var(--g)}
 html.light .devMsg.a{background:var(--c2);color:var(--tx)}
 
 
-/* Model strip in chat input area */
-#modelStrip{
-  display:flex;flex-wrap:wrap;gap:6px;padding:6px 10px 4px;
-  justify-content:flex-start;align-items:center;
-  max-height:72px;overflow-y:auto;
-  border-bottom:1px solid rgba(0,255,157,.08);
-  scrollbar-width:thin;
-}
-#modelStrip .ms-lbl{
-  font-size:11px;color:var(--dim);margin-left:4px;white-space:nowrap;
-}
-#modelStrip .ms-chip{
-  padding:4px 10px;border-radius:14px;font-size:12px;cursor:pointer;
-  border:1px solid rgba(0,255,157,.25);background:rgba(0,255,157,.06);
-  color:rgba(255,255,255,.75);transition:all .2s;white-space:nowrap;
-  font-family:Cairo,sans-serif;
-}
-#modelStrip .ms-chip:hover{border-color:var(--g);background:rgba(0,255,157,.12);color:#fff}
-#modelStrip .ms-chip.on{
-  background:linear-gradient(135deg,var(--g),var(--b));
-  color:#000;font-weight:700;border-color:transparent;
-}
-html.light #modelStrip .ms-chip{color:rgba(0,0,0,.7);background:rgba(0,136,90,.08)}
-html.light #modelStrip .ms-chip.on{color:#fff}
+/* modelStrip removed — models only in top bar */
+#modelStrip{display:none!important;height:0;overflow:hidden;padding:0;margin:0;border:none}
 
 
 .ty-dots{letter-spacing:2px;animation:tyPulse 1s infinite ease-in-out}
@@ -775,20 +761,22 @@ html.light #modelStrip .ms-chip.on{color:#fff}
     </div>
   </div>
 
-  <!-- INPUT + model selector always visible -->
+  <!-- INPUT — spacious for equations -->
   <div id="ip">
-    <div id="modelStrip">
-      <span class="ms-lbl">🤖 النموذج:</span>
-      <!-- filled by buildModels -->
-    </div>
     <div id="ir">
-      <button class="cb2 cba" onclick="document.getElementById('fileI').click()" title="إرسال ملف">📎</button>
-      <button class="cb2 cbm" id="micB" onclick="toggleMic()" title="صوت">🎤</button>
-      <input type="file" id="fileI" style="display:none" accept="image/*,.txt,.md,.csv,.json,.js,.py,.html,.css,.pdf" onchange="handleFile(this)">
+      <button type="button" class="cb2 cba" id="btnFile" title="إرسال ملف" aria-label="مرفق"
+        onclick="document.getElementById('fileI').click()">📎</button>
+      <button type="button" class="cb2 cbm" id="micB" title="صوت" aria-label="مايك"
+        onclick="toggleMic()">🎤</button>
+      <input type="file" id="fileI" style="display:none"
+        accept="image/*,.txt,.md,.csv,.json,.js,.py,.html,.css,.pdf"
+        onchange="handleFile(this)">
       <div id="iw">
         <textarea id="mi" rows="2" placeholder="اكتب سؤالك العلمي أو المعادلة هنا... (يدعم الرياضيات والهندسة)"
-          onkeydown="if((event.key==='Enter'||event.keyCode===13)&&!event.shiftKey){event.preventDefault();if(typeof doSend==='function')doSend();}" oninput="onTyp(this)"></textarea>
-        <button id="sb" onclick="doSend()">➤</button>
+          autocomplete="off" autocorrect="off"
+          onkeydown="if((event.key==='Enter'||event.keyCode===13)&&!event.shiftKey){event.preventDefault();doSend();}"
+          oninput="onTyp(this)"></textarea>
+        <button type="button" id="sb" aria-label="إرسال" onclick="doSend()">➤</button>
       </div>
     </div>
   </div>
@@ -812,6 +800,10 @@ html.light #modelStrip .ms-chip.on{color:#fff}
   <div class="dlg">
     <div class="dt">🔑 مفاتيح API المجانية فقط</div>
     <div class="ds" style="color:rgba(0,255,157,.7)">✅ تُحفظ محلياً في المتصفح فقط — لا تُرسل لأي خادم</div>
+    <div class="ks">
+      <div class="kl">𝕏 xAI Grok (الأقوى) — console.x.ai</div>
+      <input class="din" id="kXai" type="password" placeholder="xai-... مفتاح Grok من console.x.ai">
+    </div>
     <div class="ks">
       <div class="kl">🌐 OpenRouter (مجاني — 50 طلب/يوم) — openrouter.ai/keys</div>
       <input class="din" id="kOR" type="password" placeholder="sk-or-v1-...">
@@ -849,11 +841,11 @@ html.light #modelStrip .ms-chip.on{color:#fff}
 
   <!-- PREVIEW PANEL -->
 <div id="prevPanel" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:99999;background:#0a0a1a;flex-direction:column">
-  <div style="background:#050518;border-bottom:2px solid rgba(0,255,157,.25);padding:10px 14px;display:flex;align-items:center;gap:8px;direction:rtl;font-family:Cairo,sans-serif">
+  <div style="background:#050518;border-bottom:2px solid rgba(0,255,157,.25);padding:10px 14px;display:flex;align-items:center;gap:8px;direction:rtl;font-family:Cairo,sans-serif;flex-shrink:0;position:relative;z-index:100001">
     <span style="color:var(--g);font-weight:700;flex:1;font-size:14px" id="prevTitle">معاينة</span>
-    <button onclick="prevRefresh()" style="padding:6px 12px;border-radius:8px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.07);color:#fff;cursor:pointer;font-size:12px">🔄 تحديث</button>
-    <button onclick="prevDownload()" style="padding:6px 12px;border-radius:8px;border:1px solid rgba(0,255,157,.3);background:rgba(0,255,157,.1);color:var(--g);cursor:pointer;font-size:12px">⬇️ حفظ</button>
-    <button onclick="closePreview()" style="padding:6px 12px;border-radius:8px;border:1px solid rgba(255,60,60,.4);background:rgba(255,60,60,.1);color:#ff6060;cursor:pointer;font-size:12px">✕ إغلاق</button>
+    <button type="button" id="btnPrevRefresh" onclick="prevRefresh()" style="padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff;cursor:pointer;font-size:13px;min-height:44px;touch-action:manipulation;-webkit-tap-highlight-color:transparent">🔄 تحديث</button>
+    <button type="button" id="btnPrevSave" onclick="prevDownload()" style="padding:10px 16px;border-radius:10px;border:1px solid rgba(0,255,157,.45);background:rgba(0,255,157,.18);color:#00FF9D;cursor:pointer;font-size:14px;font-weight:700;min-height:44px;touch-action:manipulation;-webkit-tap-highlight-color:transparent">⬇️ حفظ</button>
+    <button type="button" id="btnPrevClose" onclick="closePreview()" style="padding:10px 14px;border-radius:10px;border:1px solid rgba(255,60,60,.45);background:rgba(255,60,60,.12);color:#ff6060;cursor:pointer;font-size:13px;min-height:44px;touch-action:manipulation">✕ إغلاق</button>
   </div>
   <iframe id="prevIframe" style="flex:1;width:100%;border:none;background:#fff" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
 </div>
@@ -867,8 +859,8 @@ html.light #modelStrip .ms-chip.on{color:#fff}
 const DEV={name:'NIDAL WATFA',role:'ROOT DEVELOPER',ver:'6.0.0-FREE',country:'Syria'};
 
 // ── State ─────────────────────────────────────────────────
-let KEYS={or:'',groq:'',gem:''}; // only free providers
-let MODEL='openrouter/free', LANG='ar';
+let KEYS={xai:'',or:'',groq:'',gem:''}; // only free providers
+let MODEL='grok-4.7', LANG='ar';
 let busy=false, devBusy=false, micOn=false;
 let sessions=[], devHistory=[];
 let mapReady=false, mapInst=null, mapMarker=null, ttsVoice=null;
@@ -898,11 +890,11 @@ function persistKeys(k){
 function loadPersistedKeys(){
   try{
     const s = localStorage.getItem(STORAGE_KEY);
-    if(s){ const k=JSON.parse(s); if(k && (k.or||k.groq||k.gem)) return k; }
+    if(s){ const k=JSON.parse(s); if(k && (k.xai||k.or||k.groq||k.gem)) return k; }
   }catch(e){}
   try{
     const s = sessionStorage.getItem(STORAGE_KEY);
-    if(s){ const k=JSON.parse(s); if(k && (k.or||k.groq||k.gem)) return k; }
+    if(s){ const k=JSON.parse(s); if(k && (k.xai||k.or||k.groq||k.gem)) return k; }
   }catch(e){}
   if(window._nexusKeysCache) return window._nexusKeysCache;
   return null;
@@ -910,54 +902,62 @@ function loadPersistedKeys(){
 function loadKeys(){
   const k = loadPersistedKeys();
   if(k){
-    KEYS.or = k.or||''; KEYS.groq = k.groq||''; KEYS.gem = k.gem||'';
+    KEYS.xai = k.xai||''; KEYS.or = k.or||''; KEYS.groq = k.groq||''; KEYS.gem = k.gem||'';
     cLog('info','✅ مفاتيح محملة محلياً');
   }
   updKeyBadge();
+  const elX=document.getElementById('kXai'); if(elX) elX.value = KEYS.xai||'';
   const elOR=document.getElementById('kOR'); if(elOR) elOR.value = KEYS.or;
   const elG=document.getElementById('kGroq'); if(elG) elG.value = KEYS.groq;
   const elGem=document.getElementById('kGem'); if(elGem) elGem.value = KEYS.gem;
 }
 function saveKeys(){
-  KEYS.or = (document.getElementById('kOR')?.value||'').trim();
-  KEYS.groq = (document.getElementById('kGroq')?.value||'').trim();
-  KEYS.gem = (document.getElementById('kGem')?.value||'').trim();
+  var elX=document.getElementById('kXai');
+  var elOR=document.getElementById('kOR');
+  var elG=document.getElementById('kGroq');
+  var elGem=document.getElementById('kGem');
+  KEYS.xai = (elX && elX.value || '').trim();
+  KEYS.or = (elOR && elOR.value || '').trim();
+  KEYS.groq = (elG && elG.value || '').trim();
+  KEYS.gem = (elGem && elGem.value || '').trim();
   persistKeys(KEYS);
   updKeyBadge();
-  closeD('apiD');
-  toast('✅ تم حفظ المفاتيح محلياً فقط');
-  cLog('info','مفاتيح محفوظة محلياً');
+  var n = [KEYS.xai, KEYS.or, KEYS.groq, KEYS.gem].filter(Boolean).length;
+  if(n===0){
+    toast('⚠️ لم يُحفظ أي مفتاح — الصق المفتاح أولاً');
+    cLog('warn','saveKeys: empty');
+  } else {
+    toast('✅ تم حفظ '+n+' مفتاح — جاهز للإرسال');
+    cLog('info','✅ مفاتيح محفوظة: OR='+(KEYS.or?'نعم':'لا')+' Groq='+(KEYS.groq?'نعم':'لا')+' Gem='+(KEYS.gem?'نعم':'لا'));
+    closeD('apiD');
+  }
 }
 function clearKeys(){
-  if(!confirm('مسح جميع المفاتيح؟'))return;
-  KEYS={or:'',groq:'',gem:''};
-  window._nexusKeysCache=null;
-  ['kOR','kGroq','kGem'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
-  try{localStorage.removeItem(STORAGE_KEY);}catch(e){}
-  try{sessionStorage.removeItem(STORAGE_KEY);}catch(e){}
+  KEYS={xai:'',or:'',groq:'',gem:''};
+  try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
+  try{ sessionStorage.removeItem(STORAGE_KEY); }catch(e){}
+  window._nexusKeysCache = null;
+  ['kXai','kOR','kGroq','kGem'].forEach(function(id){ var el=document.getElementById(id); if(el) el.value=''; });
   updKeyBadge();
-  toast('تم مسح المفاتيح');
+  toast('🗑️ تم مسح المفاتيح');
 }
 function updKeyBadge(){
-  const hasAny = KEYS.or||KEYS.groq||KEYS.gem;
+  const hasAny = KEYS.xai||KEYS.or||KEYS.groq||KEYS.gem;
   const dot = document.getElementById('keyDot');
   const lbl = document.getElementById('keyLabel');
   if(dot) dot.className = 'key-dot ' + (hasAny ? 'ok' : 'no');
   if(lbl){
-    if(KEYS.or) lbl.textContent = '🔑 OR ✅';
+    if(KEYS.xai) lbl.textContent = '🔑 Grok ✅';
+    else if(KEYS.or) lbl.textContent = '🔑 OR ✅';
     else if(KEYS.groq) lbl.textContent = '🔑 Groq ✅';
-    else if(KEYS.gem) lbl.textContent = '🔑 Gemini ✅';
+    else if(KEYS.gem) lbl.textContent = '🔑 Gem ✅';
     else lbl.textContent = '🔑 API';
   }
-  const st=document.getElementById('keySt');
-  if(st) st.innerHTML =
-    `OpenRouter: <span style="color:${KEYS.or?'var(--g)':'var(--rd)'}">${KEYS.or?'✅':'✗'}</span> &nbsp;
-     Groq: <span style="color:${KEYS.groq?'var(--g)':'var(--rd)'}">${KEYS.groq?'✅':'✗'}</span> &nbsp;
-     Gemini: <span style="color:${KEYS.gem?'var(--g)':'var(--rd)'}">${KEYS.gem?'✅':'✗'}</span>`;
-  const aiSt=document.getElementById('aiSt');
-  if(aiSt) aiSt.innerHTML = hasAny
-    ?`<span>🟢</span><span>AI نشط — ${KEYS.or?'OpenRouter':KEYS.groq?'Groq':'Gemini'}</span>`
-    :'<span>🔴</span><span>أضف مفتاحاً مجانياً من 🔑</span>';
+  const st = document.getElementById('keySt');
+  if(st){
+    if(hasAny) st.textContent = '✅ مفتاح محفوظ — جاهز للإرسال';
+    else st.textContent = '🔵 أضف مفتاح Grok من console.x.ai أو مزوداً آخر';
+  }
 }
 
 // ── Share (no keys in export) ─────────────────────────────
@@ -1043,17 +1043,91 @@ const spT=setInterval(()=>{
   document.getElementById('spf').style.width=pct+'%';
   document.getElementById('spp').textContent='تهيئة الأنظمة... '+Math.floor(pct)+'%';
 },52);
+
+// ── Wire input controls (click + touch) — must work on all mobile browsers ──
+function wireInputControls(){
+  try{
+    var sb = document.getElementById('sb');
+    var mi = document.getElementById('mi');
+    var mic = document.getElementById('micB');
+    var btnFile = document.getElementById('btnFile');
+    var fileI = document.getElementById('fileI');
+
+    function safeSend(e){
+      if(e){ e.preventDefault(); e.stopPropagation(); }
+      try{
+        if(typeof doSend === 'function') doSend();
+        else if(typeof window.doSend === 'function') window.doSend();
+        else toast('❌ دالة الإرسال غير محمّلة — حدّث الصفحة');
+      }catch(err){ toast('❌ '+err.message); console.error(err); }
+      return false;
+    }
+    function safeMic(e){
+      if(e){ e.preventDefault(); e.stopPropagation(); }
+      try{
+        if(typeof toggleMic === 'function') toggleMic();
+        else if(typeof window.toggleMic === 'function') window.toggleMic();
+        else toast('❌ المايك غير متاح');
+      }catch(err){ toast('❌ '+err.message); }
+      return false;
+    }
+    function safeFile(e){
+      if(e){ e.preventDefault(); e.stopPropagation(); }
+      try{
+        var fi = document.getElementById('fileI');
+        if(fi) fi.click();
+        else toast('❌ اختيار الملف غير متاح');
+      }catch(err){ toast('❌ '+err.message); }
+      return false;
+    }
+
+    if(sb){
+      sb.onclick = safeSend;
+      sb.ontouchend = function(e){ e.preventDefault(); safeSend(e); };
+      sb.disabled = false;
+      sb.removeAttribute('disabled');
+      sb.style.pointerEvents = 'auto';
+    }
+    if(mic){
+      mic.onclick = safeMic;
+      mic.ontouchend = function(e){ e.preventDefault(); safeMic(e); };
+    }
+    if(btnFile){
+      btnFile.onclick = safeFile;
+      btnFile.ontouchend = function(e){ e.preventDefault(); safeFile(e); };
+    }
+    if(fileI){
+      fileI.onchange = function(){ try{ handleFile(fileI); }catch(err){ toast('❌ '+err.message); } };
+    }
+    if(mi){
+      mi.oninput = function(){ try{ onTyp(mi); }catch(e){} };
+      mi.onkeydown = function(ev){
+        if((ev.key==='Enter'||ev.keyCode===13) && !ev.shiftKey){
+          ev.preventDefault();
+          safeSend(ev);
+        }
+      };
+    }
+    console.log('[NEXUS] input controls wired ✓');
+  }catch(e){ console.warn('wireInputControls', e); }
+}
+
 function showApp(){
   document.getElementById('spl').style.opacity='0';
   setTimeout(()=>document.getElementById('spl').style.display='none',900);
   document.getElementById('app').classList.add('on');
+  // wire buttons immediately when app shows
+  try{ wireInputControls(); }catch(e){}
   setTimeout(()=>{
+    try{ wireInputControls(); }catch(e){}
     drawChart();startAIType();confetti();
     buildSymbols();buildModels();
     loadKeys();initTTS();
+    try{ wireInputControls(); }catch(e){}
     cLog('info',`NEXUS v${DEV.ver} — ${DEV.name} | FREE MODELS ✓`);
     cLog('info','الخرائط: Esri World Imagery + OSM ✓');
     cLog('info','AI: OpenRouter Free / Groq / Gemini ✓');
+    cLog('info','الأزرار: إرسال / مايك / مرفق ✓');
   },750);
 }
 
@@ -1066,9 +1140,13 @@ function setM(btn){
   btn.classList.add('on');
   const m=btn.dataset.m;
   if(m==='maps'){
-    document.getElementById('mv-maps').style.display='block';
-    if(!mapReady)setTimeout(initMap,100);
-    else setTimeout(()=>mapInst?.invalidateSize(),200);
+    var mw=document.getElementById('mv-maps');
+    if(mw){ mw.style.display='block'; mw.style.visibility='visible'; }
+    if(!mapReady) setTimeout(initMap,80);
+    else {
+      setTimeout(function(){ try{ mapInst && mapInst.invalidateSize(true); }catch(e){} }, 100);
+      setTimeout(function(){ try{ mapInst && mapInst.invalidateSize(true); }catch(e){} }, 400);
+    }
   } else if(m==='devmode'){
     document.getElementById('devPanel').classList.add('on');
   } else {
@@ -1089,20 +1167,26 @@ function devTab(id,btn){
 function initMap(){
   if(mapReady||!window.L)return;
   mapReady=true;
-  mapInst=L.map('mapEl',{zoomControl:true,attributionControl:true}).setView([33.51,36.29],6);
-  // Esri World Imagery (satellite-like, commonly used free for demos)
-  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{
-    maxZoom:19,
-    attribution:'Tiles © Esri — Source: Esri, Maxar, Earthstar Geographics'
-  }).addTo(mapInst);
-  // Labels overlay
-  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',{
-    maxZoom:19, opacity:0.7
-  }).addTo(mapInst);
+  var el=document.getElementById('mapEl');
+  if(!el){ mapReady=false; return; }
+  el.style.width='100%'; el.style.height='100%';
+  mapInst=L.map('mapEl',{zoomControl:true,attributionControl:true,preferCanvas:true}).setView([33.51,36.29],6);
+
+  var osm=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    maxZoom:19, attribution:'© OpenStreetMap'
+  });
+  var carto=L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{
+    maxZoom:19, attribution:'© OSM © CARTO'
+  });
+  var esri=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{
+    maxZoom:19, attribution:'Tiles © Esri'
+  });
+  osm.addTo(mapInst);
+  L.control.layers({'🗺️ شوارع':osm,'🌑 داكن':carto,'🛰️ قمر صناعي':esri},null,{position:'topleft',collapsed:true}).addTo(mapInst);
 
   const icon=L.divIcon({
-    html:'<div style="width:18px;height:18px;border-radius:50%;background:var(--g);border:3px solid #fff;box-shadow:0 0 12px var(--g)"></div>',
-    iconSize:[18,18],iconAnchor:[9,9]
+    html:'<div style="width:22px;height:22px;border-radius:50%;background:#00FF9D;border:3px solid #fff;box-shadow:0 0 14px #00FF9D"></div>',
+    iconSize:[22,22],iconAnchor:[11,11]
   });
   mapMarker = L.marker([33.51,36.29],{icon,draggable:true}).addTo(mapInst);
   mapMarker.on('dragend', e=>{
@@ -1116,7 +1200,9 @@ function initMap(){
     document.getElementById('mapInfo').innerHTML=
       `📍 خط العرض: <b>${lat.toFixed(5)}</b><br>📍 خط الطول: <b>${lng.toFixed(5)}</b>`;
   });
-  setTimeout(()=>mapInst.invalidateSize(),200);
+  setTimeout(function(){ try{ mapInst.invalidateSize(true); }catch(e){} }, 150);
+  setTimeout(function(){ try{ mapInst.invalidateSize(true); }catch(e){} }, 500);
+  setTimeout(function(){ try{ mapInst.invalidateSize(true); }catch(e){} }, 1200);
 }
 function locateMe(){
   if(!navigator.geolocation){ toast('❌ تحديد الموقع غير مدعوم'); return; }
@@ -1137,34 +1223,172 @@ function locateMe(){
 
 // ── Symbols ────────────────────────────────────────────────
 const SYMS={
+  'آلة حاسبة':[
+    {s:'0',n:'صفر'},{s:'1',n:'واحد'},{s:'2',n:'اثنان'},{s:'3',n:'ثلاثة'},{s:'4',n:'أربعة'},
+    {s:'5',n:'خمسة'},{s:'6',n:'ستة'},{s:'7',n:'سبعة'},{s:'8',n:'ثمانية'},{s:'9',n:'تسعة'},
+    {s:'.',n:'فاصلة عشرية'},{s:',',n:'فاصلة'},{s:'+',n:'جمع'},{s:'−',n:'طرح'},{s:'×',n:'ضرب'},
+    {s:'÷',n:'قسمة'},{s:'/',n:'كسر /'},{s:'=',n:'يساوي'},{s:'±',n:'±'},{s:'%',n:'بالمئة'},
+    {s:'(',n:'('},{s:')',n:')'},{s:'[',n:'['},{s:']',n:']'},{s:'{',n:'{'},
+    {s:'}',n:'}'},{s:'^',n:'أس ^'},{s:'²',n:'تربيع'},{s:'³',n:'تكعيب'},{s:'ⁿ',n:'أس n'},
+    {s:'√',n:'جذر'},{s:'∛',n:'جذر ³'},{s:'∜',n:'جذر ⁴'},{s:'!',n:'عاملي'},{s:'|x|',n:'مطلق'},
+    {s:'π',n:'π باي'},{s:'e',n:'e أويلر'},{s:'∞',n:'∞'},{s:'≈',n:'≈'},{s:'≠',n:'≠'},
+    {s:'<',n:'<'},{s:'>',n:'>'},{s:'≤',n:'≤'},{s:'≥',n:'≥'},{s:'∝',n:'∝'},
+    {s:'sin',n:'sin'},{s:'cos',n:'cos'},{s:'tan',n:'tan'},{s:'cot',n:'cot'},{s:'sec',n:'sec'},
+    {s:'csc',n:'csc'},{s:'asin',n:'asin'},{s:'acos',n:'acos'},{s:'atan',n:'atan'},
+    {s:'sinh',n:'sinh'},{s:'cosh',n:'cosh'},{s:'tanh',n:'tanh'},{s:'log',n:'log₁₀'},{s:'ln',n:'ln'},
+    {s:'log₂',n:'log₂'},{s:'exp',n:'exp'},{s:'10^x',n:'10^x'},{s:'e^x',n:'e^x'},{s:'x⁻¹',n:'1/x'},
+    {s:'mod',n:'mod'},{s:'abs',n:'abs'},{s:'floor',n:'floor'},{s:'ceil',n:'ceil'},{s:'round',n:'round'},
+    {s:'°',n:'°'},{s:'rad',n:'rad'},{s:'′',n:'′'},{s:'″',n:'″'},{s:':',n:'نسبة :'},
+    {s:'→',n:'→'},{s:'⇒',n:'⇒'},{s:'⇔',n:'⇔'},{s:'∑',n:'∑'},{s:'∏',n:'∏'},
+    {s:'∫',n:'∫'},{s:'∂',n:'∂'},{s:'∆',n:'∆'},{s:'∇',n:'∇'},{s:'%',n:'%'},
+  ],
   'رياضيات':[
     {s:'α',n:'ألفا'},{s:'β',n:'بيتا'},{s:'γ',n:'غاما'},{s:'δ',n:'دلتا'},{s:'ε',n:'إبسيلون'},
-    {s:'θ',n:'ثيتا'},{s:'λ',n:'لامبدا'},{s:'μ',n:'ميو'},{s:'π',n:'باي'},{s:'σ',n:'سيغما'},
-    {s:'φ',n:'فاي'},{s:'ω',n:'أوميغا'},{s:'Σ',n:'مجموع'},{s:'∫',n:'تكامل'},{s:'∂',n:'جزئي'},
-    {s:'√',n:'جذر'},{s:'∇',n:'نابلا'},{s:'∞',n:'لانهاية'},{s:'∆',n:'دلتا كبير'},{s:'≈',n:'يقارب'},
-    {s:'≠',n:'لا يساوي'},{s:'≤',n:'أصغر/يساوي'},{s:'≥',n:'أكبر/يساوي'},{s:'∈',n:'ينتمي'},
-    {s:'∀',n:'لكل'},{s:'∃',n:'يوجد'},{s:'±',n:'±'},{s:'∏',n:'جداء'},
+    {s:'ζ',n:'زيتا'},{s:'η',n:'إيتا'},{s:'θ',n:'ثيتا'},{s:'ι',n:'يوتا'},{s:'κ',n:'كابا'},
+    {s:'λ',n:'لامبدا'},{s:'μ',n:'ميو'},{s:'ν',n:'نو'},{s:'ξ',n:'كسي'},{s:'π',n:'باي'},
+    {s:'ρ',n:'رو'},{s:'σ',n:'سيغما'},{s:'τ',n:'تاو'},{s:'υ',n:'أبسيلون'},{s:'φ',n:'فاي'},
+    {s:'χ',n:'كاي'},{s:'ψ',n:'بسي'},{s:'ω',n:'أوميغا'},{s:'Γ',n:'غاما كبير'},{s:'Δ',n:'دلتا كبير'},
+    {s:'Θ',n:'ثيتا كبير'},{s:'Λ',n:'لامبدا كبير'},{s:'Ξ',n:'كسي كبير'},{s:'Π',n:'باي كبير'},{s:'Σ',n:'مجموع'},
+    {s:'Φ',n:'فاي كبير'},{s:'Ψ',n:'بسي كبير'},{s:'Ω',n:'أوميغا كبير'},{s:'∞',n:'لانهاية'},{s:'∅',n:'خالية'},
+    {s:'∈',n:'ينتمي'},{s:'∉',n:'لا ينتمي'},{s:'⊂',n:'جزئية'},{s:'⊆',n:'جزئية/='},{s:'∪',n:'اتحاد'},
+    {s:'∩',n:'تقاطع'},{s:'∀',n:'لكل'},{s:'∃',n:'يوجد'},{s:'∄',n:'لا يوجد'},{s:'∴',n:'إذن'},
+    {s:'∵',n:'لأن'},{s:'±',n:'±'},{s:'∓',n:'∓'},{s:'×',n:'ضرب'},{s:'÷',n:'قسمة'},
+    {s:'·',n:'نقطة'},{s:'√',n:'جذر'},{s:'∛',n:'جذر³'},{s:'∜',n:'جذر⁴'},{s:'²',n:'تربيع'},
+    {s:'³',n:'تكعيب'},{s:'ⁿ',n:'أس n'},{s:'∫',n:'تكامل'},{s:'∬',n:'مزدوج'},{s:'∭',n:'ثلاثي'},
+    {s:'∮',n:'مغلق'},{s:'∂',n:'جزئي'},{s:'∇',n:'نابلا'},{s:'∇²',n:'لابلاس'},{s:'∆',n:'دلتا'},
+    {s:'∑',n:'مجموع'},{s:'∏',n:'جداء'},{s:'≈',n:'≈'},{s:'≠',n:'≠'},{s:'≡',n:'≡'},
+    {s:'≤',n:'≤'},{s:'≥',n:'≥'},{s:'≪',n:'≪'},{s:'≫',n:'≫'},{s:'∝',n:'∝'},
+    {s:'→',n:'→'},{s:'↔',n:'↔'},{s:'⇒',n:'⇒'},{s:'⇔',n:'⇔'},{s:'⌊',n:'⌊'},
+    {s:'⌋',n:'⌋'},{s:'⌈',n:'⌈'},{s:'⌉',n:'⌉'},{s:'|',n:'|'},{s:'‖',n:'‖'},
+    {s:'∠',n:'زاوية'},{s:'°',n:'°'},{s:'′',n:'′'},{s:'″',n:'″'},{s:'%',n:'%'},
+    {s:'.',n:'.'},{s:'(',n:'('},{s:')',n:')'},{s:'+',n:'+'},{s:'−',n:'−'},
+    {s:'/',n:'/'},{s:'=',n:'='},{s:'^',n:'^'},{s:'!',n:'!'},{s:':',n:':'},
   ],
-  'فيزياء':[
-    {s:'ℏ',n:'ثابت بلانك'},{s:'c',n:'سرعة الضوء'},{s:'G',n:'الجاذبية'},{s:'e',n:'شحنة e⁻'},
-    {s:'F',n:'قوة'},{s:'E',n:'طاقة'},{s:'ρ',n:'كثافة'},{s:'Ω',n:'أوم'},{s:'ψ',n:'دالة موجة'},
-    {s:'→',n:'ناقل'},{s:'∝',n:'يتناسب'},{s:'℃',n:'سيلزيوس'},{s:'λ',n:'طول موجة'},
-  ],
-  'كيمياء':[
-    {s:'⇌',n:'توازن'},{s:'→',n:'لاعكوس'},{s:'H',n:'هيدروجين'},{s:'O',n:'أوكسجين'},
-    {s:'C',n:'كربون'},{s:'N',n:'نيتروجين'},{s:'Na',n:'صوديوم'},{s:'Fe',n:'حديد'},
-    {s:'pH',n:'حموضة'},{s:'ΔH',n:'إنتالبي'},
+  'جبر':[
+    {s:'x',n:'x'},{s:'y',n:'y'},{s:'z',n:'z'},{s:'a',n:'a'},{s:'b',n:'b'},
+    {s:'c',n:'c'},{s:'n',n:'n'},{s:'k',n:'k'},{s:'ℝ',n:'ℝ'},{s:'ℂ',n:'ℂ'},
+    {s:'ℕ',n:'ℕ'},{s:'ℤ',n:'ℤ'},{s:'ℚ',n:'ℚ'},{s:'∅',n:'∅'},{s:'∈',n:'∈'},
+    {s:'∉',n:'∉'},{s:'⊂',n:'⊂'},{s:'⊆',n:'⊆'},{s:'∪',n:'∪'},{s:'∩',n:'∩'},
+    {s:'∖',n:'فرق'},{s:'×',n:'×'},{s:'→',n:'→'},{s:'↦',n:'↦'},{s:'∘',n:'∘'},
+    {s:'⁻¹',n:'⁻¹'},{s:'ᵀ',n:'ᵀ'},{s:'det',n:'det'},{s:'tr',n:'tr'},{s:'rank',n:'rank'},
+    {s:'dim',n:'dim'},{s:'ker',n:'ker'},{s:'im',n:'im'},{s:'⊕',n:'⊕'},{s:'⊗',n:'⊗'},
+    {s:'≅',n:'≅'},{s:'∼',n:'∼'},{s:'≈',n:'≈'},{s:'≡',n:'≡'},{s:'≠',n:'≠'},
+    {s:'≤',n:'≤'},{s:'≥',n:'≥'},{s:'|',n:'|'},{s:'∤',n:'∤'},{s:'⊥',n:'⊥'},
+    {s:'⟨',n:'⟨'},{s:'⟩',n:'⟩'},{s:'[',n:'['},{s:']',n:']'},{s:'‖',n:'‖'},
+    {s:'∑',n:'∑'},{s:'∏',n:'∏'},{s:'√',n:'√'},{s:'²',n:'²'},{s:'³',n:'³'},
+    {s:'ⁿ',n:'ⁿ'},{s:'!',n:'!'},{s:'C',n:'C'},{s:'P',n:'P'},{s:'binom',n:'binom'},
+    {s:'.',n:'.'},{s:'(',n:'('},{s:')',n:')'},{s:'+',n:'+'},{s:'−',n:'−'},
+    {s:'/',n:'/'},{s:'=',n:'='},{s:'^',n:'^'},
   ],
   'هندسة':[
-    {s:'∠',n:'زاوية'},{s:'⊥',n:'عمودي'},{s:'∥',n:'موازٍ'},{s:'△',n:'مثلث'},{s:'□',n:'مربع'},
-    {s:'○',n:'دائرة'},{s:'∫∫',n:'مزدوج'},{s:'∇²',n:'لابلاسيان'},
+    {s:'∠',n:'زاوية'},{s:'∡',n:'زاوية مقيسة'},{s:'⊥',n:'عمودي'},{s:'∥',n:'موازٍ'},{s:'△',n:'مثلث'},
+    {s:'▲',n:'مثلث'},{s:'□',n:'مربع'},{s:'■',n:'مربع'},{s:'○',n:'دائرة'},{s:'●',n:'دائرة'},
+    {s:'◯',n:'دائرة'},{s:'▭',n:'مستطيل'},{s:'▱',n:'متوازي'},{s:'◇',n:'معين'},{s:'⬡',n:'سداسي'},
+    {s:'⬠',n:'خماسي'},{s:'⋆',n:'نجمة'},{s:'°',n:'°'},{s:'′',n:'′'},{s:'″',n:'″'},
+    {s:'π',n:'π'},{s:'r',n:'r'},{s:'R',n:'R'},{s:'d',n:'d'},{s:'A',n:'مساحة'},
+    {s:'V',n:'حجم'},{s:'P',n:'محيط'},{s:'h',n:'ارتفاع'},{s:'l',n:'طول'},{s:'w',n:'عرض'},
+    {s:'sin',n:'sin'},{s:'cos',n:'cos'},{s:'tan',n:'tan'},{s:'cot',n:'cot'},{s:'sec',n:'sec'},
+    {s:'csc',n:'csc'},{s:'arcsin',n:'arcsin'},{s:'arccos',n:'arccos'},{s:'arctan',n:'arctan'},
+    {s:'sinh',n:'sinh'},{s:'cosh',n:'cosh'},{s:'tanh',n:'tanh'},{s:'∇',n:'∇'},{s:'∇²',n:'∇²'},
+    {s:'∫',n:'∫'},{s:'∬',n:'∬'},{s:'∭',n:'∭'},{s:'∮',n:'∮'},{s:'∂',n:'∂'},
+    {s:'≈',n:'≈'},{s:'≅',n:'≅'},{s:'∼',n:'∼'},{s:'≡',n:'≡'},{s:'≠',n:'≠'},
+    {s:'≤',n:'≤'},{s:'≥',n:'≥'},{s:'→',n:'→'},{s:'↔',n:'↔'},{s:'⇒',n:'⇒'},
+    {s:'.',n:'.'},{s:'(',n:'('},{s:')',n:')'},{s:'+',n:'+'},{s:'−',n:'−'},
+    {s:'/',n:'/'},{s:'=',n:'='},{s:'×',n:'×'},{s:'^',n:'^'},
+  ],
+  'فيزياء':[
+    {s:'ℏ',n:'ℏ'},{s:'h',n:'h'},{s:'c',n:'c'},{s:'G',n:'G'},
+    {s:'e',n:'e'},{s:'mₑ',n:'mₑ'},{s:'mₚ',n:'mₚ'},{s:'k',n:'k'},
+    {s:'Nₐ',n:'Nₐ'},{s:'R',n:'R'},{s:'ε₀',n:'ε₀'},{s:'μ₀',n:'μ₀'},
+    {s:'F',n:'F'},{s:'E',n:'E'},{s:'P',n:'P'},{s:'W',n:'W'},{s:'Q',n:'Q'},
+    {s:'V',n:'V'},{s:'I',n:'I'},{s:'R',n:'R'},{s:'Ω',n:'Ω'},{s:'ρ',n:'ρ'},
+    {s:'σ',n:'σ'},{s:'λ',n:'λ'},{s:'ν',n:'ν'},{s:'ω',n:'ω'},{s:'f',n:'f'},
+    {s:'T',n:'T'},{s:'t',n:'t'},{s:'v',n:'v'},{s:'a',n:'a'},{s:'m',n:'m'},
+    {s:'p',n:'p'},{s:'L',n:'L'},{s:'J',n:'J'},{s:'B',n:'B'},{s:'H',n:'H'},
+    {s:'Φ',n:'Φ'},{s:'ψ',n:'ψ'},{s:'Ψ',n:'Ψ'},{s:'→',n:'→'},
+    {s:'×',n:'×'},{s:'·',n:'·'},{s:'∇',n:'∇'},{s:'∇·',n:'div'},{s:'∇×',n:'curl'},
+    {s:'∂',n:'∂'},{s:'∫',n:'∫'},{s:'∮',n:'∮'},{s:'∝',n:'∝'},{s:'≈',n:'≈'},
+    {s:'≠',n:'≠'},{s:'≤',n:'≤'},{s:'≥',n:'≥'},{s:'±',n:'±'},{s:'∞',n:'∞'},
+    {s:'℃',n:'℃'},{s:'℉',n:'℉'},{s:'K',n:'K'},{s:'Pa',n:'Pa'},{s:'J',n:'J'},
+    {s:'W',n:'W'},{s:'N',n:'N'},{s:'V',n:'V'},{s:'A',n:'A'},{s:'C',n:'C'},
+    {s:'F',n:'F'},{s:'H',n:'H'},{s:'T',n:'T'},{s:'Wb',n:'Wb'},{s:'Hz',n:'Hz'},
+    {s:'.',n:'.'},{s:'(',n:'('},{s:')',n:')'},{s:'+',n:'+'},{s:'−',n:'−'},
+    {s:'/',n:'/'},{s:'=',n:'='},{s:'^',n:'^'},
+  ],
+  'كيمياء':[
+    {s:'⇌',n:'توازن'},{s:'→',n:'→'},{s:'←',n:'←'},{s:'↑',n:'غاز'},{s:'↓',n:'راسب'},
+    {s:'Δ',n:'Δ'},{s:'ΔH',n:'ΔH'},{s:'ΔG',n:'ΔG'},{s:'ΔS',n:'ΔS'},{s:'ΔU',n:'ΔU'},
+    {s:'K',n:'K'},{s:'Kₐ',n:'Kₐ'},{s:'Kᵦ',n:'Kᵦ'},{s:'Kₛₚ',n:'Kₛₚ'},{s:'pH',n:'pH'},
+    {s:'pOH',n:'pOH'},{s:'mol',n:'mol'},{s:'M',n:'M'},{s:'m',n:'m'},{s:'N',n:'N'},
+    {s:'H',n:'H'},{s:'He',n:'He'},{s:'Li',n:'Li'},{s:'Be',n:'Be'},{s:'B',n:'B'},
+    {s:'C',n:'C'},{s:'N',n:'N'},{s:'O',n:'O'},{s:'F',n:'F'},{s:'Ne',n:'Ne'},
+    {s:'Na',n:'Na'},{s:'Mg',n:'Mg'},{s:'Al',n:'Al'},{s:'Si',n:'Si'},{s:'P',n:'P'},
+    {s:'S',n:'S'},{s:'Cl',n:'Cl'},{s:'Ar',n:'Ar'},{s:'K',n:'K'},{s:'Ca',n:'Ca'},
+    {s:'Fe',n:'Fe'},{s:'Cu',n:'Cu'},{s:'Zn',n:'Zn'},{s:'Ag',n:'Ag'},{s:'Au',n:'Au'},
+    {s:'Hg',n:'Hg'},{s:'Pb',n:'Pb'},{s:'U',n:'U'},{s:'⁺',n:'⁺'},{s:'⁻',n:'⁻'},
+    {s:'²⁺',n:'²⁺'},{s:'²⁻',n:'²⁻'},{s:'³⁺',n:'³⁺'},{s:'aq',n:'aq'},{s:'s',n:'s'},
+    {s:'l',n:'l'},{s:'g',n:'g'},{s:'e⁻',n:'e⁻'},{s:'H⁺',n:'H⁺'},{s:'OH⁻',n:'OH⁻'},
+    {s:'H₃O⁺',n:'H₃O⁺'},{s:'CO₂',n:'CO₂'},{s:'H₂O',n:'H₂O'},{s:'O₂',n:'O₂'},{s:'N₂',n:'N₂'},
+    {s:'NH₃',n:'NH₃'},{s:'CH₄',n:'CH₄'},{s:'H₂SO₄',n:'H₂SO₄'},{s:'HCl',n:'HCl'},{s:'NaOH',n:'NaOH'},
+    {s:'.',n:'.'},{s:'(',n:'('},{s:')',n:')'},{s:'+',n:'+'},{s:'=',n:'='},
+  ],
+  'طب':[
+    {s:'♂',n:'ذكر'},{s:'♀',n:'أنثى'},{s:'♥',n:'قلب'},{s:'🩸',n:'دم'},{s:'💊',n:'دواء'},
+    {s:'🩺',n:'سماعة'},{s:'🧬',n:'DNA'},{s:'🦠',n:'ميكروب'},{s:'🦴',n:'عظم'},{s:'🧠',n:'دماغ'},
+    {s:'BP',n:'BP'},{s:'HR',n:'HR'},{s:'RR',n:'RR'},{s:'T°',n:'T°'},{s:'SpO₂',n:'SpO₂'},
+    {s:'BMI',n:'BMI'},{s:'ECG',n:'ECG'},{s:'EEG',n:'EEG'},{s:'MRI',n:'MRI'},{s:'CT',n:'CT'},
+    {s:'IV',n:'IV'},{s:'IM',n:'IM'},{s:'SC',n:'SC'},{s:'PO',n:'PO'},{s:'PRN',n:'PRN'},
+    {s:'BID',n:'BID'},{s:'TID',n:'TID'},{s:'QID',n:'QID'},{s:'QD',n:'QD'},{s:'HS',n:'HS'},
+    {s:'Rx',n:'Rx'},{s:'Dx',n:'Dx'},{s:'Hx',n:'Hx'},{s:'Sx',n:'Sx'},{s:'Tx',n:'Tx'},
+    {s:'mg',n:'mg'},{s:'μg',n:'μg'},{s:'mL',n:'mL'},{s:'IU',n:'IU'},{s:'mmol',n:'mmol'},
+    {s:'%',n:'%'},{s:'⁺',n:'⁺'},{s:'⁻',n:'⁻'},{s:'↑',n:'↑'},{s:'↓',n:'↓'},
+    {s:'→',n:'→'},{s:'≈',n:'≈'},{s:'±',n:'±'},{s:'°C',n:'°C'},{s:'mmHg',n:'mmHg'},
+    {s:'.',n:'.'},{s:'(',n:'('},{s:')',n:')'},{s:'/',n:'/'},{s:'=',n:'='},
+  ],
+  'أحياء':[
+    {s:'♂',n:'ذكر'},{s:'♀',n:'أنثى'},{s:'🧬',n:'DNA'},{s:'🧪',n:'تجربة'},{s:'🦠',n:'بكتيريا'},
+    {s:'🍄',n:'فطر'},{s:'🌿',n:'نبات'},{s:'🐾',n:'حيوان'},{s:'🦋',n:'حشرة'},
+    {s:'DNA',n:'DNA'},{s:'RNA',n:'RNA'},{s:'ATP',n:'ATP'},{s:'ADP',n:'ADP'},{s:'NADH',n:'NADH'},
+    {s:'pH',n:'pH'},{s:'°C',n:'°C'},{s:'μm',n:'μm'},{s:'nm',n:'nm'},{s:'bp',n:'bp'},
+    {s:'kb',n:'kb'},{s:'Mb',n:'Mb'},{s:'aa',n:'aa'},{s:'kDa',n:'kDa'},{s:'OD',n:'OD'},
+    {s:'CFU',n:'CFU'},{s:'MOI',n:'MOI'},{s:'LD₅₀',n:'LD₅₀'},{s:'IC₅₀',n:'IC₅₀'},{s:'EC₅₀',n:'EC₅₀'},
+    {s:'→',n:'→'},{s:'⇌',n:'⇌'},{s:'↑',n:'↑'},{s:'↓',n:'↓'},{s:'±',n:'±'},
+    {s:'%',n:'%'},{s:'≈',n:'≈'},{s:'≠',n:'≠'},{s:'≤',n:'≤'},{s:'≥',n:'≥'},
+    {s:'H₂O',n:'H₂O'},{s:'CO₂',n:'CO₂'},{s:'O₂',n:'O₂'},{s:'N₂',n:'N₂'},{s:'C₆H₁₂O₆',n:'جلوكوز'},
+    {s:'Pᵢ',n:'Pᵢ'},{s:'e⁻',n:'e⁻'},{s:'.',n:'.'},{s:'(',n:'('},{s:')',n:')'},
   ],
   'فلك':[
-    {s:'☀',n:'الشمس'},{s:'☽',n:'القمر'},{s:'♁',n:'الأرض'},{s:'♂',n:'المريخ'},
-    {s:'♃',n:'المشتري'},{s:'AU',n:'وحدة فلكية'},{s:'ly',n:'سنة ضوئية'},{s:'★',n:'نجم'},
+    {s:'☀',n:'شمس'},{s:'☽',n:'قمر'},{s:'☾',n:'قمر'},{s:'♁',n:'أرض'},{s:'♂',n:'مريخ'},
+    {s:'♀',n:'زهرة'},{s:'☿',n:'عطارد'},{s:'♃',n:'مشتري'},{s:'♄',n:'زحل'},{s:'♅',n:'أورانوس'},
+    {s:'♆',n:'نبتون'},{s:'♇',n:'بلوتو'},{s:'★',n:'نجم'},{s:'☆',n:'نجم'},{s:'✦',n:'نجم'},
+    {s:'☄',n:'مذنب'},{s:'🌌',n:'مجرة'},{s:'🌑',n:'قمر جديد'},{s:'🌕',n:'بدر'},
+    {s:'AU',n:'AU'},{s:'ly',n:'ly'},{s:'pc',n:'pc'},{s:'kpc',n:'kpc'},{s:'Mpc',n:'Mpc'},
+    {s:'M☉',n:'M☉'},{s:'R☉',n:'R☉'},{s:'L☉',n:'L☉'},{s:'M⊕',n:'M⊕'},{s:'R⊕',n:'R⊕'},
+    {s:'z',n:'z'},{s:'H₀',n:'H₀'},{s:'Ω',n:'Ω'},{s:'Λ',n:'Λ'},{s:'c',n:'c'},
+    {s:'G',n:'G'},{s:'mag',n:'mag'},{s:'α',n:'α'},{s:'δ',n:'δ'},{s:'λ',n:'λ'},
+    {s:'ν',n:'ν'},{s:'T_eff',n:'T_eff'},{s:'v_r',n:'v_r'},{s:'→',n:'→'},{s:'∞',n:'∞'},
+    {s:'≈',n:'≈'},{s:'±',n:'±'},{s:'°',n:'°'},{s:'′',n:'′'},{s:'″',n:'″'},
+    {s:'.',n:'.'},{s:'(',n:'('},{s:')',n:')'},{s:'/',n:'/'},{s:'=',n:'='},
+  ],
+  'وحدات':[
+    {s:'m',n:'m'},{s:'km',n:'km'},{s:'cm',n:'cm'},{s:'mm',n:'mm'},{s:'μm',n:'μm'},
+    {s:'nm',n:'nm'},{s:'Å',n:'Å'},{s:'pm',n:'pm'},{s:'fm',n:'fm'},{s:'ly',n:'ly'},
+    {s:'AU',n:'AU'},{s:'pc',n:'pc'},{s:'s',n:'s'},{s:'min',n:'min'},{s:'h',n:'h'},
+    {s:'d',n:'d'},{s:'yr',n:'yr'},{s:'Hz',n:'Hz'},{s:'kHz',n:'kHz'},{s:'MHz',n:'MHz'},
+    {s:'GHz',n:'GHz'},{s:'kg',n:'kg'},{s:'g',n:'g'},{s:'mg',n:'mg'},{s:'μg',n:'μg'},
+    {s:'t',n:'t'},{s:'u',n:'u'},{s:'N',n:'N'},{s:'Pa',n:'Pa'},{s:'bar',n:'bar'},
+    {s:'atm',n:'atm'},{s:'mmHg',n:'mmHg'},{s:'J',n:'J'},{s:'kJ',n:'kJ'},{s:'cal',n:'cal'},
+    {s:'kcal',n:'kcal'},{s:'eV',n:'eV'},{s:'W',n:'W'},{s:'kW',n:'kW'},{s:'MW',n:'MW'},
+    {s:'V',n:'V'},{s:'A',n:'A'},{s:'mA',n:'mA'},{s:'Ω',n:'Ω'},{s:'kΩ',n:'kΩ'},
+    {s:'F',n:'F'},{s:'μF',n:'μF'},{s:'H',n:'H'},{s:'T',n:'T'},{s:'Wb',n:'Wb'},
+    {s:'C',n:'C'},{s:'mol',n:'mol'},{s:'M',n:'M'},{s:'L',n:'L'},{s:'mL',n:'mL'},
+    {s:'m³',n:'m³'},{s:'cm³',n:'cm³'},{s:'°C',n:'°C'},{s:'°F',n:'°F'},{s:'K',n:'K'},
+    {s:'rad',n:'rad'},{s:'deg',n:'deg'},{s:'%',n:'%'},{s:'‰',n:'‰'},{s:'ppm',n:'ppm'},
+    {s:'.',n:'.'},{s:'(',n:'('},{s:')',n:')'},{s:'/',n:'/'},{s:'×',n:'×'},
   ]
 };
-const SCC={'رياضيات':'var(--g)','فيزياء':'var(--or)','كيمياء':'var(--b)','هندسة':'var(--pu)','فلك':'var(--tl)'};
+const SCC={'آلة حاسبة':'var(--g)','رياضيات':'var(--g)','جبر':'var(--tl)','هندسة':'var(--pu)','فيزياء':'var(--or)','كيمياء':'var(--b)','طب':'#ff6b9d','أحياء':'#00c853','فلك':'#7c4dff','وحدات':'#ffd600'};
+
 function buildSymbols(){
   const cats=Object.keys(SYMS);
   document.getElementById('symTabs').innerHTML=cats.map((c,i)=>
@@ -1191,15 +1415,16 @@ function cpSym(s,el){
 
 // ── Free Models only ───────────────────────────────────────
 const MODELS=[
+  {id:'grok-4.7',nm:'Grok 4.7 (xAI)',ico:'𝕏',ds:'xAI — الأقوى — يحتاج مفتاح xAI',tier:'free',pv:'xai',link:'https://console.x.ai'},
+  {id:'grok-4.6',nm:'Grok 4.6 (xAI)',ico:'𝕏',ds:'xAI — قوي',tier:'free',pv:'xai',link:'https://console.x.ai'},
+  {id:'grok-3-mini',nm:'Grok 3 Mini (xAI)',ico:'𝕏',ds:'xAI — أسرع وأخف',tier:'free',pv:'xai',link:'https://console.x.ai'},
   {id:'openrouter/free',nm:'OpenRouter Free Router',ico:'🌐',ds:'يختار تلقائياً نموذجاً مجانياً',tier:'free',pv:'or',link:'https://openrouter.ai/openrouter/free'},
-  {id:'qwen/qwen3-8b:free',nm:'Qwen3 8B (free)',ico:'🔥',ds:'OpenRouter — قوي',tier:'free',pv:'or',link:'https://openrouter.ai/qwen/qwen3-8b:free'},
+  {id:'qwen/qwen3.8-27b:free',nm:'Qwen3.8 27B (free)',ico:'🔥',ds:'OpenRouter — مجاني',tier:'free',pv:'or',link:'https://openrouter.ai/qwen/qwen3.8-27b:free'},
   {id:'meta-llama/llama-3.3-70b-instruct:free',nm:'Llama 3.3 70B (free)',ico:'🦙',ds:'OpenRouter — Meta',tier:'free',pv:'or',link:'https://openrouter.ai/meta-llama/llama-3.3-70b-instruct:free'},
-  {id:'google/gemma-2-9b-it:free',nm:'Gemma 2 9B (free)',ico:'✨',ds:'OpenRouter — Google',tier:'free',pv:'or',link:'https://openrouter.ai/google/gemma-2-9b-it:free'},
-  {id:'llama-3.3-70b-versatile',nm:'Llama 3.3 70B Groq',ico:'⚡',ds:'Groq — أسرع استجابة',tier:'free',pv:'groq',link:'https://console.groq.com/docs/models'},
-  {id:'llama-3.1-8b-instant',nm:'Llama 3.1 8B Instant',ico:'🚀',ds:'Groq — فوري',tier:'free',pv:'groq',link:'https://console.groq.com/docs/models'},
-  {id:'gemini-2.5-flash',nm:'Gemini 2.5 Flash',ico:'💫',ds:'Google AI Studio — مجاني',tier:'free',pv:'gem',link:'https://aistudio.google.com/app/apikey'},
-  {id:'gemini-2.0-flash',nm:'Gemini 2.0 Flash',ico:'🌟',ds:'Google — مجاني',tier:'free',pv:'gem',link:'https://ai.google.dev/gemini-api/docs/models'},
-  {id:'gemini-2.5-flash-lite',nm:'Gemini 2.5 Flash-Lite',ico:'⚡',ds:'Google — خفيف وسريع',tier:'free',pv:'gem',link:'https://aistudio.google.com'},
+  {id:'openai/gpt-oss-20b',nm:'GPT-OSS 20B Groq',ico:'⚡',ds:'Groq — سريع',tier:'free',pv:'groq',link:'https://console.groq.com/docs/models'},
+  {id:'llama-3.1-8b-instant',nm:'Llama 3.1 8B Instant',ico:'💨',ds:'Groq — فوري',tier:'free',pv:'groq',link:'https://console.groq.com/docs/models'},
+  {id:'gemini-3.8-flash',nm:'Gemini 3.8 Flash',ico:'💫',ds:'Google AI — مجاني',tier:'free',pv:'gem',link:'https://aistudio.google.com/app/apikey'},
+  {id:'gemini-3.5-flash-lite',nm:'Gemini 3.5 Flash-Lite',ico:'⚡',ds:'Google — خفيف',tier:'free',pv:'gem',link:'https://aistudio.google.com/app/apikey'},
 ];
 function buildModels(){
   try{
@@ -1217,16 +1442,7 @@ function buildModels(){
     var info = document.getElementById('mdInfo');
     var cur = MODELS.find(function(x){ return x.id===MODEL; });
     if(info && cur) info.textContent = cur.nm + ' — مجاني ✅';
-    // strip in chat input
-    var strip = document.getElementById('modelStrip');
-    if(strip){
-      var chips = '<span class="ms-lbl">🤖 النموذج:</span>';
-      MODELS.forEach(function(m){
-        var on = (m.id===MODEL) ? ' on' : '';
-        chips += '<button type="button" class="ms-chip'+on+'" data-mid="'+m.id+'" onclick="selModel(\''+m.id+'\',null)" title="'+m.ds+'">'+m.ico+' '+m.nm+'</button>';
-      });
-      strip.innerHTML = chips;
-    }
+    // modelStrip removed — models only via top bar 🤖 النماذج
   }catch(e){ console.warn('buildModels', e); }
 }
 function selModel(id,el){
@@ -1234,9 +1450,7 @@ function selModel(id,el){
     MODEL=id;
     document.querySelectorAll('.mdl-i').forEach(function(i){i.classList.remove('on');});
     if(el) el.classList.add('on');
-    document.querySelectorAll('#modelStrip .ms-chip').forEach(function(c){
-      c.classList.toggle('on', c.getAttribute('data-mid')===id);
-    });
+    // modelStrip chips removed
     var m=MODELS.find(function(x){return x.id===id;});
     if(m){
       var info=document.getElementById('mdInfo');
@@ -1251,6 +1465,7 @@ function selModel(id,el){
 function showD(id){
   try{
     if(id==='apiD'){
+      var kX=document.getElementById('kXai'); if(kX) kX.value = KEYS.xai||'';
       var kOR=document.getElementById('kOR'); if(kOR) kOR.value = KEYS.or||'';
       var kG=document.getElementById('kGroq'); if(kG) kG.value = KEYS.groq||'';
       var kGem=document.getElementById('kGem'); if(kGem) kGem.value = KEYS.gem||'';
@@ -1271,6 +1486,43 @@ async function callAI(systemPrompt, userMsg, maxTok=2000){
   // Ignore selected model provider if that key is missing; fallback to any available key.
 
   const errors = [];
+
+
+  // ── 0. xAI Grok (الأولوية) ──
+  if(KEYS.xai && KEYS.xai.trim()){
+    try{
+      var xaiModel = 'grok-4.7';
+      if(MODEL && (MODEL.indexOf('grok')===0 || MODEL.indexOf('grok-')===0)) xaiModel = MODEL;
+      cLog('info','xAI Grok جاري... ('+xaiModel+')');
+      var r = await fetch('https://api.x.ai/v1/chat/completions', {
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json',
+          'Authorization':'Bearer '+KEYS.xai.trim()
+        },
+        body: JSON.stringify({
+          model: xaiModel,
+          messages: [
+            {role:'system', content: systemPrompt},
+            {role:'user', content: userMsg}
+          ],
+          max_tokens: maxTok||2000,
+          temperature: 0.7
+        })
+      });
+      var data = await r.json().catch(function(){ return {}; });
+      if(!r.ok){
+        var em = (data.error && (data.error.message||data.error)) || ('HTTP '+r.status);
+        throw new Error(String(em));
+      }
+      var content = data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content;
+      if(content) return content;
+      throw new Error('Grok: رد فارغ');
+    }catch(e){
+      errors.push('Grok: '+e.message);
+      cLog('warn','xAI Grok: '+e.message);
+    }
+  }
 
   // ── 1. OpenRouter ──
   if(KEYS.or && KEYS.or.trim()){
@@ -1317,8 +1569,8 @@ async function callAI(systemPrompt, userMsg, maxTok=2000){
   // ── 2. Groq ──
   if(KEYS.groq && KEYS.groq.trim()){
     try{
-      let modelId = 'llama-3.3-70b-versatile';
-      if(MODEL && (MODEL.includes('llama') || MODEL.includes('gemma') || MODEL.includes('mixtral') || MODEL.includes('instant'))){
+      let modelId = 'openai/gpt-oss-20b';
+      if(MODEL && (MODEL.includes('llama') || MODEL.includes('gemma') || MODEL.includes('mixtral') || MODEL.includes('instant') || MODEL.includes('gpt-oss') || MODEL.includes('qwen') || MODEL.startsWith('openai/') || MODEL.startsWith('qwen/'))){
         modelId = MODEL;
       }
       cLog('info','Groq جاري... ('+modelId+')');
@@ -1357,7 +1609,7 @@ async function callAI(systemPrompt, userMsg, maxTok=2000){
 
   // ── 3. Gemini (updated model names 2026) ──
   if(KEYS.gem && KEYS.gem.trim()){
-    const gemModels = ['gemini-2.5-flash','gemini-2.0-flash','gemini-2.5-flash-lite','gemini-2.5-flash-lite-preview-09-2025'];
+    const gemModels = ['gemini-3.8-flash','gemini-3.5-flash','gemini-3.5-flash-lite','gemini-3.1-flash-lite','gemini-3.6-flash','gemini-3.7-flash'];
     // Prefer selected if it is a gemini model
     let tryList = gemModels.slice();
     if(MODEL && MODEL.startsWith('gemini-')){
@@ -1401,10 +1653,10 @@ async function callAI(systemPrompt, userMsg, maxTok=2000){
     }
   }
 
-  if(!KEYS.or && !KEYS.groq && !KEYS.gem){
-    throw new Error('❌ لا يوجد مفتاح API\\nأضف مفتاحاً مجانياً من 🔑\\n• OpenRouter: openrouter.ai/keys\\n• Groq: console.groq.com\\n• Gemini: aistudio.google.com/app/apikey');
+  if(!KEYS.xai && !KEYS.or && !KEYS.groq && !KEYS.gem){
+    throw new Error('❌ لا يوجد مفتاح API.\nللـ Grok: افتح 🔑 والصق مفتاح console.x.ai ثم احفظ.\nأو استخدم OpenRouter / Groq / Gemini');
   }
-  throw new Error('❌ فشل كل المزودين:\\n' + (errors.length ? errors.join('\\n') : 'تحقق من المفاتيح والاتصال بالإنترنت'));
+  throw new Error('❌ فشل المزودين:\n' + (errors.length ? errors.join('\n') : 'تحقق من المفتاح والإنترنت'));
 }
 
 function copyToClipboard(text, onSuccess){
@@ -1425,11 +1677,20 @@ function _fallbackCopy(text,onSuccess){
 function fIn(t){const i=document.getElementById('mi');i.value=t;onTyp(i);i.focus()}
 function onTyp(el){
   var sb = document.getElementById('sb');
-  if(sb){ sb.style.display = 'flex'; sb.style.opacity = el.value.trim() ? '1' : '0.75'; }
+  var has = !!(el && el.value && el.value.trim());
+  if(sb){
+    sb.style.display = 'flex';
+    sb.style.opacity = has ? '1' : '0.85';
+    sb.style.pointerEvents = 'auto';
+    sb.disabled = false;
+    sb.removeAttribute('disabled');
+  }
   var iw = document.getElementById('iw');
-  if(iw) iw.classList.toggle('on', !!el.value.trim());
-  el.style.height = 'auto';
-  el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+  if(iw) iw.classList.toggle('on', has);
+  if(el){
+    el.style.height = 'auto';
+    el.style.height = Math.min(el.scrollHeight, 220) + 'px';
+  }
 }
 
 
@@ -1492,7 +1753,7 @@ function runCmd(cmd){
   } else if(c==='models'){
     MODELS.forEach(function(m){ cLog('info', m.ico+' '+m.nm+' ('+m.id+')'); });
   } else if(c==='keys'){
-    cLog('info','OR:'+(KEYS.or?'✅':'✗')+' Groq:'+(KEYS.groq?'✅':'✗')+' Gem:'+(KEYS.gem?'✅':'✗'));
+    cLog('info','Grok:'+(KEYS.xai?'✅':'✗')+' OR:'+(KEYS.or?'✅':'✗')+' Groq:'+(KEYS.groq?'✅':'✗')+' Gem:'+(KEYS.gem?'✅':'✗'));
   } else if(c==='status'){
     cLog('info','MODEL='+MODEL+' busy='+busy);
   } else if(c==='version'){
@@ -1504,16 +1765,25 @@ function runCmd(cmd){
 
 
 async function doSend(){
-  if(busy)return;
+  try{
+  if(busy){ toast('⏳ انتظر انتهاء الرد السابق...'); return; }
   const inp=document.getElementById('mi');
-  if(!inp){ alert('مربع الكتابة غير موجود'); return; }
-  const txt=inp.value.trim();if(!txt)return;
+  if(!inp){ toast('❌ مربع الكتابة غير موجود'); return; }
+  const txt=inp.value.trim();
+  if(!txt){ toast('✍️ اكتب سؤالاً أولاً'); return; }
   inp.value='';inp.style.height='auto';
-  var sbEl=document.getElementById('sb'); if(sbEl){ sbEl.style.display='flex'; sbEl.style.opacity='0.75'; }
+  var sbEl=document.getElementById('sb');
+  if(sbEl){ sbEl.style.display='flex'; sbEl.style.opacity='1'; sbEl.disabled=false; sbEl.style.pointerEvents='auto'; }
   var iw=document.getElementById('iw'); if(iw) iw.classList.remove('on');
   if(typeof goTab==='function') goTab('chat');
   var em=document.getElementById('chEm'); if(em) em.remove();
   addBub(txt,'u');scrollCh();
+  // تأكد من وجود مفتاح قبل الإرسال
+  if(!(KEYS.xai||'').trim() && !(KEYS.or||'').trim() && !(KEYS.groq||'').trim() && !(KEYS.gem||'').trim()){
+    toast('🔑 أضف مفتاح API أولاً');
+    try{ showD('apiD'); }catch(e){}
+    return;
+  }
   busy=true;
   if(typeof setLoading==='function') setLoading(true,'AI يفكر...');
   if(typeof cLog==='function') cLog('info','إرسال: '+txt.slice(0,60)+'... | نموذج: '+MODEL);
@@ -1521,21 +1791,32 @@ async function doSend(){
   try{
     const isWebReq = /موقع|صفح|تصميم|html|landing|web|site|واجهة|صفحة ويب/i.test(txt);
     const sys = isWebReq
-    ? ('أنت مطور ويب محترف لـ NEXUS-INTERNATIONAL (المطور: ' + DEV.name + ').\n' +
-       'عند طلب موقع أو تصميم أو واجهة:\n' +
-       '1) أخرج كود HTML كاملاً واحداً داخل كتلة كود html من <!DOCTYPE html> حتى </html>\n' +
-       '2) لا تختصر — اكتب CSS وJS داخل الصفحة\n' +
-       '3) الألوان: خلفية #000011، أخضر #00FF9D، أزرق #00B8FF\n' +
-       '4) خطوط Google: Cairo + Orbitron\n' +
-       '5) تصميم متجاوب مع animations خفيفة\n' +
-       '6) في آخر الرد اكتب: اضغط زر المعاينة لعرض الموقع')
-    : ('أنت NEXUS-INTERNATIONAL — موسوعة علمية كونية، طوّرها ' + DEV.name + ' من ' + DEV.country + '.\n' +
+    ? ('أنت مساعد التطوير الرسمي لتطبيق NEXUS-INTERNATIONAL.\n' +
+       'المستخدم هو ROOT: ' + DEV.name + ' — ' + DEV.role + ' من ' + DEV.country + '.\n' +
+       'له صلاحيات كاملة: تطوير، تعديل، تصميم، كود، ومعاينة.\n' +
+       'التطبيق: موسوعة علمية كونية عربية — محادثة AI، رموز علمية، خرائط، رسوم، محرر كود، معاينة HD، مفاتيح Grok/OpenRouter/Groq/Gemini.\n' +
+       'عند طلب موقع أو landing أو صفحة لهذا التطبيق:\n' +
+       '1) اجعل الموقع عن NEXUS-INTERNATIONAL نفسه (الاسم، الميزات، المطوّر ' + DEV.name + '، الألوان، الأقسام)\n' +
+       '2) أخرج HTML كاملاً واحداً داخل ```html من <!DOCTYPE html> حتى </html>\n' +
+       '3) لا تختصر — CSS وJS داخل الصفحة\n' +
+       '4) ألوان: خلفية #000011، أخضر #00FF9D، أزرق #00B8FF\n' +
+       '5) خطوط: Cairo + Orbitron\n' +
+       '6) تصميم متجاوب RTL مع animations خفيفة\n' +
+       '7) في آخر الرد: اضغط زر المعاينة ثم ⬇️ حفظ لتحميل الموقع')
+    : ('أنت NEXUS-INTERNATIONAL — موسوعة علمية كونية وتطبيق ويب تفاعلي.\n' +
+       'المستخدم هو ROOT: ' + DEV.name + ' — ' + DEV.role + ' (مالك ومطوّر التطبيق) من ' + DEV.country + '.\n' +
+       'لديه صلاحيات كاملة داخل NEXUS.\n' +
+       'عن التطبيق NEXUS-INTERNATIONAL v' + DEV.ver + ':\n' +
+       '- واجهة عربية RTL داكنة: خلفية #000011، أخضر #00FF9D، أزرق #00B8FF، خطوط Cairo + Orbitron.\n' +
+       '- ميزات: محادثة AI علمية، رموز رياضيات/فيزياء/كيمياء/فلك، خرائط Leaflet مع دبوس، رسوم بيانية، محرر كود، معاينة HTML كاملة، مفاتيح API (xAI Grok / OpenRouter / Groq / Gemini).\n' +
+       '- المطوّر: ' + DEV.name + ' — ROOT DEVELOPER.\n' +
+       'إذا طُلب موقع أو صفحة تعريفية أو landing لهذا التطبيق: اجعل المحتوى عن NEXUS-INTERNATIONAL نفسه (الميزات، الألوان، المطوّر، الأقسام العلمية) وليس موقعاً عاماً unrelated.\n' +
        'أجب بلغة المستخدم بدقة علمية.\n' +
-       'مجالات: فيزياء، كيمياء، رياضيات، هندسة معمارية، رسم هندسي، فلك، أحياء، حاسوب.\n' +
+       'مجالات: فيزياء، كيمياء، رياضيات، هندسة، فلك، أحياء، حاسوب.\n' +
        'للمعادلات استخدم ترميزاً واضحاً.\n' +
-       'إذا طُلب رسم بياني: أعطِ أرقاماً مفصولة بفواصل.\n' +
-       'إذا طُلب شكل هندسي: قدّم SVG داخل كود html كامل.\n' +
-       'إذا طُلب تصميم أو موقع: قدّم HTML كاملاً من DOCTYPE إلى نهاية html.');
+       'إذا طُلب رسم بياني: أرقام مفصولة بفواصل.\n' +
+       'إذا طُلب شكل هندسي: SVG داخل HTML كامل.\n' +
+       'إذا طُلب تصميم أو موقع: HTML كامل من DOCTYPE إلى </html> داخل كتلة ```html.');
     const reply = await callAI(sys, txt, 2500);
     tyEl.remove();setLoading(false);busy=false;
     addBub(reply,'a');scrollCh();confetti();
@@ -1550,6 +1831,16 @@ async function doSend(){
     ERRORS.push({t:new Date().toISOString(),e:e.message});
     addBub('⚠️ '+e.message,'a');scrollCh();
     cLog('warn','AI error: '+e.message);
+  } finally {
+    busy = false;
+    if(typeof setLoading==='function') setLoading(false);
+    var sbEl=document.getElementById('sb');
+    if(sbEl){ sbEl.disabled=false; sbEl.style.opacity='1'; sbEl.style.pointerEvents='auto'; }
+  }
+  }catch(outerErr){
+    busy = false;
+    toast('❌ خطأ: '+(outerErr.message||outerErr));
+    console.warn(outerErr);
   }
 }
 
@@ -1567,7 +1858,7 @@ function addBub(txt,t){
     const cp=document.createElement('button');cp.className='bact cp-btn';cp.textContent='📋 نسخ';
     cp.onclick=()=>{copyToClipboard(txt,()=>{cp.textContent='✅';setTimeout(()=>cp.textContent='📋 نسخ',1400);toast('تم النسخ ✓');});};
     const ttsB=document.createElement('button');ttsB.className='bact tts-btn';ttsB.textContent='🔊 قراءة';
-    ttsB.onclick=()=>speakText(txt,ttsB);
+    ttsB.onclick=function(){ try{ (window.speakText||speakText)(txt,ttsB); }catch(e){ toast('❌ القراءة: '+(e.message||e)); } };
     acts.appendChild(cp);acts.appendChild(ttsB);
     // 🖥️ Preview always available for AI replies (and user if looks like code/html)
     if(t==='a' || /```|<html|<svg|<div|function |def |<!DOCTYPE/i.test(txt)){
@@ -1667,6 +1958,12 @@ function previewCode(codeOverride){
 
   if(window._prevBlobUrl){ try{ URL.revokeObjectURL(window._prevBlobUrl); }catch(e){} }
 
+  window._lastPreviewHtml = htmlDoc;
+  try{
+    var ci = document.getElementById('codeIn');
+    if(ci && htmlDoc && htmlDoc.length > 20) ci.value = htmlDoc;
+  }catch(e){}
+
   const blob = new Blob([htmlDoc], { type: 'text/html;charset=utf-8' });
   const url = URL.createObjectURL(blob);
   window._prevBlobUrl = url;
@@ -1681,6 +1978,17 @@ function previewCode(codeOverride){
   if(titleEl) titleEl.textContent = '🖥️ معاينة عالية الدقة — NEXUS';
   cLog('info','معاينة HD ✓ '+htmlDoc.length+' حرف');
   toast('🖥️ معاينة مفتوحة');
+  try{
+    var sb = document.getElementById('btnPrevSave');
+    if(sb){
+      sb.onclick = function(e){ if(e) e.preventDefault(); prevDownload(); return false; };
+      sb.ontouchend = function(e){ if(e){ e.preventDefault(); e.stopPropagation(); } prevDownload(); return false; };
+    }
+    var rb = document.getElementById('btnPrevRefresh');
+    if(rb){
+      rb.onclick = function(e){ if(e) e.preventDefault(); prevRefresh(); };
+    }
+  }catch(e){}
 }
 
 function previewCurrentChart(){
@@ -1714,19 +2022,77 @@ function closePreview(){
   if(window._prevBlobUrl){ try{ URL.revokeObjectURL(window._prevBlobUrl); }catch(e){} window._prevBlobUrl=null; }
 }
 function prevRefresh(){
-  const code = document.getElementById('codeIn')?.value?.trim();
-  if(code){ previewCode(code); toast('🔄 تم التحديث'); }
-  else toast('⚠️ لا يوجد كود');
+  try{
+    var code = (window._lastPreviewHtml || '').trim();
+    if(!code){
+      var ci = document.getElementById('codeIn');
+      code = (ci && ci.value || '').trim();
+    }
+    if(code){ previewCode(code); toast('🔄 تم التحديث'); }
+    else toast('⚠️ لا يوجد محتوى للتحديث');
+  }catch(e){ toast('❌ '+e.message); }
 }
 function prevDownload(){
-  const code = document.getElementById('codeIn')?.value || '';
-  if(!code){ toast('المحرر فارغ'); return; }
-  const name = (document.getElementById('fnamIn')?.value || 'nexus_site') + (code.includes('<html')||code.includes('<!DOCTYPE')?'.html':'.txt');
-  const a = document.createElement('a');
-  a.href = 'data:text/html;charset=utf-8,' + encodeURIComponent(code);
-  a.download = name.endsWith('.html')||name.endsWith('.txt') ? name : name+'.html';
-  a.click();
-  toast('⬇️ تم الحفظ');
+  try{
+    var code = (window._lastPreviewHtml || '').trim();
+    if(!code){
+      var ci = document.getElementById('codeIn');
+      code = (ci && ci.value || '').trim();
+    }
+    if(!code && typeof sessions !== 'undefined' && sessions.length){
+      var last = sessions[sessions.length-1];
+      if(last && last.a){
+        var mm = String(last.a).match(/```html\s*\n?([\s\S]*?)```/i);
+        if(mm) code = mm[1].trim();
+        else if(/<!DOCTYPE\s+html/i.test(last.a)){
+          var s = last.a.search(/<!DOCTYPE\s+html/i);
+          code = last.a.slice(s);
+          var he = code.toLowerCase().lastIndexOf('</html>');
+          if(he>0) code = code.slice(0, he+7);
+        }
+      }
+    }
+    if(!code){ toast('❌ لا يوجد موقع للتحميل — أنشئ ثم عاين أولاً'); return; }
+
+    var nameEl = document.getElementById('fnamIn');
+    var base = (nameEl && nameEl.value || 'nexus-international-site').replace(/\.[^.]+$/,'');
+    var name = base + '.html';
+
+    // Method 1: Blob + download (desktop + many mobile)
+    var blob = new Blob([code], {type:'text/html;charset=utf-8'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = name;
+    a.style.display = 'none';
+    a.setAttribute('download', name);
+    document.body.appendChild(a);
+    a.click();
+
+    // Method 2: data-URI fallback after short delay if needed
+    setTimeout(function(){
+      try{
+        // Keep blob URL a bit longer on mobile
+        var a2 = document.createElement('a');
+        a2.href = url;
+        a2.download = name;
+        a2.rel = 'noopener';
+        a2.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:100002;padding:14px 22px;background:#00FF9D;color:#000;font-weight:700;border-radius:12px;font-family:Cairo,sans-serif;text-decoration:none;box-shadow:0 4px 20px rgba(0,255,157,.4)';
+        a2.textContent = '⬇️ اضغط هنا لتحميل ' + name;
+        document.body.appendChild(a2);
+        setTimeout(function(){
+          try{ a2.remove(); URL.revokeObjectURL(url); }catch(e){}
+        }, 8000);
+      }catch(e){}
+      try{ a.remove(); }catch(e){}
+    }, 400);
+
+    toast('⬇️ جاري الحفظ: ' + name);
+    if(typeof cLog==='function') cLog('info','تحميل: '+name+' ('+code.length+')');
+  }catch(err){
+    toast('❌ فشل الحفظ: '+(err.message||err));
+    console.warn(err);
+  }
 }
 
 
@@ -1740,20 +2106,37 @@ function initTTS(){
   window.speechSynthesis.getVoices();
 }
 function speakText(txt,btn){
-  if(!window.speechSynthesis){toast('TTS غير مدعوم');return;}
-  if(window.speechSynthesis.speaking){window.speechSynthesis.cancel();if(btn)btn.textContent='🔊 قراءة';return;}
-  var u=new SpeechSynthesisUtterance(txt);
-  if(ttsVoice)u.voice=ttsVoice;
-  u.lang=LANG==='ar'?'ar-SA':LANG;u.rate=.92;
-  if(btn){btn.textContent='⏹️ إيقاف';u.onend=function(){btn.textContent='🔊 قراءة';};}
-  window.speechSynthesis.speak(u);
+  try{
+    if(!window.speechSynthesis){
+      toast('❌ المتصفح لا يدعم القراءة الصوتية — افتح في Chrome');
+      return;
+    }
+    if(window.speechSynthesis.speaking){
+      window.speechSynthesis.cancel();
+      if(btn) btn.textContent='🔊 قراءة';
+      return;
+    }
+    var u = new SpeechSynthesisUtterance(String(txt||''));
+    u.lang = (typeof LANG!=='undefined' && LANG==='ar') ? 'ar-SA' : 'en-US';
+    if(typeof ttsVoice!=='undefined' && ttsVoice) u.voice = ttsVoice;
+    u.onerror = function(ev){ if(btn) btn.textContent='🔊 قراءة'; toast('❌ فشل القراءة'); };
+    if(btn){ btn.textContent='⏹️ إيقاف'; u.onend=function(){ btn.textContent='🔊 قراءة'; }; }
+    window.speechSynthesis.speak(u);
+  }catch(e){
+    if(btn) btn.textContent='🔊 قراءة';
+    toast('❌ القراءة: '+(e.message||e));
+  }
 }
 
 // ── Mic ────────────────────────────────────────────────────
 function toggleMic(){
   var b = document.getElementById('micB');
+  if(!b){ toast('❌ زر المايك غير موجود'); return; }
   var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if(!SR){ toast('المتصفح لا يدعم التعرف على الصوت'); return; }
+  if(!SR){ toast('❌ المتصفح لا يدعم التعرف على الصوت — جرّب Chrome'); return; }
+  if(!window.isSecureContext && location.protocol!=='https:' && location.hostname!=='localhost'){
+    toast('⚠️ المايك يحتاج HTTPS — افتح الموقع عبر رابط آمن'); return;
+  }
   if(micOn){
     micOn = false;
     if(window._sr){ try{ window._sr.stop(); }catch(e){} window._sr = null; }
@@ -1785,7 +2168,9 @@ function toggleMic(){
   sr.start();
 }
 function handleFile(inp){
-  var f = inp.files && inp.files[0]; if(!f) return;
+  try{
+  if(!inp){ toast('❌ إدخال الملف غير موجود'); return; }
+  var f = inp.files && inp.files[0]; if(!f){ toast('لم يتم اختيار ملف'); return; }
   inp.value = '';
   var ext = (f.name.split('.').pop()||'').toLowerCase();
   var isImg = ['jpg','jpeg','png','gif','webp','bmp'].indexOf(ext)>=0 || (f.type||'').indexOf('image/')===0;
@@ -1810,6 +2195,7 @@ function handleFile(inp){
     var mi = document.getElementById('mi');
     if(mi){ mi.value = 'لدي ملف باسم "' + f.name + '"'; onTyp(mi); }
   }
+  }catch(err){ toast('❌ خطأ في الملف: '+(err.message||err)); console.warn(err); }
 }
 
 // ── Scientific Charts + Geometry ───────────────────────────
@@ -2057,7 +2443,7 @@ async function devSend(){
   document.getElementById('devSndBtn').textContent='...';
   var tyEl=addTy('devty');
   try{
-    var sys='أنت مطور شخصي لـ NEXUS. المطور: '+DEV.name+'. اكتب كوداً نظيفاً. عند طلب HTML كامل ابدأ بـ <!DOCTYPE>.';
+    var sys='أنت مساعد التطوير الرسمي لـ NEXUS. المستخدم ROOT: '+DEV.name+' — '+DEV.role+' من '+DEV.country+'. صلاحيات كاملة لتطوير التطبيق والكود. اكتب كوداً نظيفاً. عند طلب HTML كامل ابدأ بـ <!DOCTYPE>.';
     var reply = await callAI(sys, txt, 3000);
     devHistory.push({role:'assistant',content:reply});
     tyEl.remove();
@@ -2116,20 +2502,17 @@ function closePreview(){
   if(window._prevBlobUrl){ try{ URL.revokeObjectURL(window._prevBlobUrl); }catch(e){} window._prevBlobUrl=null; }
 }
 function prevRefresh(){
-  var code = document.getElementById('codeIn') && document.getElementById('codeIn').value;
-  if(code){ previewCode(code); toast('تم التحديث'); }
-  else toast('لا يوجد كود');
+  try{
+    var code = (window._lastPreviewHtml || '').trim();
+    if(!code){
+      var ci = document.getElementById('codeIn');
+      code = (ci && ci.value || '').trim();
+    }
+    if(code){ previewCode(code); toast('🔄 تم التحديث'); }
+    else toast('⚠️ لا يوجد محتوى للتحديث');
+  }catch(e){ toast('❌ '+e.message); }
 }
-function prevDownload(){
-  var code = document.getElementById('codeIn') && document.getElementById('codeIn').value || '';
-  if(!code){ toast('المحرر فارغ'); return; }
-  var name = (document.getElementById('fnamIn') && document.getElementById('fnamIn').value) || 'nexus_site.html';
-  var a = document.createElement('a');
-  a.href = 'data:text/html;charset=utf-8,' + encodeURIComponent(code);
-  a.download = name.indexOf('.')>=0 ? name : name+'.html';
-  a.click();
-  toast('تم الحفظ');
-}
+
 
 
 window.openPreviewFromText = openPreviewFromText;
@@ -2153,6 +2536,35 @@ function toast(msg){
   const t=document.getElementById('tst');t.textContent=msg;t.classList.add('on');
   clearTimeout(tT);tT=setTimeout(()=>t.classList.remove('on'),3000);
 }
+
+// ── Global exports (ensure buttons work on all devices) ──
+window.doSend = doSend;
+window.toggleMic = toggleMic;
+window.handleFile = handleFile;
+window.onTyp = onTyp;
+window.cpSym = cpSym;
+window.showCat = showCat;
+window.setM = setM;
+window.goTab = goTab;
+window.selModel = selModel;
+window.locateMe = locateMe;
+window.initMap = initMap;
+window.wireInputControls = wireInputControls;
+window.speakText = speakText;
+window.prevDownload = prevDownload;
+window.prevRefresh = prevRefresh;
+window.closePreview = closePreview;
+window.saveKeys = saveKeys;
+window.loadKeys = loadKeys;
+// backup: wire when DOM ready + after short delay
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded', function(){ setTimeout(wireInputControls, 100); });
+} else {
+  setTimeout(wireInputControls, 100);
+}
+setTimeout(wireInputControls, 2000);
+
+
 </script>
 </body>
-</htm   
+</html>
